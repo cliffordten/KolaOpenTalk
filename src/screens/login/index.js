@@ -1,13 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {Text} from 'react-native';
-import AppLayout from '../../views/layout';
+// import PropTypes from 'prop-types';
+import {SafeAreaView, Text, View} from 'react-native';
+import styles from './styles';
 
 const Login = () => {
   return (
-    <AppLayout>
-      <Text> Login</Text>
-    </AppLayout>
+    <SafeAreaView style={styles.safeAreaView}>
+      <View style={styles.container}>
+        <Text> Login</Text>
+      </View>
+    </SafeAreaView>
   );
 };
 Login.propTypes = {};
