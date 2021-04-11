@@ -5,7 +5,7 @@ import styles from './styles';
 
 const Signup = () => {
   return (
-    <SafeAreaView style={styles.SafeAreaView}>
+    <SafeAreaView style={styles.safeAreaView}>
       <View style={styles.container}>
         <Text> signup</Text>
       </View>
