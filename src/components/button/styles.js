@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 50,
     alignItems: 'center',
+    marginVertical: 10,
   },
   btn: {
     backgroundColor: Colors.transparent,
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   primary: {
-    color: Colors.primary,
+    color: Colors.secondary,
     fontSize: Fonts.btnTitle,
     fontWeight: '700',
   },
@@ -26,10 +27,6 @@ const styles = StyleSheet.create({
     fontSize: Fonts.btnTitle,
     fontWeight: '700',
     color: Colors.grey,
-  },
-  ripple: {
-    marginVertical: 10,
-    borderRadius: 50,
   },
 });
 

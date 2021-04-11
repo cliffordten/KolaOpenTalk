@@ -9,7 +9,7 @@ import Text from '../../components/text';
 import {Colors} from '../../config';
 import styles from './styles';
 
-const Onboard = () => {
+const Onboard = ({navigation}) => {
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <LinearGradient
@@ -25,12 +25,12 @@ const Onboard = () => {
           <View styles={styles.btnContainer}>
             <Button
               label={labels.loginText}
-              onPress={() => console.log('object')}
+              onPress={() => navigation.navigate('Login')}
               color="white"
             />
             <Button
               label={labels.signupText}
-              onPress={() => console.log('object')}
+              onPress={() => navigation.navigate('Signup')}
             />
           </View>
           <View style={styles.hostText}>
