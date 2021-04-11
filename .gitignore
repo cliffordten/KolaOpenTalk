@@ -195,7 +195,7 @@ signing.properties
 key.json
 release-key.json
 debug-key.json
-
+yarn.lock
 # Bundle artifact
 *.jsbundle
 
