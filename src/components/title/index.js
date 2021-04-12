@@ -10,7 +10,7 @@ const Title = ({style, label, large, bold, lines}) => {
         style,
         bold ? styles.bold : '',
       ]}
-      numberOfLines={lines || 1}>
+      numberOfLines={lines >= 0 ? lines : 1}>
       {label}
     </RNText>
   );

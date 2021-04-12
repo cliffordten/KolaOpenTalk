@@ -20,7 +20,11 @@ const Onboard = ({navigation}) => {
             <Logo />
           </View>
           <View style={styles.textContainer}>
-            <Text label={labels.onboardWelcomeText} style={styles.text} />
+            <Text
+              label={labels.onboardWelcomeText}
+              style={styles.text}
+              lines={0}
+            />
           </View>
           <View styles={styles.btnContainer}>
             <Button
