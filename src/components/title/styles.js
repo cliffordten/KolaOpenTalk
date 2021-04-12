@@ -7,6 +7,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: Fonts.title,
   },
+  large: {
+    fontSize: Fonts.largeTitle,
+  },
+  bold: {
+    fontWeight: 'bold',
+  },
 });
 
 export default styles;

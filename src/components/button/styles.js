@@ -10,6 +10,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 10,
   },
+  flat: {
+    paddingHorizontal: 20,
+    padding: 5,
+    borderRadius: 50,
+    alignItems: 'center',
+  },
   btn: {
     backgroundColor: Colors.transparent,
     borderWidth: 1,
@@ -18,15 +24,27 @@ const styles = StyleSheet.create({
   whiteBtn: {
     backgroundColor: Colors.white,
   },
+  secondary: {
+    backgroundColor: Colors.secondary,
+  },
   primary: {
     color: Colors.secondary,
     fontSize: Fonts.btnTitle,
-    fontWeight: '700',
   },
   white: {
     fontSize: Fonts.btnTitle,
-    fontWeight: '700',
     color: Colors.grey,
+  },
+  flatText: {
+    fontSize: Fonts.text,
+    color: Colors.white,
+  },
+  secondTxt: {
+    fontSize: Fonts.text,
+    color: Colors.secondary,
+  },
+  bold: {
+    fontWeight: '700',
   },
 });
 
