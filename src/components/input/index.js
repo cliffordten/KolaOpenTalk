@@ -73,7 +73,9 @@ const Input = ({style, placeholder, type}) => {
               typePassword ? (toggleEye ? 'eye-with-line' : 'eye') : 'check'
             }
             size={20}
-            color={!isValid ? Colors.placeholder : Colors.secondary}
+            color={
+              !isFocused || !isValid ? Colors.placeholder : Colors.secondary
+            }
           />
         )}
       </Ripple>
