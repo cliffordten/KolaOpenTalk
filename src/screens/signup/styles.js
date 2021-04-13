@@ -22,10 +22,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginVertical: 20,
     marginHorizontal: 20,
-    height: height * 0.48,
+    height: height * 0.55,
+    marginTop: 45,
   },
   inputContainer: {
-    // width: ''
+    // marginTop: 15,
   },
   fpContainer: {
     paddingRight: 0,

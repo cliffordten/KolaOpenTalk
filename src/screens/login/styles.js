@@ -23,9 +23,10 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     marginHorizontal: 20,
     height: height * 0.48,
+    marginTop: 45,
   },
   inputContainer: {
-    // width: ''
+    marginTop: 15,
   },
   fpContainer: {
     paddingRight: 0,

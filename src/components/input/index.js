@@ -43,8 +43,8 @@ const Input = ({style, placeholder, type}) => {
     }
 
     if (type === 'name') {
-      setIsValid(!val < 5);
-      setIsError(!val < 5);
+      setIsValid(val.length > 5);
+      setIsError(val.length > 5);
       return;
     }
 
@@ -55,8 +55,6 @@ const Input = ({style, placeholder, type}) => {
     setValue(val);
     validateField(val);
   };
-
-  console.log(isError);
 
   return (
     <View style={styles.container}>
