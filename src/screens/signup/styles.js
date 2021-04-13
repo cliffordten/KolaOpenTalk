@@ -7,17 +7,6 @@ const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
   },
-  gradient: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomLeftRadius: 15,
-    maxHeight: height * 0.24,
-    borderBottomRightRadius: 15,
-  },
-  flatBtn: {
-    alignSelf: 'flex-end',
-    marginVertical: 5,
-  },
   container: {
     justifyContent: 'space-between',
     marginVertical: 20,
@@ -30,9 +19,6 @@ const styles = StyleSheet.create({
   },
   fpContainer: {
     paddingRight: 0,
-  },
-  logoContainer: {
-    marginVertical: 20,
   },
   text: {
     fontSize: Fonts.text,

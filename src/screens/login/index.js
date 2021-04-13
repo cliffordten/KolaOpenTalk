@@ -22,7 +22,7 @@ const Login = ({navigation}) => {
             label={labels.signupTextAlt}
             flat="white"
             bold
-            onPress={() => navigation.navigate('Signup')}
+            onPress={() => navigation.navigate('AccountOnboarding')}
           />
         </View>
         <View style={styles.logoContainer}>
@@ -54,7 +54,7 @@ const Login = ({navigation}) => {
           <Button
             label={labels.confirmText}
             color={'secondary'}
-            onPress={() => navigation.navigate('Signup')}
+            onPress={() => navigation.navigate('AccountOnboarding')}
           />
         </View>
       </View>

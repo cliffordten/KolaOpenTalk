@@ -34,7 +34,7 @@ const Onboard = ({navigation}) => {
             />
             <Button
               label={labels.signupText}
-              onPress={() => navigation.navigate('Signup')}
+              onPress={() => navigation.navigate('AccountOnboarding')}
             />
           </View>
           <View style={styles.hostText}>
