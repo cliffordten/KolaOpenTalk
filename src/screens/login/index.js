@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import {SafeAreaView, View} from 'react-native';
+import {View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import labels from '../../assets/labels';
 import Button from '../../components/button';
@@ -8,11 +8,12 @@ import Input from '../../components/input';
 import Logo from '../../components/logo';
 import Title from '../../components/title';
 import {Colors} from '../../config';
+import ScrollView from '../../views/scroll';
 import styles from './styles';
 
 const Login = ({navigation}) => {
   return (
-    <SafeAreaView style={styles.safeAreaView}>
+    <ScrollView style={styles.safeAreaView}>
       <LinearGradient
         colors={[Colors.primary, Colors.secondary]}
         style={styles.gradient}>
@@ -57,7 +58,7 @@ const Login = ({navigation}) => {
           />
         </View>
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 Login.propTypes = {};

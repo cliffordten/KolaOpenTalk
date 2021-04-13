@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {TextInput, View, Text} from 'react-native';
+import {TextInput, Platform, Text, KeyboardAvoidingView} from 'react-native';
 import styles from './styles';
 import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -57,7 +57,9 @@ const Input = ({style, placeholder, type}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}>
       <Text style={[labelStyle]}>{placeholder}</Text>
       <TextInput
         style={[styles.input, color, !isValid && error, style]}
@@ -89,7 +91,7 @@ const Input = ({style, placeholder, type}) => {
           />
         )}
       </Ripple>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
