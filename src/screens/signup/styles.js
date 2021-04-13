@@ -1,6 +1,7 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
+import {Fonts} from '../../config';
 
-// const {width, height} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   safeAreaView: {
@@ -10,17 +11,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomLeftRadius: 15,
+    maxHeight: height * 0.27,
     borderBottomRightRadius: 15,
   },
   flatBtn: {
     alignSelf: 'flex-end',
+    marginVertical: 10,
   },
   container: {
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 20,
+    marginHorizontal: 20,
+    height: height * 0.48,
+  },
+  inputContainer: {
+    // width: ''
+  },
+  fpContainer: {
+    paddingRight: 0,
   },
   logoContainer: {
-    marginVertical: 15,
-    marginBottom: 20,
+    marginVertical: 25,
+    marginBottom: 35,
+  },
+  text: {
+    fontSize: Fonts.text,
+  },
+  lgText: {
+    alignSelf: 'center',
   },
 });
 

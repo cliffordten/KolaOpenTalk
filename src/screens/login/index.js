@@ -29,7 +29,13 @@ const Login = ({navigation}) => {
         </View>
       </LinearGradient>
       <View style={styles.container}>
-        <Title label={labels.loginTitle} large bold style={styles.lgText} />
+        <Title
+          black
+          label={labels.loginTitle}
+          large
+          bold
+          style={styles.lgText}
+        />
         <View style={styles.inputContainer}>
           <Input placeholder={labels.emailText} type={'email'} />
           <Input placeholder={labels.passwordText} type="password" />

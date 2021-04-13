@@ -42,6 +42,12 @@ const Input = ({style, placeholder, type}) => {
       return;
     }
 
+    if (type === 'name') {
+      setIsValid(!val < 5);
+      setIsError(!val < 5);
+      return;
+    }
+
     setIsValid(true);
   };
 
@@ -49,6 +55,8 @@ const Input = ({style, placeholder, type}) => {
     setValue(val);
     validateField(val);
   };
+
+  console.log(isError);
 
   return (
     <View style={styles.container}>
@@ -74,7 +82,11 @@ const Input = ({style, placeholder, type}) => {
             }
             size={20}
             color={
-              !isFocused || !isValid ? Colors.placeholder : Colors.secondary
+              value && isValid
+                ? Colors.secondary
+                : !isFocused
+                ? Colors.placeholder
+                : Colors.secondary
             }
           />
         )}

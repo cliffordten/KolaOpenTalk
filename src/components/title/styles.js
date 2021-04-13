@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Fonts} from '../../config';
+import {Colors, Fonts} from '../../config';
 
 // const {width, height} = Dimensions.get('window');
 
@@ -12,6 +12,9 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: 'bold',
+  },
+  black: {
+    color: Colors.black,
   },
 });
 

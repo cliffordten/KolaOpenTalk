@@ -1,10 +1,12 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import {SafeAreaView, Text, View} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import labels from '../../assets/labels';
 import Button from '../../components/button';
+import Input from '../../components/input';
 import Logo from '../../components/logo';
+import Title from '../../components/title';
 import {Colors} from '../../config';
 import styles from './styles';
 
@@ -16,9 +18,10 @@ const Signup = ({navigation}) => {
         style={styles.gradient}>
         <View style={styles.flatBtn}>
           <Button
-            label={labels.signupTextAlt}
+            label={labels.signIn}
             flat="white"
-            onPress={() => navigation.navigate('Signup')}
+            bold
+            onPress={() => navigation.navigate('Login')}
           />
         </View>
         <View style={styles.logoContainer}>
@@ -26,7 +29,26 @@ const Signup = ({navigation}) => {
         </View>
       </LinearGradient>
       <View style={styles.container}>
-        <Text> Login</Text>
+        <Title
+          label={labels.signupText}
+          style={styles.lgText}
+          black
+          large
+          bold
+        />
+        <View style={styles.inputContainer}>
+          <Input placeholder={labels.nameText} type={'name'} />
+          <Input placeholder={labels.yourEmail} type={'email'} />
+          <Input placeholder={labels.passwordText} type="password" />
+          <Input placeholder={labels.passwordConfirmText} type="password" />
+        </View>
+        <View style={styles.confirm}>
+          <Button
+            label={labels.confirmText}
+            color={'secondary'}
+            onPress={() => navigation.navigate('Signup')}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
