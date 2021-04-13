@@ -11,29 +11,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomLeftRadius: 15,
-    maxHeight: height * 0.27,
+    maxHeight: height * 0.24,
     borderBottomRightRadius: 15,
   },
   flatBtn: {
     alignSelf: 'flex-end',
-    marginVertical: 10,
+    marginVertical: 5,
   },
   container: {
     justifyContent: 'space-between',
     marginVertical: 20,
     marginHorizontal: 20,
-    height: height * 0.55,
-    marginTop: 45,
+    height: height * 0.62,
+    marginTop: 30,
   },
-  inputContainer: {
-    // marginTop: 15,
+  input: {
+    marginTop: 0,
   },
   fpContainer: {
     paddingRight: 0,
   },
   logoContainer: {
-    marginVertical: 25,
-    marginBottom: 35,
+    marginVertical: 20,
   },
   text: {
     fontSize: Fonts.text,

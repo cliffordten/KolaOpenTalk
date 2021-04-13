@@ -4,6 +4,7 @@ import {View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import labels from '../../assets/labels';
 import Button from '../../components/button';
+import ImagePicker from '../../components/imagePicker';
 import Input from '../../components/input';
 import Logo from '../../components/logo';
 import Title from '../../components/title';
@@ -37,8 +38,13 @@ const Signup = ({navigation}) => {
           large
           bold
         />
+        <ImagePicker />
         <View style={styles.inputContainer}>
-          <Input placeholder={labels.nameText} type={'name'} />
+          <Input
+            placeholder={labels.nameText}
+            type={'name'}
+            containerStyle={styles.input}
+          />
           <Input placeholder={labels.yourEmail} type={'email'} />
           <Input placeholder={labels.passwordText} type="password" />
           <Input placeholder={labels.passwordConfirmText} type="password" />

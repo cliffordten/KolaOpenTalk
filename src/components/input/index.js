@@ -6,7 +6,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import {Colors, Fonts} from '../../config';
 import Ripple from 'react-native-material-ripple';
 
-const Input = ({style, placeholder, type}) => {
+const Input = ({style, placeholder, type, containerStyle}) => {
   const typePassword = type === 'password';
   const Icon = typePassword ? Entypo : Feather;
 
@@ -59,7 +59,7 @@ const Input = ({style, placeholder, type}) => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}>
+      style={[styles.container, containerStyle]}>
       <Text style={[labelStyle]}>{placeholder}</Text>
       <TextInput
         style={[styles.input, color, !isValid && error, style]}
