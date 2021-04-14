@@ -4,10 +4,12 @@ import labels from '../../assets/labels';
 import Button from '../../components/button';
 import Logo from '../../components/logo';
 import {Colors} from '../../config';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Signup from '../signup';
 import styles from './styles';
 import LinearGradient from 'react-native-linear-gradient';
 import ScrollView from '../../views/scroll';
+import Pagination from '../../components/paginator';
 
 const data = [
   {
@@ -45,12 +47,34 @@ const AccountOnBoarding = ({navigation}) => {
         colors={[Colors.primary, Colors.secondary]}
         style={styles.gradient}>
         <View style={styles.flatBtn}>
-          <Button
-            label={labels.signIn}
-            flat="white"
-            bold
-            onPress={() => navigation.navigate('Login')}
-          />
+          <Pagination data={data} scrollX={scrollX} />
+          {currentIndex === 0 ? (
+            <Button
+              label={labels.signIn}
+              flat="white"
+              onPress={() => navigation.navigate('Login')}
+              style={styles.flat}
+              textStyles={styles.text}
+              bold
+            />
+          ) : (
+            <Button
+              label={labels.skip}
+              flat="white"
+              onPress={() => navigation.navigate('Login')}
+              style={styles.flat}
+              textStyles={styles.text}
+              icon={
+                <Icon
+                  name="greater-than"
+                  size={18}
+                  color={Colors.white}
+                  style={styles.icon}
+                />
+              }
+              bold
+            />
+          )}
         </View>
         <View style={styles.logoContainer}>
           <Logo />

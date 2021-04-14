@@ -3,7 +3,16 @@ import {Text} from 'react-native';
 import styles from './styles';
 import Ripple from 'react-native-material-ripple';
 
-const Button = ({style, onPress, label, color, textStyles, flat, bold}) => {
+const Button = ({
+  style,
+  onPress,
+  label,
+  color,
+  textStyles,
+  flat,
+  bold,
+  icon,
+}) => {
   if (flat) {
     return (
       <Ripple style={[styles.flat, style]} onPress={onPress}>
@@ -19,6 +28,7 @@ const Button = ({style, onPress, label, color, textStyles, flat, bold}) => {
           ]}>
           {label}
         </Text>
+        {icon}
       </Ripple>
     );
   }

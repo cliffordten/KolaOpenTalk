@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   flat: {
-    paddingHorizontal: 20,
     padding: 5,
+    paddingHorizontal: 20,
     borderRadius: 50,
     alignItems: 'center',
   },

@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Onboard from '../screens/onboard';
 import Login from '../screens/login';
-import Signup from '../screens/signup';
+import AccountOnBoarding from '../screens/accountOnbording';
 
 const Stack = createStackNavigator();
 
@@ -18,7 +18,7 @@ const AppNavigation = () => {
         initialRouteName="Onboard">
         <Stack.Screen name="Onboard" component={Onboard} />
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Signup" component={Signup} />
+        <Stack.Screen name="AccountOnboarding" component={AccountOnBoarding} />
       </Stack.Navigator>
     </NavigationContainer>
   );

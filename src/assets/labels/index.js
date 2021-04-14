@@ -14,4 +14,6 @@ export default {
   yourEmail: 'Your Email',
   passwordConfirmText: 'Comfirm password',
   passwordForgot: 'Forgot your password?',
+  steps: 'Step',
+  skip: 'Skip',
 };

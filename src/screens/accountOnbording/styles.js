@@ -21,11 +21,29 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
   },
   flatBtn: {
-    alignSelf: 'flex-end',
     marginVertical: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width,
+    paddingHorizontal: 20,
+  },
+  flat: {
+    margin: 0,
+    padding: 0,
+    marginLeft: 'auto',
+    paddingRight: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   logoContainer: {
     marginVertical: 20,
+  },
+  icon: {
+    marginLeft: 10,
+  },
+  text: {
+    marginBottom: 4,
   },
 });
 
