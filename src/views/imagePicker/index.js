@@ -6,7 +6,7 @@ import Modal from 'react-native-modalbox';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Colors} from '../../config';
-import Button from '../button';
+import Button from '../../components/button';
 import labels from '../../assets/labels';
 import {showShortToast} from '../../utils/methods';
 

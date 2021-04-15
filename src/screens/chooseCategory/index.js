@@ -4,7 +4,7 @@ import {View} from 'react-native';
 import labels from '../../assets/labels';
 import Button from '../../components/button';
 import Icon from '../../components/icon';
-import SelectImageCatergory from '../../components/selectImageCatergory';
+import SelectImageCatergory from '../../views/selectImageCatergory';
 import Title from '../../components/title';
 import {Colors} from '../../config';
 import styles from './styles';

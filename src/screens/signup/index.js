@@ -3,7 +3,7 @@ import React from 'react';
 import {View} from 'react-native';
 import labels from '../../assets/labels';
 import Button from '../../components/button';
-import ImagePicker from '../../components/imagePicker';
+import ImagePicker from '../../views/imagePicker';
 import Input from '../../components/input';
 import Title from '../../components/title';
 import styles from './styles';

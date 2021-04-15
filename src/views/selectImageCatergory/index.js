@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
+import Icon from '../../components/icon';
 import {Colors} from '../../config';
 import styles from './styles';
-import Icon from '../icon';
 
 const data = [
   {
