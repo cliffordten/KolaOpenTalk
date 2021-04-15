@@ -101,14 +101,10 @@ const RenderImage = ({uri, catergory, id, onPress}) => {
   const [select, setSelect] = useState(false);
 
   const handleSelect = _id => {
-    if (select) {
-      setSelect(false);
-      return;
-    }
     if (onPress) {
       onPress(_id);
     }
-    setSelect(true);
+    setSelect(!select);
   };
   return (
     <TouchableOpacity

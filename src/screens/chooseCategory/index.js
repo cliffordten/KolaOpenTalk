@@ -9,7 +9,7 @@ import Title from '../../components/title';
 import {Colors} from '../../config';
 import styles from './styles';
 
-const ChooseCategory = ({navigation}) => {
+const ChooseCategory = ({goToIndex}) => {
   return (
     <View style={styles.safeAreaView}>
       <View style={styles.container}>
@@ -30,12 +30,12 @@ const ChooseCategory = ({navigation}) => {
           <Button
             label={labels.seeMore}
             color={'default'}
-            onPress={() => navigation.navigate('AccountOnboarding')}
+            onPress={() => console.log('object')}
           />
           <Button
             label={labels.nextStep}
             color={'secondary'}
-            onPress={() => navigation.navigate('ChooseCategory')}
+            onPress={() => goToIndex.scrollToIndex({animated: true, index: 2})}
             icon={
               <Icon
                 name="greater-than"

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {FlatList, Image, TouchableOpacity, View} from 'react-native';
 import labels from '../../assets/labels';
 import Button from '../../components/button';
@@ -116,10 +116,13 @@ const data = [
 ];
 
 const RenderFriends = ({uri, name, username, id, onPress}) => {
+  const [isFollow, setIsFollow] = useState(false);
+
   const handleFollow = _id => {
     if (onPress) {
       onPress(_id);
     }
+    setIsFollow(!isFollow);
   };
   return (
     <View style={styles.container}>
@@ -141,10 +144,11 @@ const RenderFriends = ({uri, name, username, id, onPress}) => {
       </View>
       <View style={styles.btnContainer}>
         <Button
-          label={labels.follow}
+          label={!isFollow ? labels.follow : labels.following}
           color={'secondary'}
+          textStyles={isFollow && styles.textStyles}
           onPress={() => handleFollow(id)}
-          style={styles.btn}
+          style={[styles.btn, isFollow && styles.isFollow]}
         />
       </View>
     </View>

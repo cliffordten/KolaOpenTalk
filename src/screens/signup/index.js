@@ -8,7 +8,7 @@ import Input from '../../components/input';
 import Title from '../../components/title';
 import styles from './styles';
 
-const Signup = ({navigation}) => {
+const Signup = ({goToIndex}) => {
   return (
     <View style={styles.safeAreaView}>
       <View style={styles.container}>
@@ -34,7 +34,7 @@ const Signup = ({navigation}) => {
           <Button
             label={labels.confirmText}
             color={'secondary'}
-            onPress={() => navigation.navigate('Login')}
+            onPress={() => goToIndex.scrollToIndex({animated: true, index: 1})}
           />
         </View>
       </View>

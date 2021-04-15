@@ -29,7 +29,7 @@ const FollowFriends = ({navigation}) => {
           <Button
             label={labels.nextStep}
             color={'secondary'}
-            onPress={() => navigation.navigate('ChooseCategory')}
+            onPress={() => navigation.navigate('Home')}
             icon={
               <Icon
                 name="greater-than"

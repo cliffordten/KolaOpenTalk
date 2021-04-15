@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {FlatList, View, Animated} from 'react-native';
+import {FlatList, View, Animated, useWindowDimensions} from 'react-native';
 import labels from '../../assets/labels';
 import Button from '../../components/button';
 import Logo from '../../components/logo';
@@ -16,26 +16,30 @@ import Icon from '../../components/icon';
 const data = [
   {
     key: 0,
-    component: <Signup />,
+    component: Signup,
   },
   {
     key: 1,
-    component: <ChooseCategory />,
+    component: ChooseCategory,
   },
   {
     key: 2,
-    component: <FollowFriends />,
+    component: FollowFriends,
   },
 ];
 
-const RenderOnBoardingItem = ({component}) => (
-  <View style={styles.onboardingItem}>{component}</View>
+const RenderOnBoardingItem = ({component: Component, goToIndex}) => (
+  <View style={styles.onboardingItem}>
+    {<Component goToIndex={goToIndex} />}
+  </View>
 );
 
 const AccountOnBoarding = ({navigation}) => {
   const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
-  const slidesRef = useRef(null);
+  const flatListRef = useRef(null);
+
+  const {width} = useWindowDimensions();
 
   const handleViewableItemChanged = useRef(({viewableItems}) =>
     setCurrentIndex(viewableItems[0].index),
@@ -63,7 +67,13 @@ const AccountOnBoarding = ({navigation}) => {
             <Button
               label={labels.skip}
               flat="white"
-              onPress={() => navigation.navigate('Login')}
+              onPress={() => {
+                if (currentIndex === 1) {
+                  flatListRef.current.scrollToIndex({animated: true, index: 2});
+                } else {
+                  navigation.navigate('Home');
+                }
+              }}
               style={styles.flat}
               textStyles={styles.text}
               icon={
@@ -85,9 +95,11 @@ const AccountOnBoarding = ({navigation}) => {
       <View style={styles.listContainer}>
         <FlatList
           data={data}
+          ref={flatListRef}
           renderItem={({item}) => (
             <RenderOnBoardingItem
-              component={item.component}
+              {...item}
+              goToIndex={flatListRef.current}
               key={({key}) => key}
             />
           )}
@@ -98,9 +110,13 @@ const AccountOnBoarding = ({navigation}) => {
               useNativeDriver: false,
             },
           )}
+          getItemLayout={(_, index) => ({
+            length: width,
+            offset: width * index,
+            index,
+          })}
           onViewableItemsChanged={handleViewableItemChanged}
           viewabilityConfig={viewConfig}
-          ref={slidesRef}
           scrollEventThrottle={32}
           showsHorizontalScrollIndicator={false}
           bounces={false}

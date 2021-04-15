@@ -66,6 +66,12 @@ const styles = StyleSheet.create({
     height: height * 0.7,
     alignSelf: 'center',
   },
+  isFollow: {
+    backgroundColor: Colors.secondaryLight,
+  },
+  textStyles: {
+    color: Colors.secondary,
+  },
 });
 
 export default styles;
