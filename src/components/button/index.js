@@ -41,8 +41,11 @@ const Button = ({
           ? styles.whiteBtn
           : color === 'secondary'
           ? styles.secondary
+          : color === 'default'
+          ? styles.default
           : styles.btn,
         style,
+        color === 'default' || !color ? styles.pad : '',
         styles.button,
       ]}
       onPress={onPress}>
@@ -52,12 +55,15 @@ const Button = ({
             ? styles.primary
             : color === 'secondary'
             ? styles.flatText
+            : color === 'default'
+            ? styles.primary
             : styles.white,
           bold && styles.bold,
           textStyles,
         ]}>
         {label}
       </Text>
+      {icon}
     </Ripple>
   );
 };

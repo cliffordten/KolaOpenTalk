@@ -9,17 +9,29 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: 'center',
     marginVertical: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  pad: {
+    paddingVertical: 13,
   },
   flat: {
     padding: 5,
     paddingHorizontal: 20,
     borderRadius: 50,
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   btn: {
     backgroundColor: Colors.transparent,
     borderWidth: 1,
     borderColor: Colors.grey,
+  },
+  default: {
+    backgroundColor: Colors.transparent,
+    borderWidth: 1,
+    borderColor: Colors.secondary,
   },
   whiteBtn: {
     backgroundColor: Colors.white,

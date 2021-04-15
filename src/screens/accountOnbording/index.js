@@ -4,12 +4,14 @@ import labels from '../../assets/labels';
 import Button from '../../components/button';
 import Logo from '../../components/logo';
 import {Colors} from '../../config';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Signup from '../signup';
 import styles from './styles';
 import LinearGradient from 'react-native-linear-gradient';
 import ScrollView from '../../views/scroll';
 import Pagination from '../../components/paginator';
+import ChooseCategory from '../chooseCategory';
+import FollowFriends from '../followFriends';
+import Icon from '../../components/icon';
 
 const data = [
   {
@@ -18,11 +20,11 @@ const data = [
   },
   {
     key: 1,
-    component: <Signup />,
+    component: <ChooseCategory />,
   },
   {
     key: 2,
-    component: <Signup />,
+    component: <FollowFriends />,
   },
 ];
 
@@ -67,8 +69,8 @@ const AccountOnBoarding = ({navigation}) => {
               icon={
                 <Icon
                   name="greater-than"
-                  size={18}
                   color={Colors.white}
+                  family={'MaterialCommunityIcons'}
                   style={styles.icon}
                 />
               }
