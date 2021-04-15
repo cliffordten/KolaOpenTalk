@@ -19,4 +19,8 @@ export default {
   takePhoto: 'Take photo...',
   chooseLibrary: 'Choose from Library...',
   skip: 'Skip',
+  chooseCategoryText: 'Choose your categories',
+  followFriendsText: 'Follow your friends',
+  nextStep: 'Next step',
+  seeMore: 'See more',
 };
