@@ -165,6 +165,7 @@ const SelectFollows = ({onPress}) => {
         showsVerticalScrollIndicator={false}
         bounces={false}
         columnWrapperStyle={styles.flat}
+        contentContainerStyle={styles.content}
       />
     </View>
   );

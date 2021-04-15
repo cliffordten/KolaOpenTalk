@@ -38,6 +38,7 @@ const FollowFriends = ({navigation}) => {
                 family={'MaterialCommunityIcons'}
               />
             }
+            style={styles.btn}
           />
         </View>
       </View>

@@ -17,6 +17,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width,
     alignSelf: 'center',
+    marginTop: 25,
+    // paddingBottom: height * 0.5,
   },
   iconContainer: {
     justifyContent: 'flex-end',
@@ -27,6 +29,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 10,
+  },
+  content: {
+    paddingBottom: height * 0.2,
   },
   image: {
     height: 60,
@@ -58,7 +63,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   flatList: {
-    height: height * 0.6,
+    height: height * 0.7,
     alignSelf: 'center',
   },
 });
