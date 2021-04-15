@@ -35,6 +35,10 @@ const styles = StyleSheet.create({
     fontSize: Fonts.btnTitle,
     color: Colors.grey,
   },
+  black: {
+    fontSize: Fonts.btnTitle,
+    color: Colors.black,
+  },
   flatText: {
     fontSize: Fonts.text,
     color: Colors.white,

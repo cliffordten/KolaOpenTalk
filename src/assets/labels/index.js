@@ -15,5 +15,8 @@ export default {
   passwordConfirmText: 'Comfirm password',
   passwordForgot: 'Forgot your password?',
   steps: 'Step',
+  pickImageText: 'Pick an Image',
+  takePhoto: 'Take photo...',
+  chooseLibrary: 'Choose from Library...',
   skip: 'Skip',
 };

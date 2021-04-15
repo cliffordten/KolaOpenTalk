@@ -22,6 +22,8 @@ const Button = ({
               ? styles.flatText
               : flat === 'placeholder'
               ? styles.white
+              : flat === 'black'
+              ? styles.black
               : styles.secondTxt,
             bold && styles.bold,
             textStyles,
