@@ -34,7 +34,7 @@ const Signup = ({navigation}) => {
           <Button
             label={labels.confirmText}
             color={'secondary'}
-            onPress={() => navigation.navigate('Signup')}
+            onPress={() => navigation.navigate('Login')}
           />
         </View>
       </View>

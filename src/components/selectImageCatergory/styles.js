@@ -46,6 +46,19 @@ const styles = StyleSheet.create({
     height: height * 0.4,
     alignSelf: 'center',
   },
+  flatContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width,
+    alignSelf: 'center',
+  },
+  flat: {
+    justifyContent: 'space-around',
+    width,
+    alignSelf: 'center',
+    paddingHorizontal: 5,
+    alignItems: 'flex-start',
+  },
 });
 
 export default styles;

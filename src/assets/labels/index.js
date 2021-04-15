@@ -23,4 +23,6 @@ export default {
   followFriendsText: 'Follow your friends',
   nextStep: 'Next step',
   seeMore: 'See more',
+  follow: 'follow',
+  following: 'following',
 };
