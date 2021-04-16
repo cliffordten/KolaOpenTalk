@@ -28,9 +28,13 @@ const data = [
   },
 ];
 
-const RenderOnBoardingItem = ({component: Component, goToIndex}) => (
+const RenderOnBoardingItem = ({
+  component: Component,
+  goToIndex,
+  navigation,
+}) => (
   <View style={styles.onboardingItem}>
-    {<Component goToIndex={goToIndex} />}
+    {<Component goToIndex={goToIndex} navigation={navigation} />}
   </View>
 );
 
@@ -100,6 +104,7 @@ const AccountOnBoarding = ({navigation}) => {
             <RenderOnBoardingItem
               {...item}
               goToIndex={flatListRef.current}
+              navigation={navigation}
               key={({key}) => key}
             />
           )}

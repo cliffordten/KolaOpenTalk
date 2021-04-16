@@ -6,6 +6,7 @@ const Colors = {
   secondaryLight: '#f7d9ff',
   secondaryLightBorder: '#EFB4FF',
   grey: '#c8c8c8',
+  gray: '#bebebe',
   lightGrey: '#eee',
   transparent: 'transparent',
   placeholder: '#aaa',
