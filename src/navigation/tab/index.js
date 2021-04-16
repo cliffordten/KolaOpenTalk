@@ -62,7 +62,7 @@ const TabNav = () => {
           return (
             <Icon
               name={iconName}
-              size={22}
+              size={18}
               color={color}
               family={family}
               style={styles.icon}

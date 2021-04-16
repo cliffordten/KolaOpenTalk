@@ -6,7 +6,6 @@ import Button from '../../components/button';
 import Input from '../../components/input';
 import Logo from '../../components/logo';
 import Title from '../../components/title';
-import {Colors} from '../../config';
 import LinearGradient from '../../views/gradient';
 import ScrollView from '../../views/scroll';
 import styles from './styles';

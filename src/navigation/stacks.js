@@ -6,6 +6,7 @@ import Home from '../screens/home';
 import Search from '../screens/search';
 import Notification from '../screens/notification';
 import Message from '../screens/message';
+import labels from '../assets/labels';
 
 const Stack = createStackNavigator();
 
@@ -15,14 +16,14 @@ export const HomeStack = () => {
       screenOptions={{
         headerShown: true,
         header: ({scene}) => {
-          return <Header scene={scene} showMenu showTitle />;
+          return <Header scene={scene} isHome />;
         },
       }}
       initialRouteName="HomeScreen">
       <Stack.Screen
         name="HomeScreen"
         options={{
-          headerTitle: 'Home',
+          headerTitle: labels.navTitle.home,
         }}
         component={Home}
       />
@@ -36,14 +37,14 @@ export const SearchStack = () => {
       screenOptions={{
         headerShown: true,
         header: ({scene}) => {
-          return <Header scene={scene} showMenu showTitle />;
+          return <Header scene={scene} isHome isSearch />;
         },
       }}
       initialRouteName="Search">
       <Stack.Screen
         name="Search"
         options={{
-          headerTitle: 'Search',
+          headerTitle: labels.navTitle.search,
         }}
         component={Search}
       />
@@ -57,14 +58,14 @@ export const NotificationStack = () => {
       screenOptions={{
         headerShown: true,
         header: ({scene}) => {
-          return <Header scene={scene} showMenu showTitle />;
+          return <Header scene={scene} isHome />;
         },
       }}
       initialRouteName="Notification">
       <Stack.Screen
         name="Notification"
         options={{
-          headerTitle: 'Notification',
+          headerTitle: labels.navTitle.notification,
         }}
         component={Notification}
       />
@@ -78,14 +79,14 @@ export const MessageStack = () => {
       screenOptions={{
         headerShown: true,
         header: ({scene}) => {
-          return <Header scene={scene} showMenu showTitle />;
+          return <Header scene={scene} isHome />;
         },
       }}
       initialRouteName="Message">
       <Stack.Screen
         name="Message"
         options={{
-          headerTitle: 'Message',
+          headerTitle: labels.navTitle.message,
         }}
         component={Message}
       />

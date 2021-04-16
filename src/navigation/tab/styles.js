@@ -1,19 +1,19 @@
 import {StyleSheet, Dimensions} from 'react-native';
 import {Colors} from '../../config';
 
-const {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.transparent,
-    height: 60,
+    height: 50,
   },
   tabStyle: {
     backgroundColor: Colors.transparent,
   },
   bottomNav: {
     backgroundColor: Colors.transparent,
-    height: 60,
+    height: 50,
     elevation: 0,
   },
   gradient: {

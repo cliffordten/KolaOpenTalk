@@ -25,4 +25,10 @@ export default {
   seeMore: 'See more',
   follow: 'follow',
   following: 'following',
+  navTitle: {
+    home: 'Home',
+    search: 'Search',
+    notification: 'Notification',
+    message: 'Messages',
+  },
 };
