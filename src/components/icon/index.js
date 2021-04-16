@@ -56,7 +56,14 @@ const Icon = ({family, name, color, size, ...rest}) => {
       );
 
     default:
-      break;
+      return (
+        <FontAwesome
+          name={name}
+          size={size || 18}
+          color={color || Colors.secondary}
+          {...rest}
+        />
+      );
   }
 };
 

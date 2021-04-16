@@ -4,13 +4,13 @@ import {View} from 'react-native';
 import Title from '../../components/title';
 import styles from './styles';
 
-const Email = () => {
+const Message = () => {
   return (
     <View style={styles.safeAreaView}>
-      <Title label={'Email'} style={styles.lgText} black large bold />
+      <Title label={'Message'} style={styles.lgText} black large bold />
     </View>
   );
 };
-Email.propTypes = {};
+Message.propTypes = {};
 
-export default Email;
+export default Message;
