@@ -1,7 +1,7 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Colors, Fonts} from '../../config';
 
-const {width} = Dimensions.get('window');
+// const {width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   gradient: {
@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 5,
-    maxHeight: 43,
+    // maxHeight: 48,
+    paddingTop: 10,
   },
   icon: {
     padding: 3,
@@ -24,15 +25,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: Fonts.btnTitle,
     color: Colors.white,
-  },
-
-  searchInput: {
-    backgroundColor: Colors.white,
-    width: width * 0.65,
-    borderRadius: 50,
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    height: 30,
   },
 });
 

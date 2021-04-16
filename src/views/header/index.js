@@ -1,11 +1,12 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import {Image, Text, TextInput, View} from 'react-native';
+import {Image, Text} from 'react-native';
 import styles from './styles';
 import Icon from '../../components/icon';
 import {Colors} from '../../config';
 import LinearGradient from '../gradient';
 import Ripple from 'react-native-material-ripple';
+import SearchBar from '../../components/search';
 
 const uri =
   'https://media.istockphoto.com/photos/happy-boy-on-the-zipline-picture-id594481094?s=612x612';
@@ -38,15 +39,7 @@ const Header = ({isHome, scene, isSearch}) => {
           />
         )}
       </Ripple>
-      {!isSearch ? (
-        <Text style={styles.text}>{title}</Text>
-      ) : (
-        <TextInput
-          placeholder="Search"
-          style={styles.searchInput}
-          placeholderTextColor={Colors.gray}
-        />
-      )}
+      {!isSearch ? <Text style={styles.text}>{title}</Text> : <SearchBar />}
       <Ripple>
         <Image source={{uri}} style={styles.image} />
       </Ripple>
