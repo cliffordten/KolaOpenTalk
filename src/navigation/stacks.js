@@ -14,9 +14,9 @@ export const HomeStack = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: true,
-        // header: ({scene}) => {
-        //   return <Header scene={scene} showMenu showTitle />;
-        // },
+        header: ({scene}) => {
+          return <Header scene={scene} showMenu showTitle />;
+        },
       }}
       initialRouteName="HomeScreen">
       <Stack.Screen

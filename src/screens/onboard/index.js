@@ -1,20 +1,18 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import {SafeAreaView, View} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import labels from '../../assets/labels';
 import Button from '../../components/button';
 import Logo from '../../components/logo';
 import Text from '../../components/text';
 import {Colors} from '../../config';
+import LinearGradient from '../../views/gradient';
 import styles from './styles';
 
 const Onboard = ({navigation}) => {
   return (
     <SafeAreaView style={styles.safeAreaView}>
-      <LinearGradient
-        colors={[Colors.primary, Colors.secondary]}
-        style={styles.safeAreaView}>
+      <LinearGradient style={styles.safeAreaView}>
         <View style={styles.container}>
           <View style={styles.logoContainer}>
             <Logo />

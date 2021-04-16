@@ -1,5 +1,4 @@
 import React from 'react';
-import LinearGradient from 'react-native-linear-gradient';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import CustomDrawer from './customDrawer';
 import {useWindowDimensions} from 'react-native';

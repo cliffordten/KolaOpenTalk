@@ -6,12 +6,12 @@ import Logo from '../../components/logo';
 import {Colors} from '../../config';
 import Signup from '../signup';
 import styles from './styles';
-import LinearGradient from 'react-native-linear-gradient';
 import ScrollView from '../../views/scroll';
 import Pagination from '../../components/paginator';
 import ChooseCategory from '../chooseCategory';
 import FollowFriends from '../followFriends';
 import Icon from '../../components/icon';
+import LinearGradient from '../../views/gradient';
 
 const data = [
   {
@@ -53,9 +53,7 @@ const AccountOnBoarding = ({navigation}) => {
 
   return (
     <ScrollView style={styles.container}>
-      <LinearGradient
-        colors={[Colors.primary, Colors.secondary]}
-        style={styles.gradient}>
+      <LinearGradient style={styles.gradient}>
         <View style={styles.flatBtn}>
           <Pagination data={data} scrollX={scrollX} />
           {currentIndex === 0 ? (

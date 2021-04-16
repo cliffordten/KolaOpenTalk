@@ -1,22 +1,20 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import {View} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import labels from '../../assets/labels';
 import Button from '../../components/button';
 import Input from '../../components/input';
 import Logo from '../../components/logo';
 import Title from '../../components/title';
 import {Colors} from '../../config';
+import LinearGradient from '../../views/gradient';
 import ScrollView from '../../views/scroll';
 import styles from './styles';
 
 const Login = ({navigation}) => {
   return (
     <ScrollView style={styles.safeAreaView}>
-      <LinearGradient
-        colors={[Colors.primary, Colors.secondary]}
-        style={styles.gradient}>
+      <LinearGradient style={styles.gradient}>
         <View style={styles.flatBtn}>
           <Button
             label={labels.signupTextAlt}

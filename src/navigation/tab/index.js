@@ -7,13 +7,13 @@ import {Colors} from '../../config';
 import styles from './styles';
 import Icon from '../../components/icon';
 import Header from '../../views/header';
-import LinearGradient from 'react-native-linear-gradient';
 import {
   HomeStack,
   MessageStack,
   NotificationStack,
   SearchStack,
 } from '../stacks';
+import LinearGradient from '../../views/gradient';
 
 const Tab = createBottomTabNavigator();
 
@@ -72,9 +72,7 @@ const TabNav = () => {
       })}
       tabBar={props => {
         return (
-          <LinearGradient
-            colors={[Colors.primary, Colors.secondary]}
-            style={styles.gradient}>
+          <LinearGradient style={styles.gradient}>
             <BottomTabBar {...props} style={styles.bottomNav} />
           </LinearGradient>
         );
