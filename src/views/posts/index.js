@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {FlatList, Image, TouchableOpacity, View} from 'react-native';
+import Ripple from 'react-native-material-ripple';
 import Button from '../../components/button';
 import Icon from '../../components/icon';
 import Text from '../../components/text';
@@ -356,7 +357,17 @@ const Posts = ({onPress}) => {
         style={styles.flatList}
         showsVerticalScrollIndicator={false}
         bounces={false}
+        contentContainerStyle={styles.pad}
       />
+      <Ripple style={styles.floatingBtn}>
+        <Icon
+          name={'plus'}
+          color={Colors.white}
+          style={styles.icon}
+          size={26}
+          family={'Entypo'}
+        />
+      </Ripple>
     </View>
   );
 };

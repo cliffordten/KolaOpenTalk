@@ -9,6 +9,10 @@ const styles = StyleSheet.create({
     width: width * 0.92,
     alignSelf: 'center',
     marginVertical: 10,
+    position: 'relative',
+  },
+  pad: {
+    paddingBottom: 35,
   },
   content: {
     paddingBottom: height * 0.2,
@@ -74,6 +78,15 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginTop: 8,
     marginBottom: 4,
+  },
+  floatingBtn: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
+    backgroundColor: Colors.secondary,
+    padding: 17,
+    borderRadius: 50,
+    elevation: 5,
   },
 });
 
