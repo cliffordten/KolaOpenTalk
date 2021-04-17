@@ -23,6 +23,40 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 15,
   },
+
+  // styles concerning the drawer
+
+  drawerWrapper: {
+    height: height * 0.25,
+    justifyContent: 'flex-end',
+    paddingLeft: 20,
+    paddingBottom: 20,
+  },
+  imageWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    color: Colors.white,
+  },
+  textWrapper: {
+    marginTop: 7,
+    marginLeft: 5,
+  },
+  username: {
+    color: Colors.placeholder,
+    // marginTop: 10
+  },
+  left: {
+    marginLeft: 20,
+  },
+  image: {
+    height: 70,
+    width: 70,
+    borderRadius: 50,
+    marginBottom: 10,
+    marginRight: 20,
+  },
 });
 
 export default styles;
