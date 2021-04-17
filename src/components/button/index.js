@@ -12,10 +12,12 @@ const Button = ({
   flat,
   bold,
   icon,
+  left,
 }) => {
   if (flat) {
     return (
       <Ripple style={[styles.flat, style]} onPress={onPress}>
+        {left && icon}
         <Text
           style={[
             flat === 'white'
@@ -30,7 +32,7 @@ const Button = ({
           ]}>
           {label}
         </Text>
-        {icon}
+        {!left && icon}
       </Ripple>
     );
   }

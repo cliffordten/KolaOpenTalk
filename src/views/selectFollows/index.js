@@ -107,7 +107,7 @@ const data = [
     username: 'User Name',
   },
   {
-    id: 15,
+    id: 16,
     uri:
       'https://media.istockphoto.com/photos/happy-boy-on-the-zipline-picture-id594481094?s=612x612',
     name: 'Friend Name',
