@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {FlatList, Image, TouchableOpacity, View} from 'react-native';
-import Ripple from 'react-native-material-ripple';
+import {FlatList, Image, View} from 'react-native';
 import Button from '../../components/button';
 import Icon from '../../components/icon';
 import Text from '../../components/text';
@@ -227,8 +226,8 @@ const data = [
     id: 7,
     profile:
       'https://media.istockphoto.com/photos/happy-boy-on-the-zipline-picture-id594481094?s=612x612',
-    name: 'Tenengaadfadsfadfasdf Clifford',
-    username: 'cliffordtenafafadfasdfa',
+    name: 'Tenenafadfasdfg Clifadfadfadfaford',
+    username: 'clifforadfafasdfdten',
     nComments: 43,
     nLikes: 60,
     time: '30 mins',
@@ -241,16 +240,13 @@ const data = [
   },
 ];
 
-const RenderPost = ({
+const RenderPostTalk = ({
   profile,
   name,
   username,
-  id,
-  onPress,
   nComments,
   nLikes,
   time,
-  navigation,
   isLiked,
   postImage,
   description,
@@ -258,31 +254,8 @@ const RenderPost = ({
   const [isCommentLiked, setIsCommentLiked] = useState(isLiked);
   const [nPostLikes, setNPostLikes] = useState(nLikes);
 
-  const handlePress = _id => {
-    if (onPress) {
-      onPress(_id);
-    }
-    navigation.navigate('PostTalk', {
-      post: {
-        profile,
-        name,
-        username,
-        id,
-        nComments,
-        nLikes,
-        time,
-        navigation,
-        isLiked,
-        postImage,
-        description,
-      },
-    });
-  };
-
   return (
-    <TouchableOpacity
-      style={styles.postContainer}
-      onPress={() => handlePress(id)}>
+    <View style={styles.postContainer}>
       <Image source={{uri: profile}} style={styles.imageProfile} />
       <View style={styles.infoContainer}>
         <View style={styles.textContainer}>
@@ -290,6 +263,22 @@ const RenderPost = ({
           <Text
             label={`@${username.toLowerCase()}`}
             style={[styles.text, styles.username]}
+          />
+          <Button
+            label={time}
+            flat="placeholder"
+            onPress={() => console.log('object')}
+            style={styles.flatBtn}
+            textStyles={[styles.textBtn, styles.time]}
+            icon={
+              <Icon
+                name={'dot-single'}
+                color={Colors.placeholder}
+                style={styles.icon}
+                family={'Entypo'}
+              />
+            }
+            left
           />
         </View>
         <Text label={description} style={styles.normal} lines={3} />
@@ -326,43 +315,131 @@ const RenderPost = ({
             textStyles={styles.textBtn}
             icon={
               <Icon
-                name={!isCommentLiked ? 'thumb-up-outline' : 'thumb-up'}
+                name={!isCommentLiked ? 'thumbs-o-up' : 'thumbs-up'}
                 color={!isCommentLiked ? Colors.placeholder : Colors.secondary}
                 style={styles.icon}
-                family={'MaterialCommunityIcons'}
-              />
-            }
-            left
-          />
-          <Button
-            label={time}
-            flat="placeholder"
-            onPress={() => console.log('object')}
-            style={[styles.flatBtn, styles.dot]}
-            textStyles={[styles.textBtn, styles.time]}
-            icon={
-              <Icon
-                name={'dot-single'}
-                color={Colors.placeholder}
-                style={[styles.icon]}
-                family={'Entypo'}
+                family={'FontAwesome'}
               />
             }
             left
           />
         </View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
-const Posts = ({onPress, navigation}) => {
+const RenderPostHeader = ({headerData}) => {
+  const {
+    profile,
+    name,
+    username,
+    nComments,
+    nLikes,
+    time,
+    isLiked,
+    postImage,
+    description,
+  } = headerData;
+
+  const [isCommentLiked, setIsCommentLiked] = useState(isLiked);
+  const [nPostLikes, setNPostLikes] = useState(nLikes);
+
+  return (
+    <View style={styles.postHeaderContainer}>
+      <View style={styles.imgContainer}>
+        <Image source={{uri: profile}} style={styles.imageProfile} />
+        <View style={styles.textHeaderContainer}>
+          <Text label={name} style={styles.text} />
+          <Text
+            label={`@${username?.toLowerCase()}`}
+            style={[styles.text, styles.username]}
+          />
+        </View>
+      </View>
+      <View style={styles.infoHeaderContainer}>
+        <Text
+          label={description}
+          style={[styles.normal, styles.headerText]}
+          lines={3}
+        />
+        {postImage && (
+          <Image source={{uri: postImage}} style={styles.imageHeaderPost} />
+        )}
+        <View style={styles.btnWrapper}>
+          <View style={[styles.btnContainer, styles.btnHeaderC]}>
+            <Button
+              label={nComments}
+              flat="placeholder"
+              onPress={() => console.log('object')}
+              style={styles.flatBtn}
+              textStyles={styles.textBtn}
+              icon={
+                <Icon
+                  name="commenting-o"
+                  color={Colors.placeholder}
+                  style={styles.icon}
+                  family={'FontAwesome'}
+                />
+              }
+              left
+            />
+            <Button
+              label={nPostLikes}
+              flat="placeholder"
+              onPress={() => {
+                setIsCommentLiked(!isCommentLiked);
+                !isCommentLiked
+                  ? setNPostLikes(nPostLikes + 1)
+                  : setNPostLikes(nPostLikes - 1);
+              }}
+              style={styles.flatBtn}
+              textStyles={styles.textBtn}
+              icon={
+                <Icon
+                  name={!isCommentLiked ? 'thumbs-o-up' : 'thumbs-up'}
+                  color={
+                    !isCommentLiked ? Colors.placeholder : Colors.secondary
+                  }
+                  style={styles.icon}
+                  family={'FontAwesome'}
+                />
+              }
+              left
+            />
+            <Button
+              label={time}
+              flat="placeholder"
+              onPress={() => console.log('object')}
+              style={styles.flatBtn}
+              textStyles={[styles.textBtn, styles.time]}
+              icon={
+                <Icon
+                  name={'dot-single'}
+                  color={Colors.placeholder}
+                  style={styles.icon}
+                  family={'Entypo'}
+                />
+              }
+              left
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const PostTalk = ({onPress, navigation, route}) => {
   return (
     <View style={styles.flatContainer}>
       <FlatList
         data={data}
+        ListHeaderComponent={() => (
+          <RenderPostHeader headerData={route?.params?.post} />
+        )}
         renderItem={({item}) => (
-          <RenderPost
+          <RenderPostTalk
             {...item}
             key={({id}) => id}
             onPress={onPress}
@@ -375,17 +452,8 @@ const Posts = ({onPress, navigation}) => {
         bounces={false}
         contentContainerStyle={styles.pad}
       />
-      <Ripple style={styles.floatingBtn}>
-        <Icon
-          name={'plus'}
-          color={Colors.white}
-          style={styles.icon}
-          size={26}
-          family={'Entypo'}
-        />
-      </Ripple>
     </View>
   );
 };
 
-export default Posts;
+export default PostTalk;

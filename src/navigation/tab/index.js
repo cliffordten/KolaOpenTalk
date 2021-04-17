@@ -6,7 +6,6 @@ import {
 import {Colors} from '../../config';
 import styles from './styles';
 import Icon from '../../components/icon';
-import Header from '../../views/header';
 import {
   HomeStack,
   MessageStack,
@@ -87,17 +86,7 @@ const TabNav = () => {
         tabStyle: styles.tabStyle,
         iconStyle: styles.tabStyle,
       }}>
-      <Tab.Screen
-        name="HomeStack"
-        component={HomeStack}
-        options={{
-          headerShown: true,
-          // headerTitle: t('search.label'),
-          header: ({scene}) => {
-            return <Header scene={scene} showBack showExpandedSearch />;
-          },
-        }}
-      />
+      <Tab.Screen name="HomeStack" component={HomeStack} />
       <Tab.Screen name="SearchStack" component={SearchStack} />
       <Tab.Screen name="NotificationStack" component={NotificationStack} />
       <Tab.Screen name="MessageStack" component={MessageStack} />

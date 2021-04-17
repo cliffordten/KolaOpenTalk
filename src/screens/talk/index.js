@@ -1,16 +1,16 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import {View} from 'react-native';
-import Posts from '../../views/posts';
+import PostTalk from '../../views/postTalk';
 import styles from './styles';
 
-const Home = ({...rest}) => {
+const Talk = ({...rest}) => {
   return (
     <View style={styles.safeAreaView}>
-      <Posts {...rest} />
+      <PostTalk {...rest} />
     </View>
   );
 };
-Home.propTypes = {};
+Talk.propTypes = {};
 
-export default Home;
+export default Talk;

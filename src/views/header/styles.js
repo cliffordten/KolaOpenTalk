@@ -13,6 +13,14 @@ const styles = StyleSheet.create({
     // maxHeight: 48,
     paddingTop: 10,
   },
+  noImage: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    // maxHeight: 48,
+    paddingTop: 10,
+  },
   icon: {
     padding: 3,
     borderRadius: 50,
@@ -25,6 +33,9 @@ const styles = StyleSheet.create({
   text: {
     fontSize: Fonts.btnTitle,
     color: Colors.white,
+  },
+  pad: {
+    paddingRight: 20,
   },
 });
 

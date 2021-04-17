@@ -6,6 +6,9 @@ import Onboard from '../screens/onboard';
 import Login from '../screens/login';
 import AccountOnBoarding from '../screens/accountOnbording';
 import SideBar from './sideBar';
+import Talk from '../screens/talk';
+import Header from '../views/header';
+import labels from '../assets/labels';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +23,17 @@ const AppNavigation = () => {
         <Stack.Screen name="Onboard" component={Onboard} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="AccountOnboarding" component={AccountOnBoarding} />
+        <Stack.Screen
+          name="PostTalk"
+          component={Talk}
+          options={{
+            headerShown: true,
+            header: ({scene}) => {
+              return <Header scene={scene} noImage />;
+            },
+            headerTitle: labels.navTitle.talk,
+          }}
+        />
         <Stack.Screen name="Home" component={SideBar} />
       </Stack.Navigator>
     </NavigationContainer>

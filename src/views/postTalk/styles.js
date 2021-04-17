@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',
     color: Colors.black,
-    maxWidth: (width * 0.92 - 62) * 0.42,
+    maxWidth: (width * 0.92 - 62) * 0.38,
   },
   normal: {
     fontSize: Fonts.normal,
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   username: {
     color: Colors.placeholder,
     fontWeight: '100',
-    marginLeft: 15,
+    marginLeft: 10,
   },
   flatBtn: {
     margin: 0,
@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingLeft: 0,
   },
   textBtn: {
     marginLeft: 10,
@@ -55,6 +54,17 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.grey,
     borderBottomWidth: 0.5,
   },
+  postHeaderContainer: {
+    width: width * 0.9,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imgContainer: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignSelf: 'flex-start',
+    marginVertical: 12,
+  },
   imageProfile: {
     height: 50,
     width: 50,
@@ -65,12 +75,17 @@ const styles = StyleSheet.create({
     width: width * 0.92 - 62,
     marginTop: 5,
   },
+  infoHeaderContainer: {
+    width: width * 0.9,
+    marginTop: 5,
+  },
   textContainer: {
     flexDirection: 'row',
+    marginBottom: 5,
   },
   btnContainer: {
     flexDirection: 'row',
-    width: width * 0.6,
+    width: width * 0.4,
     alignSelf: 'flex-end',
     marginTop: 10,
   },
@@ -81,14 +96,26 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 4,
   },
-  floatingBtn: {
-    position: 'absolute',
-    right: 0,
-    bottom: 0,
-    backgroundColor: Colors.secondary,
-    padding: 17,
-    borderRadius: 50,
-    elevation: 5,
+  headerText: {
+    marginBottom: 10,
+  },
+  btnHeaderC: {
+    width: width * 0.6,
+    marginTop: 15,
+  },
+  btnWrapper: {
+    borderColor: Colors.placeholder,
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
+    paddingBottom: 15,
+    marginBottom: 10,
+  },
+  imageHeaderPost: {
+    width: width * 0.9,
+    height: 200,
+    borderRadius: 15,
+    marginTop: 5,
+    marginBottom: 15,
   },
 });
 

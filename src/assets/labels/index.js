@@ -30,5 +30,6 @@ export default {
     search: 'Search',
     notification: 'Notification',
     message: 'Messages',
+    talk: 'Talk',
   },
 };

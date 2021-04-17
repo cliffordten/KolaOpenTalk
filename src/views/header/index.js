@@ -11,7 +11,7 @@ import SearchBar from '../../components/search';
 const uri =
   'https://media.istockphoto.com/photos/happy-boy-on-the-zipline-picture-id594481094?s=612x612';
 
-const Header = ({isHome, scene, isSearch}) => {
+const Header = ({isHome, scene, isSearch, noImage}) => {
   const {options, navigation} = scene.descriptor;
 
   const title =
@@ -22,9 +22,9 @@ const Header = ({isHome, scene, isSearch}) => {
       : scene.route.name;
 
   return (
-    <LinearGradient style={styles.gradient}>
+    <LinearGradient style={noImage ? styles.noImage : styles.gradient}>
       <Ripple
-        style={styles.icon}
+        style={[styles.icon, noImage && styles.pad]}
         onPress={() =>
           isHome ? navigation.toggleDrawer() : navigation.goBack()
         }>
@@ -40,9 +40,11 @@ const Header = ({isHome, scene, isSearch}) => {
         )}
       </Ripple>
       {!isSearch ? <Text style={styles.text}>{title}</Text> : <SearchBar />}
-      <Ripple>
-        <Image source={{uri}} style={styles.image} />
-      </Ripple>
+      {!noImage ? (
+        <Ripple>
+          <Image source={{uri}} style={styles.image} />
+        </Ripple>
+      ) : null}
     </LinearGradient>
   );
 };
