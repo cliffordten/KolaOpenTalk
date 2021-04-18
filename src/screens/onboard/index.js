@@ -1,13 +1,13 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import {SafeAreaView, View} from 'react-native';
+import {View} from 'react-native';
 import labels from '../../assets/labels';
 import Button from '../../components/button';
 import Logo from '../../components/logo';
 import Text from '../../components/text';
-import {Colors} from '../../config';
 import LinearGradient from '../../views/gradient';
 import styles from './styles';
+import SafeAreaView from 'react-native-safe-area-view';
 
 const Onboard = ({navigation}) => {
   return (

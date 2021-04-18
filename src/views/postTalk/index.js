@@ -4,6 +4,7 @@ import Button from '../../components/button';
 import Icon from '../../components/icon';
 import Text from '../../components/text';
 import {Colors} from '../../config';
+import Keyboard from '../keyboard';
 import styles from './styles';
 
 const data = [
@@ -452,6 +453,7 @@ const PostTalk = ({onPress, navigation, route}) => {
         bounces={false}
         contentContainerStyle={styles.pad}
       />
+      <Keyboard />
     </View>
   );
 };

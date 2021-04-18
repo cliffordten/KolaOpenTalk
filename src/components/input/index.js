@@ -69,6 +69,7 @@ const Input = ({style, placeholder, type, containerStyle}) => {
         value={value}
         autoCompleteType={type}
         secureTextEntry={typePassword ? !toggleEye : false}
+        selectionColor={Colors.secondary}
       />
       <Ripple
         style={styles.icon}

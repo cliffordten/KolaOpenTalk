@@ -32,4 +32,5 @@ export default {
     message: 'Messages',
     talk: 'Talk',
   },
+  comment: 'Your Comment',
 };

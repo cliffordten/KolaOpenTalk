@@ -10,7 +10,7 @@ import Button from '../../components/button';
 import labels from '../../assets/labels';
 import {showShortToast} from '../../utils/methods';
 
-const ImagePicker = ({style}) => {
+const ImagePicker = ({style, external, setImageExternalUrl}) => {
   const ref = useRef();
   const [imageUrl, setImageUrl] = useState(null);
 
@@ -24,6 +24,7 @@ const ImagePicker = ({style}) => {
       });
 
       setImageUrl(path);
+      setImageExternalUrl(path);
     } catch (error) {
       showShortToast('Image was not picked');
     }
@@ -41,6 +42,7 @@ const ImagePicker = ({style}) => {
       });
 
       setImageUrl(path);
+      setImageExternalUrl(path);
     } catch (error) {
       showShortToast('Image was not picked');
     }
@@ -49,24 +51,38 @@ const ImagePicker = ({style}) => {
 
   return (
     <View style={[styles.container, style]}>
-      {!imageUrl ? (
+      {!imageUrl
+        ? !external && (
+            <TouchableOpacity
+              style={styles.imageContainer}
+              onPress={() => ref.current.open()}>
+              <Icon
+                name="camera"
+                size={16}
+                color={Colors.secondary}
+                style={styles.image}
+              />
+            </TouchableOpacity>
+          )
+        : !external && (
+            <TouchableOpacity onPress={() => ref.current.open()}>
+              <Image
+                style={[styles.imageContainer, styles.image]}
+                source={{
+                  uri: imageUrl,
+                }}
+              />
+            </TouchableOpacity>
+          )}
+      {external && (
         <TouchableOpacity
-          style={styles.imageContainer}
+          style={styles.imageContainerExternal}
           onPress={() => ref.current.open()}>
           <Icon
             name="camera"
             size={16}
             color={Colors.secondary}
             style={styles.image}
-          />
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity onPress={() => ref.current.open()}>
-          <Image
-            style={[styles.imageContainer, styles.image]}
-            source={{
-              uri: imageUrl,
-            }}
           />
         </TouchableOpacity>
       )}

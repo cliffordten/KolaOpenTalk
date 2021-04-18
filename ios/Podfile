@@ -20,6 +20,8 @@ target 'KolaOpenTalk' do
 
   pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
 
+  pod 'react-native-viewpager', :path => '../node_modules/@react-native-community/viewpager'
+
   target 'KolaOpenTalkTests' do
     inherit! :complete
     # Pods for testing

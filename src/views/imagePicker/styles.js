@@ -41,6 +41,9 @@ const styles = StyleSheet.create({
     height: 160,
     width: width * 0.9,
   },
+  imageContainerExternal: {
+    marginLeft: 10,
+  },
 });
 
 export default styles;
