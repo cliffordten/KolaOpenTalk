@@ -375,7 +375,9 @@ const Posts = ({onPress, navigation}) => {
         bounces={false}
         contentContainerStyle={styles.pad}
       />
-      <Ripple style={styles.floatingBtn}>
+      <Ripple
+        style={styles.floatingBtn}
+        onPress={() => navigation.navigate('CreatePost')}>
         <Icon
           name={'plus'}
           color={Colors.white}

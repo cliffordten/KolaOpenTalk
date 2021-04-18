@@ -9,6 +9,7 @@ import SideBar from './sideBar';
 import Talk from '../screens/talk';
 import Header from '../views/header';
 import labels from '../assets/labels';
+import CreatePost from '../screens/createPost';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,17 @@ const AppNavigation = () => {
         <Stack.Screen name="Onboard" component={Onboard} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="AccountOnboarding" component={AccountOnBoarding} />
+        <Stack.Screen
+          name="CreatePost"
+          component={CreatePost}
+          options={{
+            headerShown: true,
+            header: ({scene}) => {
+              return <Header scene={scene} noImage />;
+            },
+            headerTitle: labels.navTitle.createPost,
+          }}
+        />
         <Stack.Screen
           name="PostTalk"
           component={Talk}
