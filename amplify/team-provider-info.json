@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-kolaopentalk-dev-10155-authRole",
+      "UnauthRoleArn": "arn:aws:iam::064665645620:role/amplify-kolaopentalk-dev-10155-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::064665645620:role/amplify-kolaopentalk-dev-10155-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-kolaopentalk-dev-10155-deployment",
+      "UnauthRoleName": "amplify-kolaopentalk-dev-10155-unauthRole",
+      "StackName": "amplify-kolaopentalk-dev-10155",
+      "StackId": "arn:aws:cloudformation:us-east-1:064665645620:stack/amplify-kolaopentalk-dev-10155/4cffa3c0-a490-11eb-bc4f-0af47575f89b",
+      "AmplifyAppId": "dqcazcr1ddri"
+    }
+  }
+}
