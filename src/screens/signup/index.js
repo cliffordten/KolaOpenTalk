@@ -8,7 +8,8 @@ import Input from '../../components/input';
 import Title from '../../components/title';
 import styles from './styles';
 import {useForm} from '../../utils/hooks';
-import {showShortToast} from '../../utils/methods';
+import {showLongToast, showShortToast} from '../../utils/methods';
+import {Auth} from 'aws-amplify';
 
 const Signup = ({goToIndex}) => {
   const [url, setUrl] = useState(null);
@@ -26,7 +27,6 @@ const Signup = ({goToIndex}) => {
 
   const isValidate = formData => {
     const {password, confirmPassword} = formData;
-    console.log(isError);
 
     if (isError.length === 0) {
       showShortToast('Please fill the form to create an account');
@@ -35,6 +35,11 @@ const Signup = ({goToIndex}) => {
 
     if (password !== confirmPassword) {
       showShortToast('Password missmatch');
+      return;
+    }
+
+    if (password.length < 8) {
+      showShortToast('Password must be greater than 8 characters');
       return;
     }
 
@@ -51,13 +56,29 @@ const Signup = ({goToIndex}) => {
     return true;
   };
 
-  const onSubmit = formData => {
-    // if (isValidate(formData)) {
-    //   formData.profilePic = url;
-
-    //   console.log(formData);
-    // }
-    goToIndex.scrollToIndex({animated: true, index: 1});
+  const onSubmit = async formData => {
+    if (isValidate(formData)) {
+      const {password, email, name} = formData;
+      try {
+        const {user} = await Auth.signUp({
+          username: email,
+          email,
+          password,
+          attributes: {
+            name,
+            profile: url,
+          },
+        });
+        if (user) {
+          goToIndex.scrollToIndex({animated: true, index: 1});
+        }
+      } catch ({code, message}) {
+        if (code === 'UsernameExistsException') {
+          showLongToast(message);
+        }
+        console.log(code, 'msg', message);
+      }
+    }
   };
 
   const {handleInputChange, handleSubmit} = useForm(formInit, onSubmit);
