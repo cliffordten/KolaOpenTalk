@@ -1,7 +1,7 @@
 import {StyleSheet, Dimensions} from 'react-native';
 import {Fonts} from '../../config';
 
-const {height} = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   safeAreaView: {
@@ -25,6 +25,22 @@ const styles = StyleSheet.create({
   },
   lgText: {
     alignSelf: 'center',
+  },
+  modal: {
+    elevation: 5,
+    height: 190,
+    width: width * 0.9,
+    padding: 18,
+  },
+  titleContainer: {
+    marginBottom: 15,
+  },
+  title: {
+    fontSize: Fonts.title,
+  },
+  button: {
+    marginTop: 15,
+    alignItems: 'flex-end',
   },
 });
 

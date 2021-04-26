@@ -13,7 +13,7 @@ export default {
   passwordText: 'Your password',
   yourEmail: 'Your Email',
   passwordConfirmText: 'Comfirm password',
-  comfirmCode: 'Input Confirmation Code',
+  comfirmCode: 'Confirmation Code',
   passwordForgot: 'Forgot your password?',
   steps: 'Step',
   pickImageText: 'Pick an Image',

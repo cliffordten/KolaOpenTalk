@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
+import Modal from 'react-native-modalbox';
 // import PropTypes from 'prop-types';
-import {View} from 'react-native';
+import {Text, View} from 'react-native';
 import labels from '../../assets/labels';
 import Button from '../../components/button';
 import ImagePicker from '../../views/imagePicker';
@@ -14,6 +15,9 @@ import {Auth} from 'aws-amplify';
 const Signup = ({goToIndex}) => {
   const [url, setUrl] = useState(null);
   const [isError, setIsError] = useState([]);
+  const [confirmCode, setCode] = useState(null);
+  const [conEmail, setConEmail] = useState(null);
+  const ref = useRef();
   const formInit = {
     name: '',
     email: '',
@@ -70,7 +74,9 @@ const Signup = ({goToIndex}) => {
           },
         });
         if (user) {
-          goToIndex.scrollToIndex({animated: true, index: 1});
+          setConEmail(email);
+          showLongToast('A comfirmation code was sent to your email');
+          ref.current.open();
         }
       } catch ({code, message}) {
         if (code === 'UsernameExistsException') {
@@ -82,6 +88,23 @@ const Signup = ({goToIndex}) => {
   };
 
   const {handleInputChange, handleSubmit} = useForm(formInit, onSubmit);
+
+  const codeInput = (name, val) => {
+    setCode(val);
+  };
+
+  const confirmAuth = async () => {
+    if (confirmCode && conEmail) {
+      try {
+        await Auth.confirmSignUp(conEmail, confirmCode);
+        console.log('successully signed up!');
+        ref.current.close();
+        goToIndex.scrollToIndex({animated: true, index: 1});
+      } catch (err) {
+        console.log('error confirming signing up: ', err);
+      }
+    }
+  };
 
   return (
     <View style={styles.safeAreaView}>
@@ -133,6 +156,26 @@ const Signup = ({goToIndex}) => {
           />
         </View>
       </View>
+      <Modal style={[styles.modal]} position={'center'} coverScreen ref={ref}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{labels.confirmationRequired}</Text>
+        </View>
+        <Input
+          placeholder={labels.comfirmCode}
+          handleInputChange={codeInput}
+          type="name"
+          name={'confirmCode'}
+          setError={handleError}
+        />
+        <Button
+          label={labels.okay}
+          flat="secondary"
+          bold
+          style={styles.button}
+          textStyles={styles.text}
+          onPress={confirmAuth}
+        />
+      </Modal>
     </View>
   );
 };
