@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {FlatList, View, Animated, useWindowDimensions} from 'react-native';
 import labels from '../../assets/labels';
 import Button from '../../components/button';
@@ -42,6 +42,7 @@ const AccountOnBoarding = ({navigation}) => {
   const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef(null);
+  const [goToIndex, setGoToIndex] = useState(null);
 
   const {width} = useWindowDimensions();
 
@@ -50,6 +51,11 @@ const AccountOnBoarding = ({navigation}) => {
   ).current;
 
   const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current;
+
+  useEffect(() => {
+    setGoToIndex(flatListRef.current);
+    return () => {};
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
@@ -101,7 +107,7 @@ const AccountOnBoarding = ({navigation}) => {
           renderItem={({item}) => (
             <RenderOnBoardingItem
               {...item}
-              goToIndex={flatListRef.current}
+              goToIndex={goToIndex}
               navigation={navigation}
               key={({key}) => key}
             />

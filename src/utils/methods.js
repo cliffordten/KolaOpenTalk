@@ -1,21 +1,29 @@
-import {ToastAndroid} from 'react-native';
+import {ToastAndroid, Platform, AlertIOS} from 'react-native';
 
 export const showShortToast = message => {
-  ToastAndroid.showWithGravityAndOffset(
-    message,
-    ToastAndroid.SHORT,
-    ToastAndroid.BOTTOM,
-    25,
-    50,
-  );
+  if (Platform.OS === 'android') {
+    ToastAndroid.showWithGravityAndOffset(
+      message,
+      ToastAndroid.SHORT,
+      ToastAndroid.BOTTOM,
+      25,
+      50,
+    );
+  } else {
+    AlertIOS.alert(message);
+  }
 };
 
 export const showLongToast = message => {
-  ToastAndroid.showWithGravityAndOffset(
-    message,
-    ToastAndroid.LONG,
-    ToastAndroid.BOTTOM,
-    25,
-    50,
-  );
+  if (Platform.OS === 'android') {
+    ToastAndroid.showWithGravityAndOffset(
+      message,
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      25,
+      50,
+    );
+  } else {
+    AlertIOS.alert(message);
+  }
 };

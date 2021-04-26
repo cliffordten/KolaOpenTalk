@@ -7,26 +7,64 @@ import ImagePicker from '../../views/imagePicker';
 import Input from '../../components/input';
 import Title from '../../components/title';
 import styles from './styles';
-import {useForm, FormProvider} from 'react-hook-form';
+import {useForm} from '../../utils/hooks';
+import {showShortToast} from '../../utils/methods';
 
 const Signup = ({goToIndex}) => {
   const [url, setUrl] = useState(null);
-  const formMethods = useForm({
-    defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    },
-  });
-
-  const onSubmit = model => {
-    console.log('form submitted', model, url);
-    // goToIndex.scrollToIndex({animated: true, index: 1})
+  const [isError, setIsError] = useState([]);
+  const formInit = {
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   };
+
+  const handleError = (name, error) => {
+    setIsError({...isError, [name]: error});
+  };
+
+  const isValidate = formData => {
+    const {password, confirmPassword} = formData;
+    console.log(isError);
+
+    if (isError.length === 0) {
+      showShortToast('Please fill the form to create an account');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      showShortToast('Password missmatch');
+      return;
+    }
+
+    if (!url) {
+      showShortToast('Profile Picture is required');
+      return;
+    }
+
+    if (Object.values(isError).includes(false)) {
+      showShortToast('Form contains invalid fields');
+      return;
+    }
+
+    return true;
+  };
+
+  const onSubmit = formData => {
+    // if (isValidate(formData)) {
+    //   formData.profilePic = url;
+
+    //   console.log(formData);
+    // }
+    goToIndex.scrollToIndex({animated: true, index: 1});
+  };
+
+  const {handleInputChange, handleSubmit} = useForm(formInit, onSubmit);
+
   return (
     <View style={styles.safeAreaView}>
-      <FormProvider {...formMethods} style={styles.container}>
+      <View style={styles.container}>
         <Title
           label={labels.signupText}
           style={styles.lgText}
@@ -40,28 +78,40 @@ const Signup = ({goToIndex}) => {
             placeholder={labels.nameText}
             type={'name'}
             name={'name'}
+            setError={handleError}
+            handleInputChange={handleInputChange}
             containerStyle={styles.input}
           />
-          <Input placeholder={labels.yourEmail} type={'email'} name={'email'} />
+          <Input
+            placeholder={labels.yourEmail}
+            handleInputChange={handleInputChange}
+            type={'email'}
+            name={'email'}
+            setError={handleError}
+          />
           <Input
             placeholder={labels.passwordText}
+            handleInputChange={handleInputChange}
             type="password"
             name={'password'}
+            setError={handleError}
           />
           <Input
             placeholder={labels.passwordConfirmText}
+            handleInputChange={handleInputChange}
             type="password"
             name={'confirmPassword'}
+            setError={handleError}
           />
         </View>
         <View style={styles.confirm}>
           <Button
             label={labels.confirmText}
             color={'secondary'}
-            onPress={() => formMethods.handleSubmit(onSubmit)}
+            onPress={handleSubmit}
           />
         </View>
-      </FormProvider>
+      </View>
     </View>
   );
 };

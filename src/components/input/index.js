@@ -5,9 +5,16 @@ import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {Colors, Fonts} from '../../config';
 import Ripple from 'react-native-material-ripple';
-import {useFormContext, Controller} from 'react-hook-form';
 
-const Input = ({style, placeholder, type, containerStyle, name}) => {
+const Input = ({
+  style,
+  placeholder,
+  type,
+  name,
+  containerStyle,
+  setError,
+  handleInputChange,
+}) => {
   const typePassword = type === 'password';
   const Icon = typePassword ? Entypo : Feather;
 
@@ -16,8 +23,6 @@ const Input = ({style, placeholder, type, containerStyle, name}) => {
   const [value, setValue] = useState(null);
   const [isValid, setIsValid] = useState(true);
   const [isError, setIsError] = useState(false);
-
-  const {control} = useFormContext();
 
   const labelStyle = {
     position: 'absolute',
@@ -54,15 +59,15 @@ const Input = ({style, placeholder, type, containerStyle, name}) => {
     setIsValid(true);
   };
 
-  const handleChange = (val, onChange) => {
-    onChange(val);
+  const handleChange = val => {
     setValue(val);
     validateField(val);
+    handleInputChange(name, val);
   };
 
-  const handleBlur = onBlur => {
-    onBlur();
+  const handleBlur = () => {
     setisFocused(false);
+    setError(name, isValid);
   };
 
   return (
@@ -70,26 +75,16 @@ const Input = ({style, placeholder, type, containerStyle, name}) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={[styles.container, containerStyle]}>
       <Text style={[labelStyle]}>{placeholder}</Text>
-
-      <Controller
-        control={control}
-        render={({onChange, onBlur, vals}) => (
-          <TextInput
-            style={[styles.input, color, !isValid && error, style]}
-            onFocus={() => setisFocused(true)}
-            onChangeText={val => handleChange(val, onChange)}
-            onBlur={() => handleBlur(onBlur)}
-            value={vals}
-            autoCompleteType={type}
-            secureTextEntry={typePassword ? !toggleEye : false}
-            selectionColor={Colors.secondary}
-          />
-        )}
-        name={name}
-        rules={{required: true}}
-        defaultValue=""
+      <TextInput
+        style={[styles.input, color, !isValid && error, style]}
+        onFocus={() => setisFocused(true)}
+        onChangeText={val => handleChange(val)}
+        onBlur={() => handleBlur()}
+        value={value}
+        autoCompleteType={type}
+        secureTextEntry={typePassword ? !toggleEye : false}
+        selectionColor={Colors.secondary}
       />
-
       <Ripple
         style={styles.icon}
         onPress={() => {
