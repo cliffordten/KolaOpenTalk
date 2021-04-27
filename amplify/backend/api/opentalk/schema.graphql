@@ -1,0 +1,66 @@
+type User @model {
+  id: ID!
+  name: String!
+  username: String!
+  email: String!
+  picture: String
+  followInfo: [FollowInfo] @connection(keyName: "byUser", fields: ["id"])
+  interest: [Interest] @connection(keyName: "byUser", fields: ["id"])
+}
+
+type FollowInfo @model @key(name: "byUser", fields: ["userID"]) {
+  id: ID!
+  isFollowed: Boolean!
+  isFollowing: Boolean!
+  userID: ID!
+  user: User! @connection(fields: ["userID"])
+}
+
+type Interest @model @key(name: "byUser", fields: ["userID"]) {
+  id: ID!
+  name: String!
+  profile: String!
+  userID: ID!
+}
+
+type Post @model @key(name: "byBlog", fields: ["userID"]) {
+  id: ID!
+  desc: String!
+  isRead: Boolean
+  isLiked: Boolean
+  nLikes: Int
+  postImage: String
+  time: String!
+  userID: ID!
+  user: User! @connection(fields: ["userID"])
+  comments: [ParentComment] @connection(keyName: "byPost", fields: ["id"])
+}
+
+type ParentComment @model @key(name: "byPost", fields: ["postID", "userID"]) {
+  id: ID!
+  content: String!
+  isRead: Boolean
+  isLiked: Boolean
+  nLikes: Int
+  commentImage: String
+  time: String!
+  postID: ID!
+  userID: ID!
+  user: User! @connection(fields: ["userID"])
+  post: Post! @connection(fields: ["postID"])
+  comments: [ChildComment] @connection(keyName: "byChildComment", fields: ["id"])
+}
+
+type ChildComment @model @key(name: "byChildComment", fields: ["pCommentID", "userID"]) {
+  id: ID!
+  content: String!
+  isRead: Boolean
+  isLiked: Boolean
+  nLikes: Int
+  commentImage: String
+  time: String!
+  pCommentID: ID!
+  userID: ID!
+  user: User! @connection(fields: ["userID"])
+  pComment: Post! @connection(fields: ["pCommentID"])
+}
