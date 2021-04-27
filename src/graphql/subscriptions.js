@@ -15,6 +15,7 @@ export const onCreateUser = /* GraphQL */ `
           isFollowed
           isFollowing
           userID
+          userFollowingID
           createdAt
           updatedAt
         }
@@ -26,6 +27,7 @@ export const onCreateUser = /* GraphQL */ `
           name
           profile
           userID
+          categoryID
           createdAt
           updatedAt
         }
@@ -50,6 +52,7 @@ export const onUpdateUser = /* GraphQL */ `
           isFollowed
           isFollowing
           userID
+          userFollowingID
           createdAt
           updatedAt
         }
@@ -61,6 +64,7 @@ export const onUpdateUser = /* GraphQL */ `
           name
           profile
           userID
+          categoryID
           createdAt
           updatedAt
         }
@@ -85,6 +89,7 @@ export const onDeleteUser = /* GraphQL */ `
           isFollowed
           isFollowing
           userID
+          userFollowingID
           createdAt
           updatedAt
         }
@@ -96,6 +101,7 @@ export const onDeleteUser = /* GraphQL */ `
           name
           profile
           userID
+          categoryID
           createdAt
           updatedAt
         }
@@ -113,21 +119,7 @@ export const onCreateFollowInfo = /* GraphQL */ `
       isFollowed
       isFollowing
       userID
-      user {
-        id
-        name
-        username
-        email
-        picture
-        followInfo {
-          nextToken
-        }
-        interest {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      userFollowingID
       createdAt
       updatedAt
     }
@@ -140,21 +132,7 @@ export const onUpdateFollowInfo = /* GraphQL */ `
       isFollowed
       isFollowing
       userID
-      user {
-        id
-        name
-        username
-        email
-        picture
-        followInfo {
-          nextToken
-        }
-        interest {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      userFollowingID
       createdAt
       updatedAt
     }
@@ -167,21 +145,7 @@ export const onDeleteFollowInfo = /* GraphQL */ `
       isFollowed
       isFollowing
       userID
-      user {
-        id
-        name
-        username
-        email
-        picture
-        followInfo {
-          nextToken
-        }
-        interest {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      userFollowingID
       createdAt
       updatedAt
     }
@@ -194,6 +158,14 @@ export const onCreateInterest = /* GraphQL */ `
       name
       profile
       userID
+      categoryID
+      category {
+        id
+        name
+        profile
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -206,6 +178,14 @@ export const onUpdateInterest = /* GraphQL */ `
       name
       profile
       userID
+      categoryID
+      category {
+        id
+        name
+        profile
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -218,6 +198,47 @@ export const onDeleteInterest = /* GraphQL */ `
       name
       profile
       userID
+      categoryID
+      category {
+        id
+        name
+        profile
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateCategory = /* GraphQL */ `
+  subscription OnCreateCategory {
+    onCreateCategory {
+      id
+      name
+      profile
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateCategory = /* GraphQL */ `
+  subscription OnUpdateCategory {
+    onUpdateCategory {
+      id
+      name
+      profile
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteCategory = /* GraphQL */ `
+  subscription OnDeleteCategory {
+    onDeleteCategory {
+      id
+      name
+      profile
       createdAt
       updatedAt
     }

@@ -1,17 +1,21 @@
-import React, {useRef, useState, useEffect} from 'react';
-import {FlatList, View, Animated, useWindowDimensions} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+
+import {Animated, FlatList, useWindowDimensions, View} from 'react-native';
+
 import labels from '../../assets/labels';
 import Button from '../../components/button';
+import Icon from '../../components/icon';
 import Logo from '../../components/logo';
-import {Colors} from '../../config';
-import Signup from '../signup';
-import styles from './styles';
-import ScrollView from '../../views/scroll';
 import Pagination from '../../components/paginator';
+import {Colors} from '../../config';
+import storage from '../../utils/storage';
+import LinearGradient from '../../views/gradient';
+import ScrollView from '../../views/scroll';
 import ChooseCategory from '../chooseCategory';
 import FollowFriends from '../followFriends';
-import Icon from '../../components/icon';
-import LinearGradient from '../../views/gradient';
+import Signup from '../signup';
+import styles from './styles';
+import {showLongToast} from '../../utils/methods';
 
 const data = [
   {
@@ -57,6 +61,13 @@ const AccountOnBoarding = ({navigation}) => {
     return () => {};
   }, []);
 
+  const checkIsSignedup = () => {
+    if (!storage.readUserSignedup() && currentIndex > 0) {
+      goToIndex.scrollToIndex({animated: true, index: 0});
+      showLongToast('Please Create an account');
+    }
+  };
+
   return (
     <ScrollView style={styles.container}>
       <LinearGradient style={styles.gradient}>
@@ -77,7 +88,7 @@ const AccountOnBoarding = ({navigation}) => {
               flat="white"
               onPress={() => {
                 if (currentIndex === 1) {
-                  flatListRef.current.scrollToIndex({animated: true, index: 2});
+                  goToIndex.scrollToIndex({animated: true, index: 2});
                 } else {
                   navigation.navigate('Home');
                 }
@@ -113,12 +124,12 @@ const AccountOnBoarding = ({navigation}) => {
             />
           )}
           keyExtractor={item => item.key}
-          onScroll={Animated.event(
-            [{nativeEvent: {contentOffset: {x: scrollX}}}],
-            {
+          onScroll={
+            (Animated.event([{nativeEvent: {contentOffset: {x: scrollX}}}], {
               useNativeDriver: false,
-            },
-          )}
+            }),
+            checkIsSignedup())
+          }
           getItemLayout={(_, index) => ({
             length: width,
             offset: width * index,

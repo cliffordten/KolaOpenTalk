@@ -15,6 +15,7 @@ export const getUser = /* GraphQL */ `
           isFollowed
           isFollowing
           userID
+          userFollowingID
           createdAt
           updatedAt
         }
@@ -26,6 +27,7 @@ export const getUser = /* GraphQL */ `
           name
           profile
           userID
+          categoryID
           createdAt
           updatedAt
         }
@@ -69,21 +71,7 @@ export const getFollowInfo = /* GraphQL */ `
       isFollowed
       isFollowing
       userID
-      user {
-        id
-        name
-        username
-        email
-        picture
-        followInfo {
-          nextToken
-        }
-        interest {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      userFollowingID
       createdAt
       updatedAt
     }
@@ -101,15 +89,7 @@ export const listFollowInfos = /* GraphQL */ `
         isFollowed
         isFollowing
         userID
-        user {
-          id
-          name
-          username
-          email
-          picture
-          createdAt
-          updatedAt
-        }
+        userFollowingID
         createdAt
         updatedAt
       }
@@ -124,6 +104,14 @@ export const getInterest = /* GraphQL */ `
       name
       profile
       userID
+      categoryID
+      category {
+        id
+        name
+        profile
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -141,6 +129,43 @@ export const listInterests = /* GraphQL */ `
         name
         profile
         userID
+        categoryID
+        category {
+          id
+          name
+          profile
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getCategory = /* GraphQL */ `
+  query GetCategory($id: ID!) {
+    getCategory(id: $id) {
+      id
+      name
+      profile
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listCategorys = /* GraphQL */ `
+  query ListCategorys(
+    $filter: ModelCategoryFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCategorys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        profile
         createdAt
         updatedAt
       }

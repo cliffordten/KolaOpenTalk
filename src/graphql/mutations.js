@@ -18,6 +18,7 @@ export const createUser = /* GraphQL */ `
           isFollowed
           isFollowing
           userID
+          userFollowingID
           createdAt
           updatedAt
         }
@@ -29,6 +30,7 @@ export const createUser = /* GraphQL */ `
           name
           profile
           userID
+          categoryID
           createdAt
           updatedAt
         }
@@ -56,6 +58,7 @@ export const updateUser = /* GraphQL */ `
           isFollowed
           isFollowing
           userID
+          userFollowingID
           createdAt
           updatedAt
         }
@@ -67,6 +70,7 @@ export const updateUser = /* GraphQL */ `
           name
           profile
           userID
+          categoryID
           createdAt
           updatedAt
         }
@@ -94,6 +98,7 @@ export const deleteUser = /* GraphQL */ `
           isFollowed
           isFollowing
           userID
+          userFollowingID
           createdAt
           updatedAt
         }
@@ -105,6 +110,7 @@ export const deleteUser = /* GraphQL */ `
           name
           profile
           userID
+          categoryID
           createdAt
           updatedAt
         }
@@ -125,21 +131,7 @@ export const createFollowInfo = /* GraphQL */ `
       isFollowed
       isFollowing
       userID
-      user {
-        id
-        name
-        username
-        email
-        picture
-        followInfo {
-          nextToken
-        }
-        interest {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      userFollowingID
       createdAt
       updatedAt
     }
@@ -155,21 +147,7 @@ export const updateFollowInfo = /* GraphQL */ `
       isFollowed
       isFollowing
       userID
-      user {
-        id
-        name
-        username
-        email
-        picture
-        followInfo {
-          nextToken
-        }
-        interest {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      userFollowingID
       createdAt
       updatedAt
     }
@@ -185,21 +163,7 @@ export const deleteFollowInfo = /* GraphQL */ `
       isFollowed
       isFollowing
       userID
-      user {
-        id
-        name
-        username
-        email
-        picture
-        followInfo {
-          nextToken
-        }
-        interest {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      userFollowingID
       createdAt
       updatedAt
     }
@@ -215,6 +179,14 @@ export const createInterest = /* GraphQL */ `
       name
       profile
       userID
+      categoryID
+      category {
+        id
+        name
+        profile
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -230,6 +202,14 @@ export const updateInterest = /* GraphQL */ `
       name
       profile
       userID
+      categoryID
+      category {
+        id
+        name
+        profile
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -245,6 +225,56 @@ export const deleteInterest = /* GraphQL */ `
       name
       profile
       userID
+      categoryID
+      category {
+        id
+        name
+        profile
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createCategory = /* GraphQL */ `
+  mutation CreateCategory(
+    $input: CreateCategoryInput!
+    $condition: ModelCategoryConditionInput
+  ) {
+    createCategory(input: $input, condition: $condition) {
+      id
+      name
+      profile
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateCategory = /* GraphQL */ `
+  mutation UpdateCategory(
+    $input: UpdateCategoryInput!
+    $condition: ModelCategoryConditionInput
+  ) {
+    updateCategory(input: $input, condition: $condition) {
+      id
+      name
+      profile
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteCategory = /* GraphQL */ `
+  mutation DeleteCategory(
+    $input: DeleteCategoryInput!
+    $condition: ModelCategoryConditionInput
+  ) {
+    deleteCategory(input: $input, condition: $condition) {
+      id
+      name
+      profile
       createdAt
       updatedAt
     }

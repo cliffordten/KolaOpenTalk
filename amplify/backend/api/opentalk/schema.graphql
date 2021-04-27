@@ -8,12 +8,12 @@ type User @model {
   interest: [Interest] @connection(keyName: "byUser", fields: ["id"])
 }
 
-type FollowInfo @model @key(name: "byUser", fields: ["userID"]) {
+type FollowInfo @model @key(name: "byUser", fields: ["userID", "userFollowingID"]) {
   id: ID!
   isFollowed: Boolean!
   isFollowing: Boolean!
   userID: ID!
-  user: User! @connection(fields: ["userID"])
+  userFollowingID: ID
 }
 
 type Interest @model @key(name: "byUser", fields: ["userID"]) {
@@ -21,6 +21,14 @@ type Interest @model @key(name: "byUser", fields: ["userID"]) {
   name: String!
   profile: String!
   userID: ID!
+  categoryID: ID!
+  category: Category  @connection(fields: ["categoryID"])
+}
+
+type Category @model{
+  id: ID!
+  name: String!
+  profile: String!
 }
 
 type Post @model @key(name: "byBlog", fields: ["userID"]) {

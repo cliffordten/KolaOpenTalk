@@ -1,12 +1,14 @@
 import React from 'react';
+
 // import PropTypes from 'prop-types';
 import {View} from 'react-native';
+
 import labels from '../../assets/labels';
 import Button from '../../components/button';
 import Icon from '../../components/icon';
-import SelectImageCatergory from '../../views/selectImageCatergory';
 import Title from '../../components/title';
 import {Colors} from '../../config';
+import SelectImageCatergory from '../../views/selectImageCatergory';
 import styles from './styles';
 
 const ChooseCategory = ({goToIndex}) => {
