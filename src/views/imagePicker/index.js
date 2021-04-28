@@ -10,9 +10,15 @@ import Button from '../../components/button';
 import labels from '../../assets/labels';
 import {showShortToast} from '../../utils/methods';
 
-const ImagePicker = ({style, external, setImageExternalUrl}) => {
+const ImagePicker = ({style, external, setImageExternalUrl, setPath}) => {
   const ref = useRef();
   const [imageUrl, setImageUrl] = useState(null);
+
+  const makeBlob = async img => {
+    const photoResponse = await fetch(img);
+
+    return await photoResponse.blob();
+  };
 
   const openPicker = async () => {
     try {
@@ -24,9 +30,11 @@ const ImagePicker = ({style, external, setImageExternalUrl}) => {
       });
 
       setImageUrl(path);
-      setImageExternalUrl(path);
-    } catch (error) {
+      setPath(path);
+      setImageExternalUrl(await makeBlob(path));
+    } catch ({code, message}) {
       showShortToast('Image was not picked');
+      console.log('open pick', code, message);
     }
     ref.current.close();
   };
@@ -42,9 +50,11 @@ const ImagePicker = ({style, external, setImageExternalUrl}) => {
       });
 
       setImageUrl(path);
-      setImageExternalUrl(path);
-    } catch (error) {
+      setPath(path);
+      setImageExternalUrl(await makeBlob(path));
+    } catch ({code, message}) {
       showShortToast('Image was not picked');
+      console.log('open Camera', code, message);
     }
     ref.current.close();
   };

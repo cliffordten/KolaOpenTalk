@@ -11,12 +11,17 @@ import styles from './styles';
 import {useForm} from '../../utils/hooks';
 import {showLongToast, showShortToast} from '../../utils/methods';
 import {Auth} from 'aws-amplify';
+import {createUserAccount} from '../../utils/graphql/mutations';
+import storage from '../../utils/storage';
+import Loader from '../../components/loader';
 
 const Signup = ({goToIndex}) => {
-  const [url, setUrl] = useState(null);
+  const [photo, setphoto] = useState(null);
   const [isError, setIsError] = useState([]);
   const [confirmCode, setCode] = useState(null);
   const [conEmail, setConEmail] = useState(null);
+  const [path, setPath] = useState(null);
+  const [load, setLoad] = useState(false);
   const ref = useRef();
   const formInit = {
     name: '',
@@ -47,8 +52,8 @@ const Signup = ({goToIndex}) => {
       return;
     }
 
-    if (!url) {
-      showShortToast('Profile Picture is required');
+    if (!photo || !path) {
+      showShortToast('Profile photo is required');
       return;
     }
 
@@ -61,7 +66,11 @@ const Signup = ({goToIndex}) => {
   };
 
   const onSubmit = async formData => {
+    const {
+      _data: {name: fileName},
+    } = photo;
     if (isValidate(formData)) {
+      setLoad(true);
       const {password, email, name} = formData;
       try {
         const {user} = await Auth.signUp({
@@ -70,19 +79,29 @@ const Signup = ({goToIndex}) => {
           password,
           attributes: {
             name,
-            profile: url,
+            profile: fileName,
           },
         });
         if (user) {
           setConEmail(email);
+          createUserAccount(
+            email,
+            fileName,
+            email.split('@')[0],
+            name,
+            photo,
+            path,
+          );
           showLongToast('A comfirmation code was sent to your email');
+          setLoad(false);
           ref.current.open();
         }
       } catch ({code, message}) {
         if (code === 'UsernameExistsException') {
+          setLoad(false);
           showLongToast(message);
         }
-        console.log(code, 'msg', message);
+        console.log('onSubmit', code, 'msg', message);
       }
     }
   };
@@ -94,14 +113,26 @@ const Signup = ({goToIndex}) => {
   };
 
   const confirmAuth = async () => {
+    setLoad(true);
+    if (!confirmCode) {
+      setLoad(false);
+      showLongToast('Please Confirm your Account');
+      return;
+    }
     if (confirmCode && conEmail) {
       try {
         await Auth.confirmSignUp(conEmail, confirmCode);
         console.log('successully signed up!');
+        storage.setUserSignedup(true);
         ref.current.close();
+        setLoad(false);
         goToIndex.scrollToIndex({animated: true, index: 1});
-      } catch (err) {
-        console.log('error confirming signing up: ', err);
+      } catch ({code, message}) {
+        if (code === 'CodeMismatchException') {
+          setLoad(false);
+          showLongToast(message);
+        }
+        console.log('confirmAuth ', code, message);
       }
     }
   };
@@ -116,7 +147,7 @@ const Signup = ({goToIndex}) => {
           large
           bold
         />
-        <ImagePicker setImageExternalUrl={setUrl} />
+        <ImagePicker setImageExternalUrl={setphoto} setPath={setPath} />
         <View style={styles.inputContainer}>
           <Input
             placeholder={labels.nameText}
@@ -156,7 +187,13 @@ const Signup = ({goToIndex}) => {
           />
         </View>
       </View>
-      <Modal style={[styles.modal]} position={'center'} coverScreen ref={ref}>
+      <Modal
+        style={[styles.modal]}
+        position={'center'}
+        coverScreen
+        ref={ref}
+        backdropPressToClose={false}
+        swipeToClose={false}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{labels.confirmationRequired}</Text>
         </View>
@@ -176,6 +213,7 @@ const Signup = ({goToIndex}) => {
           onPress={confirmAuth}
         />
       </Modal>
+      {load && <Loader />}
     </View>
   );
 };
