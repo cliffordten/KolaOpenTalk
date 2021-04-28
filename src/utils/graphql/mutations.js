@@ -1,7 +1,8 @@
-import {Auth, API, graphqlOperation} from 'aws-amplify';
+import {API, graphqlOperation} from 'aws-amplify';
 
-import {createUser} from '../../graphql/mutations';
+import {createUser, createInterest} from '../../graphql/mutations';
 import {uploadImage} from '../methods';
+import storage from '../storage';
 
 export const createUserAccount = async (
   email,
@@ -29,7 +30,11 @@ export const createUserAccount = async (
     if (status !== 201) {
       console.log('Failed to upload image to S3', response);
     }
-    const result = await API.graphql(
+    const {
+      data: {
+        createUser: {id},
+      },
+    } = await API.graphql(
       graphqlOperation(createUser, {
         input: {
           email,
@@ -40,8 +45,22 @@ export const createUserAccount = async (
       }),
     );
 
-    console.log(result);
+    storage.setUserId(id);
   } catch (error) {
     console.log('createuser', error);
+  }
+};
+
+export const createUserInterest = async (categoryID, name, profile) => {
+  try {
+    const result = await API.graphql(
+      graphqlOperation(createInterest, {
+        input: {categoryID, name, profile, userID: storage.readUserId()},
+      }),
+    );
+
+    console.log(result ? 'Sucess' : false);
+  } catch (error) {
+    console.log('createUserInterest', error);
   }
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 // import PropTypes from 'prop-types';
 import {View} from 'react-native';
@@ -10,8 +10,56 @@ import Title from '../../components/title';
 import {Colors} from '../../config';
 import SelectImageCatergory from '../../views/selectImageCatergory';
 import styles from './styles';
+import {listCategories} from '../../utils/graphql/query';
+import Loader from '../../components/loader';
+import {createUserInterest} from '../../utils/graphql/mutations';
 
 const ChooseCategory = ({goToIndex}) => {
+  const [data, setData] = useState([]);
+  const [next, setNext] = useState(null);
+  const [load, setLoad] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const {items, nextToken} = await listCategories();
+      setData(items);
+      setNext(nextToken);
+    };
+    fetch();
+    return () => {};
+  }, []);
+
+  const loadMore = async () => {
+    setLoad(true);
+    const {items, nextToken} = await listCategories(next);
+    setData([...data, ...items]);
+    setNext(nextToken);
+    setLoad(false);
+  };
+
+  const getSelected = (isSelected, selection) => {
+    if (selection) {
+      if (isSelected) {
+        setCategories([...categories, selection]);
+      } else {
+        const filter = categories.filter(obj => obj.name !== selection.name);
+        setCategories(filter);
+      }
+    }
+  };
+
+  const saveSelection = () => {
+    if (categories.length > 0) {
+      setLoad(true);
+      categories.forEach(({categoryID, name, profile}) => {
+        createUserInterest(categoryID, name, profile);
+      });
+      setLoad(false);
+      goToIndex.scrollToIndex({animated: true, index: 2});
+    }
+  };
+
   return (
     <View style={styles.safeAreaView}>
       <View style={styles.container}>
@@ -26,18 +74,14 @@ const ChooseCategory = ({goToIndex}) => {
           />
         </View>
         <View style={styles.inputContainer}>
-          <SelectImageCatergory />
+          <SelectImageCatergory data={data} onPress={getSelected} />
         </View>
         <View style={styles.confirm}>
-          <Button
-            label={labels.seeMore}
-            color={'default'}
-            onPress={() => console.log('object')}
-          />
+          <Button label={labels.seeMore} color={'default'} onPress={loadMore} />
           <Button
             label={labels.nextStep}
             color={'secondary'}
-            onPress={() => goToIndex.scrollToIndex({animated: true, index: 2})}
+            onPress={saveSelection}
             icon={
               <Icon
                 name="greater-than"
@@ -49,6 +93,7 @@ const ChooseCategory = ({goToIndex}) => {
           />
         </View>
       </View>
+      {load && <Loader />}
     </View>
   );
 };
