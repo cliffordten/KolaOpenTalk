@@ -1,6 +1,7 @@
 import {API, graphqlOperation} from 'aws-amplify';
 
 import {listCategorys, listUsers, getUser} from '../../graphql/queries';
+import storage from '../storage';
 
 export const listCategories = async (nextToken = null) => {
   try {
@@ -39,7 +40,7 @@ export const listUserFollow = async () => {
   }
 };
 
-export const getUserInfo = async id => {
+export const getUserInfo = async (id = storage.readUserId()) => {
   try {
     const {
       data: {getUser: list},

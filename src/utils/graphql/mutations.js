@@ -8,6 +8,11 @@ import {
 } from '../../graphql/mutations';
 import {uploadImage} from '../methods';
 import storage from '../storage';
+import {getUserInfo} from './query';
+
+const getUserId = () => {
+  return storage.readUserId();
+};
 
 export const createUserAccount = async (
   email,
@@ -94,19 +99,109 @@ export const createUserFollows = async (
   }
 };
 
-export const updateUserFollows = async (id, isFollowed = true) => {
+export const updateUserFollows = async (
+  id,
+  following = null,
+  isFollowed = true,
+) => {
   try {
-    const result = await API.graphql(
-      graphqlOperation(updateFollowInfo, {
-        input: {
-          id,
-          isFollowed,
-        },
-      }),
-    );
+    if (following) {
+      await API.graphql(
+        graphqlOperation(updateFollowInfo, {
+          input: {
+            id,
+            following,
+          },
+        }),
+      );
+    } else {
+      await API.graphql(
+        graphqlOperation(updateFollowInfo, {
+          input: {
+            id,
+            isFollowed,
+          },
+        }),
+      );
+    }
 
-    console.log(result ? 'Sucess' : false);
+    console.log('Sucess');
   } catch (error) {
     console.log('updateFollowInfo', error);
+  }
+};
+
+export const followUser = async id => {
+  const {followInfo: userFollowInfo} = await getUserInfo(getUserId());
+  let updated = 0;
+
+  if (userFollowInfo) {
+    const {items: userItems} = userFollowInfo;
+    userItems.forEach(({id: _id, userFollowingID}) => {
+      if (userFollowingID === id) {
+        updateUserFollows(_id, true);
+        updated = updated + 1;
+      }
+    });
+    const {followInfo} = await getUserInfo(id);
+    let check = 0;
+
+    if (followInfo) {
+      const {items} = followInfo;
+
+      items.forEach(({id: _id, userFollowingID}) => {
+        if (userFollowingID === getUserId()) {
+          updateUserFollows(_id);
+          check = check + 1;
+        }
+      });
+    }
+    if (check === 0) {
+      createUserFollows(getUserId(), false, true, id);
+    }
+  }
+
+  if (updated === 0) {
+    createUserFollows(id);
+    const {followInfo} = await getUserInfo(id);
+    let check = 0;
+
+    if (followInfo) {
+      const {items} = followInfo;
+
+      items.forEach(({id: _id, userFollowingID}) => {
+        if (userFollowingID === getUserId()) {
+          updateUserFollows(_id);
+          check = check + 1;
+        }
+      });
+    }
+    if (check === 0) {
+      createUserFollows(getUserId(), false, true, id);
+    }
+  }
+};
+
+export const unFollowUser = async id => {
+  const {followInfo: userFollowInfo} = await getUserInfo(getUserId());
+
+  if (userFollowInfo) {
+    const {items: userItems} = userFollowInfo;
+    userItems.forEach(({id: _id, userFollowingID}) => {
+      if (userFollowingID === id) {
+        updateUserFollows(_id, false);
+      }
+    });
+    const {followInfo} = await getUserInfo(id);
+
+    if (followInfo) {
+      const {items} = followInfo;
+
+      items.forEach(({id: _id, userFollowingID}) => {
+        if (userFollowingID === getUserId()) {
+          updateUserFollows(_id, null, false);
+        }
+      });
+    }
   }
 };
