@@ -25,14 +25,13 @@ const Keyboard = () => {
   const [show, setShow] = useState(false);
 
   const onClick = emoji => {
-    console.log(emoji);
     if (value.length <= 100) {
       setValue(prev => prev + emoji?.code);
     }
   };
 
   const handleChange = val => {
-    if (value.length <= 100) {
+    if (val.length <= 100) {
       setValue(val);
     }
   };

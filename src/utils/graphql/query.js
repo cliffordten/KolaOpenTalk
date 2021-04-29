@@ -3,8 +3,15 @@ import {API, graphqlOperation} from 'aws-amplify';
 import {listCategorys, listUsers, getUser} from '../../graphql/queries';
 import storage from '../storage';
 
-export const listCategories = async (nextToken = null) => {
+export const listCategories = async (nextToken = null, noLimit = false) => {
   try {
+    if (noLimit) {
+      const {
+        data: {listCategorys: list},
+      } = await API.graphql(graphqlOperation(listCategorys));
+      return {...list};
+    }
+
     if (nextToken) {
       const {
         data: {listCategorys: list},

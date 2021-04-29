@@ -5,6 +5,7 @@ import {
   createInterest,
   createFollowInfo,
   updateFollowInfo,
+  createPost,
 } from '../../graphql/mutations';
 import {uploadImage} from '../methods';
 import storage from '../storage';
@@ -23,23 +24,13 @@ export const createUserAccount = async (
   path,
 ) => {
   try {
-    const response = await uploadImage(
+    const location = await uploadImage(
       'profile/',
       path,
       picture,
       blob._data.type,
     );
 
-    const {
-      status,
-      body: {
-        postResponse: {location},
-      },
-    } = response;
-
-    if (status !== 201) {
-      console.log('Failed to upload image to S3', response);
-    }
     const {
       data: {
         createUser: {id},
@@ -203,5 +194,42 @@ export const unFollowUser = async id => {
         }
       });
     }
+  }
+};
+
+export const createUserPost = async (
+  desc,
+  interest,
+  blob,
+  path,
+  time,
+  userID = storage.readUserId(),
+) => {
+  try {
+    const postImage = blob
+      ? await uploadImage(
+          'postImages/',
+          path,
+          blob?._data?.name,
+          blob?._data?.type,
+        )
+      : null;
+
+    const result = await API.graphql(
+      graphqlOperation(createPost, {
+        input: {
+          desc,
+          interest,
+          postImage,
+          time,
+          userID,
+        },
+      }),
+    );
+
+    console.log(result ? 'Sucess' : false);
+    return true;
+  } catch (error) {
+    console.log('createUserPost', error);
   }
 };

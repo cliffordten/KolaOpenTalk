@@ -1,6 +1,7 @@
 import {ToastAndroid, Platform, AlertIOS} from 'react-native';
 import awsmobile from '../aws-exports';
 import {RNS3} from 'react-native-aws3';
+import moment from 'moment';
 
 export const showShortToast = message => {
   if (Platform.OS === 'android') {
@@ -45,5 +46,27 @@ export const uploadImage = async (folder, uri, name, type) => {
     secretKey: awsmobile.aws_user_secretekey,
     successActionStatus: 201,
   };
-  return RNS3.put(file, options);
+
+  const response = await RNS3.put(file, options);
+
+  const {
+    status,
+    body: {
+      postResponse: {location},
+    },
+  } = response;
+
+  if (status !== 201) {
+    console.log('Failed to upload image to S3', response);
+  }
+
+  return location;
+};
+
+export const getCurrentTime = () => {
+  return moment().startOf(moment().format()).fromNow(true);
+};
+
+export const getFomatedTime = time => {
+  return moment().startOf(time).fromNow(true);
 };

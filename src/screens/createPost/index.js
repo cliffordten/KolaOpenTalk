@@ -19,23 +19,28 @@ import ScrollView from '../../views/scroll';
 import {Picker} from '@react-native-picker/picker';
 import {Colors} from '../../config';
 import Icon from '../../components/icon';
+import {listCategories} from '../../utils/graphql/query';
+import {createUserPost} from '../../utils/graphql/mutations';
+import {getCurrentTime, showShortToast} from '../../utils/methods';
+import Loader from '../../components/loader';
 
-const CreatePost = ({goToIndex}) => {
+const CreatePost = ({navigation}) => {
   const [value, setValue] = useState('');
   const [blob, setBlob] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [show, setShow] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(labels.category);
+  const [selectedInterest, setSelectedInterest] = useState(null);
+  const [category, setCategory] = useState([]);
+  const [load, setLoad] = useState(false);
 
   const onClick = emoji => {
-    console.log(emoji);
-    if (value.length <= 300) {
+    if (value.length < 300) {
       setValue(prev => prev + emoji?.code);
     }
   };
 
   const handleChange = val => {
-    if (value.length <= 300) {
+    if (val.length < 300) {
       setValue(val);
     }
   };
@@ -45,11 +50,39 @@ const CreatePost = ({goToIndex}) => {
   };
 
   useEffect(() => {
+    const fetch = async () => {
+      const {items} = await listCategories(null, true);
+      setCategory(items);
+    };
+    fetch();
+
     RNKeyboard.addListener('keyboardDidShow', keyboardDidShow);
     return () => {
       RNKeyboard.removeListener('keyboardDidShow', keyboardDidShow);
     };
   }, []);
+
+  const createPost = async () => {
+    if (selectedInterest && value) {
+      setLoad(true);
+      const res = await createUserPost(
+        value,
+        selectedInterest,
+        blob,
+        imageUrl,
+        getCurrentTime(),
+      );
+      if (res) {
+        setTimeout(() => {
+          setLoad(false);
+          navigation.navigate('Home');
+          showShortToast('Successfuly Created post');
+        }, 2000);
+      }
+    } else {
+      showShortToast('Make sure you selected a category and written something');
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -59,13 +92,15 @@ const CreatePost = ({goToIndex}) => {
         <View style={styles.container}>
           <View style={styles.wrapper}>
             <Picker
-              selectedValue={selectedValue}
+              selectedValue={selectedInterest}
               style={styles.picker}
               onValueChange={(itemValue, itemIndex) =>
-                setSelectedValue(itemValue)
+                setSelectedInterest(itemValue)
               }>
-              <Picker.Item label={labels.category} value="java" />
-              <Picker.Item label="JavaScript" value="js" />
+              <Picker.Item label={labels.category} value="" />
+              {category?.map(({name, id}) => (
+                <Picker.Item label={name} value={name} key={id} />
+              ))}
             </Picker>
             <View style={styles.inputContainer}>
               <TextInput
@@ -122,11 +157,10 @@ const CreatePost = ({goToIndex}) => {
             <Button
               label={labels.postText}
               color={'secondary'}
-              onPress={() =>
-                goToIndex.scrollToIndex({animated: true, index: 1})
-              }
+              onPress={createPost}
             />
           </View>
+          {load && <Loader />}
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

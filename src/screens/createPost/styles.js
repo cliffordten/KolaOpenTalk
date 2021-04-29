@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   text: {
     position: 'absolute',
     right: 20,
-    bottom: 15,
+    bottom: 5,
     color: Colors.secondaryLightBorder,
   },
   img: {
