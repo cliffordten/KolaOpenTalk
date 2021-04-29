@@ -8,10 +8,13 @@ import Title from '../../components/title';
 import {Colors} from '../../config';
 import SelectFollows from '../../views/selectFollows';
 import styles from './styles';
-import {listUserFollow} from '../../utils/graphql/query';
+import {listUserFollow, getUserInfo} from '../../utils/graphql/query';
 import Loader from '../../components/loader';
 import storage from '../../utils/storage';
-import {createUserFollows} from '../../utils/graphql/mutations';
+import {
+  createUserFollows,
+  updateUserFollows,
+} from '../../utils/graphql/mutations';
 
 const FollowFriends = ({navigation}) => {
   const [data, setData] = useState(null);
@@ -41,13 +44,25 @@ const FollowFriends = ({navigation}) => {
   const saveFollowing = () => {
     if (following.length > 0) {
       setLoad(true);
-      following.forEach(id => {
+      const userID = storage.readUserId();
+      following.forEach(async id => {
         createUserFollows(id);
+        const {followInfo} = await getUserInfo(id);
+
+        if (followInfo) {
+          const {items} = followInfo;
+
+          items.forEach(({id: _id, userFollowingID}) => {
+            if (userFollowingID === userID) {
+              updateUserFollows(_id);
+            }
+          });
+        } else {
+          createUserFollows(userID, false, true, id);
+        }
       });
-      setTimeout(() => {
-        navigation.navigate('Home');
-        setLoad(false);
-      }, 2000);
+      navigation.navigate('Home');
+      setLoad(false);
     }
 
     storage.setonBoardComplete(true);

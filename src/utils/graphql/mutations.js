@@ -4,6 +4,7 @@ import {
   createUser,
   createInterest,
   createFollowInfo,
+  updateFollowInfo,
 } from '../../graphql/mutations';
 import {uploadImage} from '../methods';
 import storage from '../storage';
@@ -73,6 +74,7 @@ export const createUserFollows = async (
   userFollowingID,
   isFollowing = true,
   isFollowed = false,
+  userID = storage.readUserId(),
 ) => {
   try {
     const result = await API.graphql(
@@ -81,7 +83,7 @@ export const createUserFollows = async (
           isFollowed,
           isFollowing,
           userFollowingID,
-          userID: storage.readUserId(),
+          userID,
         },
       }),
     );
@@ -89,5 +91,22 @@ export const createUserFollows = async (
     console.log(result ? 'Sucess' : false);
   } catch (error) {
     console.log('createUserFollows', error);
+  }
+};
+
+export const updateUserFollows = async (id, isFollowed = true) => {
+  try {
+    const result = await API.graphql(
+      graphqlOperation(updateFollowInfo, {
+        input: {
+          id,
+          isFollowed,
+        },
+      }),
+    );
+
+    console.log(result ? 'Sucess' : false);
+  } catch (error) {
+    console.log('updateFollowInfo', error);
   }
 };
