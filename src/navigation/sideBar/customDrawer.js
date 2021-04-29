@@ -4,9 +4,13 @@ import Text from '../../components/text';
 import LinearGradient from '../../views/gradient';
 import styles from './styles';
 import {getUserInfoFollower} from '../../utils/graphql/query';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import storage from '../../utils/storage';
+import Loader from '../../components/loader';
 
-const CustomDrawer = () => {
+const CustomDrawer = ({navigation}) => {
   const [user, setUser] = useState(null);
+  const [load, setLoad] = useState(false);
   useEffect(() => {
     const fetch = async () => {
       const data = await getUserInfoFollower();
@@ -16,8 +20,18 @@ const CustomDrawer = () => {
     fetch();
     return () => {};
   }, []);
+
+  const logout = () => {
+    setLoad(true);
+    storage.setUserisLogedOut(true);
+    storage.setUserSignedup(false);
+    setTimeout(() => {
+      setLoad(false);
+      navigation.navigate('Login');
+    }, 2000);
+  };
   return (
-    <View>
+    <View style={styles.cont}>
       <LinearGradient style={styles.drawerWrapper}>
         <View style={styles.imageWrapper}>
           <Image source={{uri: user?.picture}} style={styles.image} />
@@ -40,6 +54,10 @@ const CustomDrawer = () => {
           />
         </View>
       </LinearGradient>
+      <TouchableOpacity onPress={logout} style={styles.btn}>
+        <Text label={'Logout'} style={[styles.text, styles.btnText]} />
+      </TouchableOpacity>
+      {load && <Loader />}
     </View>
   );
 };

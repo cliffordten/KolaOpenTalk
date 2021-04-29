@@ -23,7 +23,9 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 15,
   },
-
+  cont: {
+    flex: 1,
+  },
   // styles concerning the drawer
 
   drawerWrapper: {
@@ -56,6 +58,14 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginBottom: 10,
     marginRight: 20,
+  },
+  btn: {
+    marginTop: 20,
+    padding: 10,
+    paddingLeft: 15,
+  },
+  btnText: {
+    color: Colors.secondary,
   },
 });
 

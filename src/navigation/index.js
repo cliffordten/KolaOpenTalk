@@ -10,6 +10,7 @@ import Talk from '../screens/talk';
 import Header from '../views/header';
 import labels from '../assets/labels';
 import CreatePost from '../screens/createPost';
+import storage from '../utils/storage';
 
 const Stack = createStackNavigator();
 
@@ -20,7 +21,13 @@ const AppNavigation = () => {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="Onboard">
+        initialRouteName={
+          storage.readUserisLogedOut()
+            ? 'Login'
+            : storage.readonBoardComplete() && storage.readUserId()
+            ? 'Home'
+            : 'Onboard'
+        }>
         <Stack.Screen name="Onboard" component={Onboard} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="AccountOnboarding" component={AccountOnBoarding} />
