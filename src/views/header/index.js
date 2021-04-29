@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 // import PropTypes from 'prop-types';
 import {Image, Text} from 'react-native';
 import styles from './styles';
@@ -7,12 +7,11 @@ import {Colors} from '../../config';
 import LinearGradient from '../gradient';
 import Ripple from 'react-native-material-ripple';
 import SearchBar from '../../components/search';
-
-const uri =
-  'https://media.istockphoto.com/photos/happy-boy-on-the-zipline-picture-id594481094?s=612x612';
+import {getUserInfoFollower} from '../../utils/graphql/query';
 
 const Header = ({isHome, scene, isSearch, noImage}) => {
   const {options, navigation} = scene.descriptor;
+  const [user, setUser] = useState(null);
 
   const title =
     options.headerTitle !== undefined
@@ -20,6 +19,16 @@ const Header = ({isHome, scene, isSearch, noImage}) => {
       : options.title !== undefined
       ? options.title
       : scene.route.name;
+
+  useEffect(() => {
+    const fetch = async () => {
+      const data = await getUserInfoFollower();
+      setUser(data);
+    };
+
+    fetch();
+    return () => {};
+  }, []);
 
   return (
     <LinearGradient style={noImage ? styles.noImage : styles.gradient}>
@@ -42,7 +51,7 @@ const Header = ({isHome, scene, isSearch, noImage}) => {
       {!isSearch ? <Text style={styles.text}>{title}</Text> : <SearchBar />}
       {!noImage ? (
         <Ripple>
-          <Image source={{uri}} style={styles.image} />
+          <Image source={{uri: user?.picture}} style={styles.image} />
         </Ripple>
       ) : null}
     </LinearGradient>
