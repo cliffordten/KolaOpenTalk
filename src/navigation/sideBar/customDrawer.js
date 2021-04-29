@@ -1,29 +1,43 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, View} from 'react-native';
 import Text from '../../components/text';
 import LinearGradient from '../../views/gradient';
 import styles from './styles';
-
-const uri =
-  'https://media.istockphoto.com/photos/happy-boy-on-the-zipline-picture-id594481094?s=612x612';
+import {getUserInfoFollower} from '../../utils/graphql/query';
 
 const CustomDrawer = () => {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const fetch = async () => {
+      const data = await getUserInfoFollower();
+      setUser(data);
+    };
+
+    fetch();
+    return () => {};
+  }, []);
   return (
     <View>
       <LinearGradient style={styles.drawerWrapper}>
         <View style={styles.imageWrapper}>
-          <Image source={{uri}} style={styles.image} />
+          <Image source={{uri: user?.picture}} style={styles.image} />
           <View>
-            <Text label={'Teneng Clifford'} style={styles.text} />
+            <Text label={user?.name} style={styles.text} />
             <Text
-              label={`@${'cliffordten'}`}
+              label={`@${user?.username}`}
               style={[styles.text, styles.username]}
             />
           </View>
         </View>
         <View style={[styles.imageWrapper, styles.textWrapper]}>
-          <Text label={'22 Following'} style={styles.text} />
-          <Text label={'444 Followers'} style={[styles.text, styles.left]} />
+          <Text
+            label={user?.following?.length + ' Following'}
+            style={styles.text}
+          />
+          <Text
+            label={user?.followers?.length + ' Followers'}
+            style={[styles.text, styles.left]}
+          />
         </View>
       </LinearGradient>
     </View>

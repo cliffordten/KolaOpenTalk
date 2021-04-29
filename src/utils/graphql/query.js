@@ -50,3 +50,15 @@ export const getUserInfo = async (id = storage.readUserId()) => {
     console.log('listCategory', code, message);
   }
 };
+
+export const getUserInfoFollower = async () => {
+  const {
+    followInfo: {items},
+    ...rest
+  } = await getUserInfo();
+
+  const followers = items.filter(({isFollowed}) => isFollowed === true);
+  const following = items.filter(({isFollowing}) => isFollowing === true);
+
+  return {followers, following, ...rest};
+};
