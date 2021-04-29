@@ -64,7 +64,7 @@ export const uploadImage = async (folder, uri, name, type) => {
 };
 
 export const getCurrentTime = () => {
-  return moment().startOf(moment().format()).fromNow(true);
+  return moment().format();
 };
 
 export const getFomatedTime = time => {

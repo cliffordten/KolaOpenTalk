@@ -3,12 +3,12 @@ import {ActivityIndicator} from 'react-native';
 import styles from './styles';
 import {Colors} from '../../config';
 
-const Loader = () => {
+const Loader = ({nofloat, small}) => {
   return (
     <ActivityIndicator
-      size="large"
+      size={small ? 'small' : 'large'}
       color={Colors.secondary}
-      style={styles.loader}
+      style={!nofloat && styles.loader}
     />
   );
 };

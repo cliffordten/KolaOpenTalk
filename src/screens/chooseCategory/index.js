@@ -13,6 +13,7 @@ import styles from './styles';
 import {listCategories} from '../../utils/graphql/query';
 import Loader from '../../components/loader';
 import {createUserInterest} from '../../utils/graphql/mutations';
+import {showShortToast} from '../../utils/methods';
 
 const ChooseCategory = ({goToIndex}) => {
   const [data, setData] = useState([]);
@@ -31,11 +32,15 @@ const ChooseCategory = ({goToIndex}) => {
   }, []);
 
   const loadMore = async () => {
-    setLoad(true);
-    const {items, nextToken} = await listCategories(next);
-    setData([...data, ...items]);
-    setNext(nextToken);
-    setLoad(false);
+    if (next) {
+      setLoad(true);
+      const {items, nextToken} = await listCategories(next);
+      setData([...data, ...items]);
+      setNext(nextToken);
+      setLoad(false);
+    } else {
+      showShortToast('End of list');
+    }
   };
 
   const getSelected = (isSelected, selection) => {
