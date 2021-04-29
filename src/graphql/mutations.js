@@ -288,7 +288,7 @@ export const createPost = /* GraphQL */ `
     createPost(input: $input, condition: $condition) {
       id
       desc
-      isRead
+      isUserLikedID
       isLiked
       nLikes
       postImage
@@ -339,7 +339,7 @@ export const updatePost = /* GraphQL */ `
     updatePost(input: $input, condition: $condition) {
       id
       desc
-      isRead
+      isUserLikedID
       isLiked
       nLikes
       postImage
@@ -390,7 +390,7 @@ export const deletePost = /* GraphQL */ `
     deletePost(input: $input, condition: $condition) {
       id
       desc
-      isRead
+      isUserLikedID
       isLiked
       nLikes
       postImage
@@ -466,7 +466,7 @@ export const createParentComment = /* GraphQL */ `
       post {
         id
         desc
-        isRead
+        isUserLikedID
         isLiked
         nLikes
         postImage
@@ -542,7 +542,7 @@ export const updateParentComment = /* GraphQL */ `
       post {
         id
         desc
-        isRead
+        isUserLikedID
         isLiked
         nLikes
         postImage
@@ -618,7 +618,7 @@ export const deleteParentComment = /* GraphQL */ `
       post {
         id
         desc
-        isRead
+        isUserLikedID
         isLiked
         nLikes
         postImage
@@ -694,7 +694,7 @@ export const createChildComment = /* GraphQL */ `
       pComment {
         id
         desc
-        isRead
+        isUserLikedID
         isLiked
         nLikes
         postImage
@@ -754,7 +754,7 @@ export const updateChildComment = /* GraphQL */ `
       pComment {
         id
         desc
-        isRead
+        isUserLikedID
         isLiked
         nLikes
         postImage
@@ -814,7 +814,7 @@ export const deleteChildComment = /* GraphQL */ `
       pComment {
         id
         desc
-        isRead
+        isUserLikedID
         isLiked
         nLikes
         postImage

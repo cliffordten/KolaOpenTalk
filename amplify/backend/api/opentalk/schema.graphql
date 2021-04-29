@@ -34,7 +34,7 @@ type Category @model{
 type Post @model @key(name: "byBlog", fields: ["userID"]) {
   id: ID!
   desc: String!
-  isRead: Boolean
+  isUserLikedID: ID
   isLiked: Boolean
   nLikes: Int
   postImage: String

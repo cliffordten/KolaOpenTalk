@@ -68,5 +68,5 @@ export const getCurrentTime = () => {
 };
 
 export const getFomatedTime = time => {
-  return moment().startOf(time).fromNow(true);
+  return moment(time).fromNow(true);
 };

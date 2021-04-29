@@ -120,7 +120,15 @@ const RenderPost = ({
   );
 };
 
-const Posts = ({onPress, navigation, data, loadMore, load}) => {
+const Posts = ({
+  onPress,
+  navigation,
+  data,
+  loadMore,
+  load,
+  onRefresh,
+  reload,
+}) => {
   return (
     <View style={styles.flatContainer}>
       <FlatList
@@ -140,6 +148,8 @@ const Posts = ({onPress, navigation, data, loadMore, load}) => {
         contentContainerStyle={styles.pad}
         onEndReached={loadMore}
         loadMore={load}
+        reload={reload}
+        onRefresh={onRefresh}
       />
       <Ripple
         style={styles.floatingBtn}

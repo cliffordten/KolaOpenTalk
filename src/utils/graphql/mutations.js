@@ -233,3 +233,5 @@ export const createUserPost = async (
     console.log('createUserPost', error);
   }
 };
+
+export const likePost = (id, isliked) => {};

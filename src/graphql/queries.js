@@ -178,7 +178,7 @@ export const getPost = /* GraphQL */ `
     getPost(id: $id) {
       id
       desc
-      isRead
+      isUserLikedID
       isLiked
       nLikes
       postImage
@@ -231,7 +231,7 @@ export const listPosts = /* GraphQL */ `
       items {
         id
         desc
-        isRead
+        isUserLikedID
         isLiked
         nLikes
         postImage
@@ -287,7 +287,7 @@ export const getParentComment = /* GraphQL */ `
       post {
         id
         desc
-        isRead
+        isUserLikedID
         isLiked
         nLikes
         postImage
@@ -359,7 +359,7 @@ export const listParentComments = /* GraphQL */ `
         post {
           id
           desc
-          isRead
+          isUserLikedID
           isLiked
           nLikes
           postImage
@@ -409,7 +409,7 @@ export const getChildComment = /* GraphQL */ `
       pComment {
         id
         desc
-        isRead
+        isUserLikedID
         isLiked
         nLikes
         postImage
@@ -465,7 +465,7 @@ export const listChildComments = /* GraphQL */ `
         pComment {
           id
           desc
-          isRead
+          isUserLikedID
           isLiked
           nLikes
           postImage
