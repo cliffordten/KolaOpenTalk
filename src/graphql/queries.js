@@ -184,6 +184,7 @@ export const getPost = /* GraphQL */ `
       postImage
       time
       userID
+      interest
       user {
         id
         name
@@ -236,6 +237,7 @@ export const listPosts = /* GraphQL */ `
         postImage
         time
         userID
+        interest
         user {
           id
           name
@@ -291,6 +293,7 @@ export const getParentComment = /* GraphQL */ `
         postImage
         time
         userID
+        interest
         user {
           id
           name
@@ -362,6 +365,7 @@ export const listParentComments = /* GraphQL */ `
           postImage
           time
           userID
+          interest
           createdAt
           updatedAt
         }
@@ -411,6 +415,7 @@ export const getChildComment = /* GraphQL */ `
         postImage
         time
         userID
+        interest
         user {
           id
           name
@@ -466,6 +471,7 @@ export const listChildComments = /* GraphQL */ `
           postImage
           time
           userID
+          interest
           createdAt
           updatedAt
         }

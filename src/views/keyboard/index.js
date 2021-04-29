@@ -19,20 +19,21 @@ import ImagePicker from '../imagePicker';
 import ScrollView from '../scroll';
 
 const Keyboard = () => {
-  const [value, setValue] = useState(null);
-  const [count, setCount] = useState(0);
+  const [value, setValue] = useState('');
   const [imageUrl, setImageUrl] = useState(null);
+  const [blob, setBlob] = useState(null);
   const [show, setShow] = useState(false);
 
   const onClick = emoji => {
     console.log(emoji);
-    setValue(prev => prev + emoji?.code);
+    if (value.length <= 100) {
+      setValue(prev => prev + emoji?.code);
+    }
   };
 
   const handleChange = val => {
-    if (val.length <= 100) {
+    if (value.length <= 100) {
       setValue(val);
-      setCount(count + 1);
     }
   };
 
@@ -60,9 +61,10 @@ const Keyboard = () => {
               value={value}
               placeholder={labels.comment}
               placeholderTextColor={Colors.placeholder}
-              selectionColor={Colors.secondary}
+              selectionColor={Colors.secondaryLightBorder}
+              multiline
             />
-            <Text style={styles.text}>{`${count}/100`}</Text>
+            <Text style={styles.text}>{`${value.length}/100`}</Text>
           </View>
           <View style={styles.iconContainer}>
             <View style={styles.iconWrapper}>
@@ -78,7 +80,11 @@ const Keyboard = () => {
                   family={'Feather'}
                 />
               </Ripple>
-              <ImagePicker external setImageExternalUrl={setImageUrl} />
+              <ImagePicker
+                external
+                setImageExternalUrl={setBlob}
+                setPath={setImageUrl}
+              />
             </View>
             <View style={styles.btnContainer}>
               <Button

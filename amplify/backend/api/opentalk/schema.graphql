@@ -40,6 +40,7 @@ type Post @model @key(name: "byBlog", fields: ["userID"]) {
   postImage: String
   time: String!
   userID: ID!
+  interest: String!
   user: User! @connection(fields: ["userID"])
   comments: [ParentComment] @connection(keyName: "byPost", fields: ["id"])
 }

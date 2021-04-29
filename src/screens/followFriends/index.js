@@ -44,10 +44,12 @@ const FollowFriends = ({navigation}) => {
       following.forEach(async id => {
         followUser(id);
       });
-      navigation.navigate('Home');
-      setLoad(false);
+      setTimeout(() => {
+        setLoad(false);
+      }, 2000);
     }
 
+    navigation.navigate('Home');
     storage.setonBoardComplete(true);
   };
 

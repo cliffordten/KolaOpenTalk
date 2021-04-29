@@ -294,6 +294,7 @@ export const createPost = /* GraphQL */ `
       postImage
       time
       userID
+      interest
       user {
         id
         name
@@ -344,6 +345,7 @@ export const updatePost = /* GraphQL */ `
       postImage
       time
       userID
+      interest
       user {
         id
         name
@@ -394,6 +396,7 @@ export const deletePost = /* GraphQL */ `
       postImage
       time
       userID
+      interest
       user {
         id
         name
@@ -469,6 +472,7 @@ export const createParentComment = /* GraphQL */ `
         postImage
         time
         userID
+        interest
         user {
           id
           name
@@ -544,6 +548,7 @@ export const updateParentComment = /* GraphQL */ `
         postImage
         time
         userID
+        interest
         user {
           id
           name
@@ -619,6 +624,7 @@ export const deleteParentComment = /* GraphQL */ `
         postImage
         time
         userID
+        interest
         user {
           id
           name
@@ -694,6 +700,7 @@ export const createChildComment = /* GraphQL */ `
         postImage
         time
         userID
+        interest
         user {
           id
           name
@@ -753,6 +760,7 @@ export const updateChildComment = /* GraphQL */ `
         postImage
         time
         userID
+        interest
         user {
           id
           name
@@ -812,6 +820,7 @@ export const deleteChildComment = /* GraphQL */ `
         postImage
         time
         userID
+        interest
         user {
           id
           name

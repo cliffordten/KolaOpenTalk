@@ -1,30 +1,88 @@
 import {StyleSheet, Dimensions} from 'react-native';
-import {Fonts} from '../../config';
+import {Colors} from '../../config';
 
-const {height} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
+    justifyContent: 'center',
+  },
+  confirm: {
+    width: width * 0.92,
+    alignSelf: 'center',
+    marginTop: 20,
   },
   container: {
+    justifyContent: 'space-around',
+    height: height * 0.9,
+  },
+  btn: {
+    paddingVertical: 10,
+  },
+  iconWrapper: {
+    flexDirection: 'row',
+  },
+  iconContainer: {
+    flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: 20,
-    marginHorizontal: 20,
-    height: height * 0.62,
-    marginTop: 30,
+    paddingRight: 20,
+    paddingLeft: 10,
+    alignItems: 'center',
+  },
+  icon: {
+    padding: 10,
+  },
+  iconBtn: {
+    paddingLeft: 10,
   },
   input: {
-    marginTop: 0,
+    color: Colors.secondary,
+    borderBottomColor: Colors.placeholder,
+    borderBottomWidth: 0.5,
+    marginHorizontal: 20,
   },
-  fpContainer: {
-    paddingRight: 0,
+  inputContainer: {
+    position: 'relative',
   },
   text: {
-    fontSize: Fonts.text,
+    position: 'absolute',
+    right: 20,
+    bottom: 15,
+    color: Colors.secondaryLightBorder,
   },
-  lgText: {
+  img: {
+    width: width * 0.9,
+    height: height * 0.3,
     alignSelf: 'center',
+    marginBottom: 10,
+    borderRadius: 13,
+  },
+  wrapperPicker: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginLeft: 20,
+    marginTop: 15,
+    borderBottomColor: Colors.black,
+    borderBottomWidth: 0.5,
+  },
+  emoji: {
+    backgroundColor: Colors.secondaryLight,
+    position: 'absolute',
+  },
+  picker: {
+    height: 50,
+    width: width * 0.97,
+    alignSelf: 'center',
+  },
+  noImageContainer: {
+    height: height * 0.3,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noImage: {
+    color: Colors.secondaryLightBorder,
   },
 });
 

@@ -5,9 +5,11 @@ export default {
   loginTitle: 'Login',
   signIn: 'Sign In',
   signupText: 'Create Account',
+  category: 'Select Category',
   signupTextAlt: 'Sign Up',
   hostText: 'Hosted by Kola',
   confirmText: 'Confirm',
+  postText: 'Post',
   emailText: 'Email',
   nameText: 'Name',
   passwordText: 'Your password',
@@ -37,4 +39,6 @@ export default {
     createPost: 'Create Post',
   },
   comment: 'Your Comment',
+  post: 'write something...',
+  NoImage: 'No Image Selected',
 };
