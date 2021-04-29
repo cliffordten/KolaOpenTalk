@@ -7,120 +7,12 @@ import Text from '../../components/text';
 import {Colors} from '../../config';
 import styles from './styles';
 
-const data = [
-  {
-    id: 0,
-    uri:
-      'https://www.filmibeat.com/ph-big/2019/07/ismart-shankar_156195627930.jpg',
-    name: 'Friend Name',
-    username: 'User Name',
-  },
-  {
-    id: 1,
-    uri:
-      'https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_960_720.jpg',
-    name: 'Friend Name',
-    username: 'User Name',
-  },
-  {
-    id: 2,
-    uri:
-      'https://media.istockphoto.com/photos/happy-boy-on-the-zipline-picture-id594481094?s=612x612',
-    name: 'Friend Name',
-    username: 'User Name',
-  },
-  {
-    id: 4,
-    uri:
-      'https://www.filmibeat.com/ph-big/2019/07/ismart-shankar_156195627930.jpg',
-    name: 'Friend Name',
-    username: 'User Name',
-  },
-  {
-    id: 5,
-    uri:
-      'https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_960_720.jpg',
-    name: 'Friend Name',
-    username: 'User Name',
-  },
-  {
-    id: 6,
-    uri:
-      'https://media.istockphoto.com/photos/happy-boy-on-the-zipline-picture-id594481094?s=612x612',
-    name: 'Friend Name',
-    username: 'User Name',
-  },
-  {
-    id: 8,
-    uri:
-      'https://www.filmibeat.com/ph-big/2019/07/ismart-shankar_156195627930.jpg',
-    name: 'Friend Name',
-    username: 'User Name',
-  },
-  {
-    id: 9,
-    uri:
-      'https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_960_720.jpg',
-    name: 'Friend Name',
-    username: 'User Name',
-  },
-  {
-    id: 10,
-    uri:
-      'https://media.istockphoto.com/photos/happy-boy-on-the-zipline-picture-id594481094?s=612x612',
-    name: 'Friend Name',
-    username: 'User Name',
-  },
-  {
-    id: 11,
-    uri:
-      'https://www.filmibeat.com/ph-big/2019/07/ismart-shankar_156195627930.jpg',
-    name: 'Friend Name',
-    username: 'User Name',
-  },
-  {
-    id: 12,
-    uri:
-      'https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_960_720.jpg',
-    name: 'Friend Name',
-    username: 'User Name',
-  },
-  {
-    id: 13,
-    uri:
-      'https://media.istockphoto.com/photos/happy-boy-on-the-zipline-picture-id594481094?s=612x612',
-    name: 'Friend Name',
-    username: 'User Name',
-  },
-  {
-    id: 14,
-    uri:
-      'https://www.filmibeat.com/ph-big/2019/07/ismart-shankar_156195627930.jpg',
-    name: 'Friend Name',
-    username: 'User Name',
-  },
-  {
-    id: 15,
-    uri:
-      'https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_960_720.jpg',
-    name: 'Friend Name',
-    username: 'User Name',
-  },
-  {
-    id: 16,
-    uri:
-      'https://media.istockphoto.com/photos/happy-boy-on-the-zipline-picture-id594481094?s=612x612',
-    name: 'Friend Name',
-    username: 'User Name',
-  },
-];
-
-const RenderFriends = ({uri, name, username, id, onPress}) => {
+const RenderFriends = ({picture, name, username, id, onPress}) => {
   const [isFollow, setIsFollow] = useState(false);
 
   const handleFollow = _id => {
     if (onPress) {
-      onPress(_id);
+      onPress(_id, !isFollow);
     }
     setIsFollow(!isFollow);
   };
@@ -135,7 +27,7 @@ const RenderFriends = ({uri, name, username, id, onPress}) => {
         />
       </TouchableOpacity>
       <View style={styles.infoContainer}>
-        <Image source={{uri}} style={styles.image} />
+        <Image source={{uri: picture}} style={styles.image} />
         <Text label={name} style={styles.text} />
         <Text
           label={`@${username.toLowerCase()}`}
@@ -155,7 +47,7 @@ const RenderFriends = ({uri, name, username, id, onPress}) => {
   );
 };
 
-const SelectFollows = ({onPress}) => {
+const SelectFollows = ({onPress, data}) => {
   return (
     <View style={styles.flatContainer}>
       <FlatList

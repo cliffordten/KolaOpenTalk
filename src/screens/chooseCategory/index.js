@@ -55,8 +55,8 @@ const ChooseCategory = ({goToIndex}) => {
       categories.forEach(({categoryID, name, profile}) => {
         createUserInterest(categoryID, name, profile);
       });
-      setLoad(false);
       goToIndex.scrollToIndex({animated: true, index: 2});
+      setLoad(false);
     }
   };
 

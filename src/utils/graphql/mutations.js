@@ -1,6 +1,10 @@
 import {API, graphqlOperation} from 'aws-amplify';
 
-import {createUser, createInterest} from '../../graphql/mutations';
+import {
+  createUser,
+  createInterest,
+  createFollowInfo,
+} from '../../graphql/mutations';
 import {uploadImage} from '../methods';
 import storage from '../storage';
 
@@ -62,5 +66,28 @@ export const createUserInterest = async (categoryID, name, profile) => {
     console.log(result ? 'Sucess' : false);
   } catch (error) {
     console.log('createUserInterest', error);
+  }
+};
+
+export const createUserFollows = async (
+  userFollowingID,
+  isFollowing = true,
+  isFollowed = false,
+) => {
+  try {
+    const result = await API.graphql(
+      graphqlOperation(createFollowInfo, {
+        input: {
+          isFollowed,
+          isFollowing,
+          userFollowingID,
+          userID: storage.readUserId(),
+        },
+      }),
+    );
+
+    console.log(result ? 'Sucess' : false);
+  } catch (error) {
+    console.log('createUserFollows', error);
   }
 };

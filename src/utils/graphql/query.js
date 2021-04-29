@@ -1,6 +1,6 @@
 import {API, graphqlOperation} from 'aws-amplify';
 
-import {listCategorys} from '../../graphql/queries';
+import {listCategorys, listUsers} from '../../graphql/queries';
 
 export const listCategories = async (nextToken = null) => {
   try {
@@ -22,6 +22,17 @@ export const listCategories = async (nextToken = null) => {
         limit: 12,
       }),
     );
+    return {...list};
+  } catch ({code, message}) {
+    console.log('listCategory', code, message);
+  }
+};
+
+export const listUserFollow = async () => {
+  try {
+    const {
+      data: {listUsers: list},
+    } = await API.graphql(graphqlOperation(listUsers));
     return {...list};
   } catch ({code, message}) {
     console.log('listCategory', code, message);

@@ -4,51 +4,72 @@ import * as Sentry from '@sentry/react-native';
 class Storage {
   signedUp = false;
   userId = null;
+  onBoardComplete = false;
 
   constructor() {
-    AsyncStorage.getItem('signedUp')
-      .then(value => {
-        if (value) {
-          this.signedUp = JSON.parse(value);
-        }
-      })
-      .catch(e => {
-        Sentry.captureException(e);
-      });
+    const func = async () => {
+      const val = await getItemFromStorage('signedUp');
 
-    AsyncStorage.getItem('userId')
-      .then(value => {
-        if (value) {
-          this.userId = JSON.parse(value);
-        }
-      })
-      .catch(e => {
-        Sentry.captureException(e);
-      });
+      if (val) {
+        this.signedUp = JSON.parse(val);
+      }
+    };
+
+    const func1 = async () => {
+      const val = await getItemFromStorage('userId');
+
+      if (val) {
+        this.userId = JSON.parse(val);
+      }
+    };
+
+    const func2 = async () => {
+      const val = await getItemFromStorage('onBoardComplete');
+
+      if (val) {
+        this.onBoardComplete = JSON.parse(val);
+      }
+    };
+
+    func();
+    func1();
+    func2();
   }
 
   readUserSignedup = () => this.signedUp;
   readUserId = () => this.userId;
+  readonBoardComplete = () => this.onBoardComplete;
+
+  setonBoardComplete = value => {
+    setItemFromStorage('onBoardComplete', JSON.stringify(value));
+    this.signedUp = value;
+  };
 
   setUserSignedup = value => {
-    try {
-      AsyncStorage.setItem('signedUp', JSON.stringify(value)).then(() => {
-        this.signedUp = value;
-      });
-    } catch (e) {
-      Sentry.captureException(e);
-    }
+    setItemFromStorage('signedUp', JSON.stringify(value));
+    this.signedUp = value;
   };
 
   setUserId = value => {
-    try {
-      AsyncStorage.setItem('userId', JSON.stringify(value)).then(() => {
-        this.userId = value;
-      });
-    } catch (e) {
-      Sentry.captureException(e);
-    }
+    setItemFromStorage('userId', JSON.stringify(value));
+    this.userId = value;
   };
 }
+
+const getItemFromStorage = async key => {
+  try {
+    return await AsyncStorage.getItem(key);
+  } catch (e) {
+    Sentry.captureException(e);
+  }
+};
+
+const setItemFromStorage = async (key, val) => {
+  try {
+    return await AsyncStorage.setItem(key, val);
+  } catch (e) {
+    Sentry.captureException(e);
+  }
+};
 
 export default new Storage();
