@@ -33,10 +33,13 @@ const Login = ({navigation}) => {
       storage.setUserisLogedOut(false);
       storage.setUserSignedup(false);
       storage.setUserId(id);
-      setLoad(false);
       navigation.navigate('Home');
+      setLoad(false);
     } catch ({code, message}) {
       if (code === 'InvalidParameterException') {
+        showShortToast('An error occured');
+      }
+      if (code === 'NotAuthorizedException') {
         showShortToast('Invalid Credentials');
       }
       console.log('onSubmit', code, 'msg', message);
