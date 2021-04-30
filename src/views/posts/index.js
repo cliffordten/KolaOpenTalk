@@ -28,19 +28,7 @@ const RenderPost = ({
     if (onPress) {
       onPress(_id);
     }
-    navigation.navigate('PostTalk', {
-      post: {
-        user,
-        id,
-        nComments,
-        nLikes,
-        time,
-        navigation,
-        isLiked,
-        postImage,
-        desc,
-      },
-    });
+    navigation.navigate('PostTalk', {_id});
   };
 
   return (
@@ -64,7 +52,7 @@ const RenderPost = ({
           <Button
             label={nComments}
             flat="placeholder"
-            onPress={() => console.log('object')}
+            onPress={() => handlePress(id)}
             style={styles.flatBtn}
             textStyles={styles.textBtn}
             icon={

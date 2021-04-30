@@ -12,7 +12,7 @@ const ScrollView = ({children, height, style, ...rest}) => {
   const [screenHeight, setScreenHeight] = useState(height);
 
   useEffect(() => {
-    setScrollEnabled(contentHeight > screenHeight);
+    setScrollEnabled(contentHeight - 200 > screenHeight);
 
     const _handleDimensionChange = e => {
       const {height: H} = e.window;

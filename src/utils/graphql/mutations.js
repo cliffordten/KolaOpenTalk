@@ -6,10 +6,12 @@ import {
   createFollowInfo,
   updateFollowInfo,
   createPost,
+  createParentComment,
 } from '../../graphql/mutations';
 import {uploadImage} from '../methods';
 import storage from '../storage';
 import {getUserInfo} from './query';
+import {getPost} from '../../graphql/queries';
 
 const getUserId = () => {
   return storage.readUserId();
@@ -234,4 +236,60 @@ export const createUserPost = async (
   }
 };
 
-export const likePost = (id, isliked) => {};
+export const likePost = async (id, isliked) => {};
+
+export const getClickedPost = async id => {
+  try {
+    const {
+      data: {getPost: list},
+    } = await API.graphql(
+      graphqlOperation(getPost, {
+        id,
+      }),
+    );
+
+    console.log('Sucess');
+
+    return list;
+  } catch (error) {
+    console.log('getClickedPost', error);
+  }
+};
+export const createUComment = async (
+  content,
+  path,
+  blob,
+  time,
+  postID,
+  userID = storage.readUserId(),
+) => {
+  try {
+    const commentImage = blob
+      ? await uploadImage(
+          'commentImage/',
+          path,
+          blob?._data?.name,
+          blob?._data?.type,
+        )
+      : null;
+
+    const {
+      data: {createParentComment: list},
+    } = await API.graphql(
+      graphqlOperation(createParentComment, {
+        input: {
+          content,
+          postID,
+          commentImage,
+          time,
+          userID,
+        },
+      }),
+    );
+
+    console.log(list ? 'Sucess' : false);
+    return list;
+  } catch (error) {
+    console.log('createUserPost', error);
+  }
+};

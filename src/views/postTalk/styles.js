@@ -10,9 +10,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: 10,
     position: 'relative',
+    flex: 1,
   },
   pad: {
-    paddingBottom: 35,
+    paddingBottom: 150,
   },
   content: {
     paddingBottom: height * 0.2,

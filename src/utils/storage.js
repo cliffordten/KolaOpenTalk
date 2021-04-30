@@ -5,6 +5,7 @@ class Storage {
   signedUp = false;
   userId = null;
   onBoardComplete = false;
+  isLogedOut = false;
 
   constructor() {
     const func = async () => {
@@ -31,23 +32,38 @@ class Storage {
       }
     };
 
+    const func3 = async () => {
+      const val = await getItemFromStorage('isLogedOut');
+
+      if (val) {
+        this.isLogedOut = JSON.parse(val);
+      }
+    };
+
     func();
     func1();
     func2();
+    func3();
   }
 
+  readUserisLogedOut = () => this.isLogedOut;
   readUserSignedup = () => this.signedUp;
   readUserId = () => this.userId;
   readonBoardComplete = () => this.onBoardComplete;
 
   setonBoardComplete = value => {
     setItemFromStorage('onBoardComplete', JSON.stringify(value));
-    this.signedUp = value;
+    this.onBoardComplete = value;
   };
 
   setUserSignedup = value => {
     setItemFromStorage('signedUp', JSON.stringify(value));
     this.signedUp = value;
+  };
+
+  setUserisLogedOut = value => {
+    setItemFromStorage('isLogedOut', JSON.stringify(value));
+    this.isLogedOut = value;
   };
 
   setUserId = value => {

@@ -5,6 +5,7 @@ import {
   listUsers,
   getUser,
   listPosts,
+  listParentComments,
 } from '../../graphql/queries';
 import storage from '../storage';
 
@@ -114,5 +115,42 @@ export const listAllPosts = async (nextToken = null, noLimit = false) => {
     return {...list};
   } catch ({code, message}) {
     console.log('listPosts', code, message);
+  }
+};
+
+export const listComments = async (id, nextToken = null, noLimit = false) => {
+  try {
+    if (noLimit) {
+      const {
+        data: {listParentComments: list},
+      } = await API.graphql(
+        graphqlOperation(listParentComments, {filter: {postID: {eq: id}}}),
+      );
+      return {...list};
+    }
+
+    if (nextToken) {
+      const {
+        data: {listParentComments: list},
+      } = await API.graphql(
+        graphqlOperation(listParentComments, {
+          filter: {postID: {eq: id}},
+          limit: 6,
+          nextToken,
+        }),
+      );
+      return {...list};
+    }
+    const {
+      data: {listParentComments: list},
+    } = await API.graphql(
+      graphqlOperation(listParentComments, {
+        limit: 6,
+        filter: {postID: {eq: id}},
+      }),
+    );
+    return {...list};
+  } catch ({code, message}) {
+    console.log('listParentComments', code, message);
   }
 };

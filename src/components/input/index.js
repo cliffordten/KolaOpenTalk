@@ -67,7 +67,9 @@ const Input = ({
 
   const handleBlur = () => {
     setisFocused(false);
-    setError(name, isValid);
+    if (setError) {
+      setError(name, isValid);
+    }
   };
 
   return (

@@ -17,8 +17,9 @@ import Button from '../../components/button';
 import EmojiBoard from 'react-native-emoji-board';
 import ImagePicker from '../imagePicker';
 import ScrollView from '../scroll';
+import {getCurrentTime} from '../../utils/methods';
 
-const Keyboard = () => {
+const Keyboard = ({createUserComment}) => {
   const [value, setValue] = useState('');
   const [imageUrl, setImageUrl] = useState(null);
   const [blob, setBlob] = useState(null);
@@ -38,6 +39,21 @@ const Keyboard = () => {
 
   const keyboardDidShow = () => {
     setShow(false);
+  };
+
+  const createComment = async () => {
+    const res = await createUserComment(
+      value,
+      imageUrl,
+      blob,
+      getCurrentTime(),
+    );
+    if (res) {
+      setValue('');
+      setImageUrl(null);
+      setBlob(null);
+      setShow(false);
+    }
   };
 
   useEffect(() => {
@@ -90,7 +106,7 @@ const Keyboard = () => {
                 label={labels.navTitle.talk}
                 color={'secondary'}
                 style={styles.btn}
-                onPress={() => console.log('object')}
+                onPress={createComment}
                 icon={
                   <Icon
                     name={'send'}

@@ -6,267 +6,32 @@ import Text from '../../components/text';
 import {Colors} from '../../config';
 import Keyboard from '../keyboard';
 import styles from './styles';
-
-const data = [
-  {
-    id: 0,
-    profile:
-      'https://www.filmibeat.com/ph-big/2019/07/ismart-shankar_156195627930.jpg',
-    name: 'Teneng Clifford',
-    username: 'cliffordten',
-    nComments: 43,
-    nLikes: 60,
-    time: '30 mins',
-    isRead: false,
-    isLiked: false,
-    postImage: null,
-    description:
-      'This is a Description of a very very long post which could be read in more than an hour time but most of the people who love reading such as Giselle and sister can handle the reading of this text in just some few minutes',
-  },
-  {
-    id: 1,
-    profile:
-      'https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_960_720.jpg',
-    name: 'Teneng Clifford',
-    username: 'cliffordten',
-    nComments: 43,
-    nLikes: 60,
-    time: '30 mins',
-    isRead: false,
-    isLiked: false,
-    postImage: null,
-    description:
-      'This is a Description of a very very long post which could be read in more than an hour time but most of the people who love reading such as Giselle and sister can handle the reading of this text in just some few minutes',
-  },
-  {
-    id: 2,
-    profile:
-      'https://media.istockphoto.com/photos/happy-boy-on-the-zipline-picture-id594481094?s=612x612',
-    name: 'Teneng Clifford',
-    username: 'cliffordten',
-    nComments: 43,
-    nLikes: 60,
-    time: '30 mins',
-    isRead: false,
-    isLiked: false,
-    postImage:
-      'https://www.filmibeat.com/ph-big/2019/07/ismart-shankar_156195627930.jpg',
-    description:
-      'This is a Description of a very very long post which could be read in more than an hour time but most of the people who love reading such as Giselle and sister can handle the reading of this text in just some few minutes',
-  },
-  {
-    id: 4,
-    profile:
-      'https://www.filmibeat.com/ph-big/2019/07/ismart-shankar_156195627930.jpg',
-    name: 'Teneng Clifford',
-    username: 'cliffordten',
-    nComments: 43,
-    nLikes: 60,
-    time: '30 mins',
-    isRead: false,
-    isLiked: false,
-    postImage:
-      'https://www.filmibeat.com/ph-big/2019/07/ismart-shankar_156195627930.jpg',
-    description:
-      'This is a Description of a very very long post which could be read in more than an hour time but most of the people who love reading such as Giselle and sister can handle the reading of this text in just some few minutes',
-  },
-  {
-    id: 5,
-    profile:
-      'https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_960_720.jpg',
-    name: 'Teneng Clifford',
-    username: 'cliffordten',
-    nComments: 43,
-    nLikes: 60,
-    time: '30 mins',
-    isRead: true,
-    isLiked: false,
-    postImage: null,
-    description:
-      'This is a Description of a very very long post which could be read in more than an hour time but most of the people who love reading such as Giselle and sister can handle the reading of this text in just some few minutes',
-  },
-  {
-    id: 6,
-    profile:
-      'https://media.istockphoto.com/photos/happy-boy-on-the-zipline-picture-id594481094?s=612x612',
-    name: 'Teneng Clifford',
-    username: 'cliffordten',
-    nComments: 43,
-    nLikes: 60,
-    time: '30 mins',
-    isRead: false,
-    isLiked: false,
-    postImage: null,
-    description:
-      'This is a Description of a very very long post which could be read in more than an hour time but most of the people who love reading such as Giselle and sister can handle the reading of this text in just some few minutes',
-  },
-  {
-    id: 8,
-    profile:
-      'https://www.filmibeat.com/ph-big/2019/07/ismart-shankar_156195627930.jpg',
-    name: 'Teneng Clifford',
-    username: 'cliffordten',
-    nComments: 43,
-    nLikes: 60,
-    time: '30 mins',
-    isRead: false,
-    isLiked: false,
-    postImage:
-      'https://www.filmibeat.com/ph-big/2019/07/ismart-shankar_156195627930.jpg',
-    description:
-      'This is a Description of a very very long post which could be read in more than an hour time but most of the people who love reading such as Giselle and sister can handle the reading of this text in just some few minutes',
-  },
-  {
-    id: 9,
-    profile:
-      'https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_960_720.jpg',
-    name: 'Teneng Clifford',
-    username: 'cliffordten',
-    nComments: 43,
-    nLikes: 60,
-    time: '30 mins',
-    isRead: false,
-    isLiked: true,
-    postImage:
-      'https://www.filmibeat.com/ph-big/2019/07/ismart-shankar_156195627930.jpg',
-    description:
-      'This is a Description of a very very long post which could be read in more than an hour time but most of the people who love reading such as Giselle and sister can handle the reading of this text in just some few minutes',
-  },
-  {
-    id: 10,
-    profile:
-      'https://media.istockphoto.com/photos/happy-boy-on-the-zipline-picture-id594481094?s=612x612',
-    name: 'Teneng Clifford',
-    username: 'cliffordten',
-    nComments: 43,
-    nLikes: 60,
-    time: '30 mins',
-    isRead: true,
-    isLiked: false,
-    postImage: null,
-    description:
-      'This is a Description of a very very long post which could be read in more than an hour time but most of the people who love reading such as Giselle and sister can handle the reading of this text in just some few minutes',
-  },
-  {
-    id: 11,
-    profile:
-      'https://www.filmibeat.com/ph-big/2019/07/ismart-shankar_156195627930.jpg',
-    name: 'Teneng Clifford',
-    username: 'cliffordten',
-    nComments: 43,
-    nLikes: 60,
-    time: '30 mins',
-    isRead: false,
-    isLiked: false,
-    postImage: null,
-    description:
-      'This is a Description of a very very long post which could be read in more than an hour time but most of the people who love reading such as Giselle and sister can handle the reading of this text in just some few minutes',
-  },
-  {
-    id: 12,
-    profile:
-      'https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_960_720.jpg',
-    name: 'Teneng Clifford',
-    username: 'cliffordten',
-    nComments: 43,
-    nLikes: 60,
-    time: '30 mins',
-    isRead: false,
-    isLiked: true,
-    postImage:
-      'https://www.filmibeat.com/ph-big/2019/07/ismart-shankar_156195627930.jpg',
-    description:
-      'This is a Description of a very very long post which could be read in more than an hour time but most of the people who love reading such as Giselle and sister can handle the reading of this text in just some few minutes',
-  },
-  {
-    id: 13,
-    profile:
-      'https://media.istockphoto.com/photos/happy-boy-on-the-zipline-picture-id594481094?s=612x612',
-    name: 'Teneng Clifford',
-    username: 'cliffordten',
-    nComments: 43,
-    nLikes: 60,
-    time: '30 mins',
-    isRead: true,
-    isLiked: false,
-    postImage: null,
-    description:
-      'This is a Description of a very very long post which could be read in more than an hour time but most of the people who love reading such as Giselle and sister can handle the reading of this text in just some few minutes',
-  },
-  {
-    id: 14,
-    profile:
-      'https://www.filmibeat.com/ph-big/2019/07/ismart-shankar_156195627930.jpg',
-    name: 'Teneng Clifford',
-    username: 'cliffordten',
-    nComments: 43,
-    nLikes: 60,
-    time: '30 mins',
-    isRead: true,
-    isLiked: false,
-    postImage: null,
-    description:
-      'This is a Description of a very very long post which could be read in more than an hour time but most of the people who love reading such as Giselle and sister can handle the reading of this text in just some few minutes',
-  },
-  {
-    id: 15,
-    profile:
-      'https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_960_720.jpg',
-    name: 'Teneng Clifford',
-    username: 'cliffordten',
-    nComments: 43,
-    nLikes: 60,
-    time: '30 mins',
-    isRead: false,
-    isLiked: false,
-    postImage: null,
-    description:
-      'This is a Description of a very very long post which could be read in more than an hour time but most of the people who love reading such as Giselle and sister can handle the reading of this text in just some few minutes',
-  },
-  {
-    id: 7,
-    profile:
-      'https://media.istockphoto.com/photos/happy-boy-on-the-zipline-picture-id594481094?s=612x612',
-    name: 'Tenenafadfasdfg Clifadfadfadfaford',
-    username: 'clifforadfafasdfdten',
-    nComments: 43,
-    nLikes: 60,
-    time: '30 mins',
-    isRead: false,
-    isLiked: false,
-    postImage:
-      'https://www.filmibeat.com/ph-big/2019/07/ismart-shankar_156195627930.jpg',
-    description:
-      'This is a Description of a very very long post which could be read in more than an hour time but most of the people who love reading such as Giselle and sister can handle the reading of this text in just some few minutes',
-  },
-];
+import {getFomatedTime} from '../../utils/methods';
 
 const RenderPostTalk = ({
-  profile,
-  name,
-  username,
+  user,
   nComments,
   nLikes,
   time,
   isLiked,
   postImage,
-  description,
+  content,
 }) => {
   const [isCommentLiked, setIsCommentLiked] = useState(isLiked);
   const [nPostLikes, setNPostLikes] = useState(nLikes);
 
   return (
     <View style={styles.postContainer}>
-      <Image source={{uri: profile}} style={styles.imageProfile} />
+      <Image source={{uri: user?.picture}} style={styles.imageProfile} />
       <View style={styles.infoContainer}>
         <View style={styles.textContainer}>
-          <Text label={name} style={styles.text} />
+          <Text label={user?.name} style={styles.text} />
           <Text
-            label={`@${username.toLowerCase()}`}
+            label={`@${user?.username?.toLowerCase()}`}
             style={[styles.text, styles.username]}
           />
           <Button
-            label={time}
+            label={getFomatedTime(time)}
             flat="placeholder"
             onPress={() => console.log('object')}
             style={styles.flatBtn}
@@ -282,7 +47,7 @@ const RenderPostTalk = ({
             left
           />
         </View>
-        <Text label={description} style={styles.normal} lines={3} />
+        <Text label={content} style={styles.normal} lines={3} />
         {postImage && (
           <Image source={{uri: postImage}} style={styles.imagePost} />
         )}
@@ -331,17 +96,7 @@ const RenderPostTalk = ({
 };
 
 const RenderPostHeader = ({headerData}) => {
-  const {
-    profile,
-    name,
-    username,
-    nComments,
-    nLikes,
-    time,
-    isLiked,
-    postImage,
-    description,
-  } = headerData;
+  const {user, nComments, nLikes, time, isLiked, postImage, desc} = headerData;
 
   const [isCommentLiked, setIsCommentLiked] = useState(isLiked);
   const [nPostLikes, setNPostLikes] = useState(nLikes);
@@ -349,18 +104,18 @@ const RenderPostHeader = ({headerData}) => {
   return (
     <View style={styles.postHeaderContainer}>
       <View style={styles.imgContainer}>
-        <Image source={{uri: profile}} style={styles.imageProfile} />
+        <Image source={{uri: user?.picture}} style={styles.imageProfile} />
         <View style={styles.textHeaderContainer}>
-          <Text label={name} style={styles.text} />
+          <Text label={user?.name} style={styles.text} />
           <Text
-            label={`@${username?.toLowerCase()}`}
+            label={`@${user?.username?.toLowerCase()}`}
             style={[styles.text, styles.username]}
           />
         </View>
       </View>
       <View style={styles.infoHeaderContainer}>
         <Text
-          label={description}
+          label={desc}
           style={[styles.normal, styles.headerText]}
           lines={3}
         />
@@ -409,7 +164,7 @@ const RenderPostHeader = ({headerData}) => {
               left
             />
             <Button
-              label={time}
+              label={getFomatedTime(time)}
               flat="placeholder"
               onPress={() => console.log('object')}
               style={styles.flatBtn}
@@ -431,14 +186,12 @@ const RenderPostHeader = ({headerData}) => {
   );
 };
 
-const PostTalk = ({onPress, navigation, route}) => {
+const PostTalk = ({onPress, navigation, data, post, createUserComment}) => {
   return (
     <View style={styles.flatContainer}>
       <FlatList
         data={data}
-        ListHeaderComponent={() => (
-          <RenderPostHeader headerData={route?.params?.post} />
-        )}
+        ListHeaderComponent={() => <RenderPostHeader headerData={post} />}
         renderItem={({item}) => (
           <RenderPostTalk
             {...item}
@@ -453,7 +206,7 @@ const PostTalk = ({onPress, navigation, route}) => {
         bounces={false}
         contentContainerStyle={styles.pad}
       />
-      <Keyboard />
+      <Keyboard createUserComment={createUserComment} />
     </View>
   );
 };
