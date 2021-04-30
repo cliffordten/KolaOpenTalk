@@ -10,8 +10,6 @@ import styles from './styles';
 const RenderFriends = ({followInfo, picture, name, username, id, onPress}) => {
   const [isFollow, setIsFollow] = useState(false);
 
-  console.log(followInfo);
-
   const handleFollow = _id => {
     if (onPress) {
       onPress(_id, !isFollow);

@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useEffect} from 'react';
+import RNBootSplash from 'react-native-bootsplash';
 import {
   Keyboard,
   StatusBar,
@@ -12,6 +13,12 @@ import AppNavigation from './src/navigation';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 const App = () => {
+  useEffect(() => {
+    setTimeout(() => {
+      RNBootSplash.hide({fade: true});
+    }, 2000);
+    return () => {};
+  }, []);
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaProvider>
