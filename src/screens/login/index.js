@@ -14,6 +14,7 @@ import {Auth} from 'aws-amplify';
 import {showShortToast} from '../../utils/methods';
 import Loader from '../../components/loader';
 import storage from '../../utils/storage';
+import {getCurrentUser} from '../../utils/graphql/query';
 
 const Login = ({navigation}) => {
   const formInit = {
@@ -27,10 +28,11 @@ const Login = ({navigation}) => {
     setLoad(true);
     const {password, email} = formData;
     try {
-      const user = await Auth.signIn(email, password);
-      console.log(user);
+      await Auth.signIn(email, password);
+      const {id} = await getCurrentUser(email);
       storage.setUserisLogedOut(false);
       storage.setUserSignedup(false);
+      storage.setUserId(id);
       setLoad(false);
       navigation.navigate('Home');
     } catch ({code, message}) {

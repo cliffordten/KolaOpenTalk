@@ -53,6 +53,21 @@ export const listUserFollow = async () => {
   }
 };
 
+export const getCurrentUser = async email => {
+  try {
+    const {
+      data: {
+        listUsers: {items},
+      },
+    } = await API.graphql(
+      graphqlOperation(listUsers, {filter: {email: {eq: email}}}),
+    );
+    return items[0];
+  } catch ({code, message}) {
+    console.log('listCategory', code, message);
+  }
+};
+
 export const getUserInfo = async (id = storage.readUserId()) => {
   try {
     const {

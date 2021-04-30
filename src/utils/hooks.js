@@ -9,6 +9,7 @@ export const useForm = (initialState = {}, onSubmit) => {
 
   const handleSubmit = () => {
     onSubmit?.(formData);
+    setFormData(initialState);
   };
 
   return {formData, handleInputChange, handleSubmit};

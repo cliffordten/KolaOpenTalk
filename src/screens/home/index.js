@@ -6,12 +6,14 @@ import styles from './styles';
 import {listAllPosts} from '../../utils/graphql/query';
 import {showShortToast} from '../../utils/methods';
 import {subscribeCreatePost} from '../../utils/graphql/subscriptions';
+import Loader from '../../components/loader';
 
 const Home = ({...rest}) => {
   const [data, setData] = useState([]);
   const [next, setNext] = useState(null);
   const [load, setLoad] = useState(false);
   const [reload, setReload] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const subscribe = useCallback(() => {
     const subscribtion = subscribeCreatePost().subscribe({
@@ -30,9 +32,11 @@ const Home = ({...rest}) => {
 
   useEffect(() => {
     const fetch = async () => {
+      setLoading(true);
       const {items, nextToken} = await listAllPosts();
       setData(items);
       setNext(nextToken);
+      setLoading(false);
     };
     fetch();
     subscribe();
@@ -71,6 +75,7 @@ const Home = ({...rest}) => {
         onRefresh={onRefresh}
         reload={reload}
       />
+      {loading && <Loader />}
     </View>
   );
 };
