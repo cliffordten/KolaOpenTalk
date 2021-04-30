@@ -7,8 +7,10 @@ import Text from '../../components/text';
 import {Colors} from '../../config';
 import styles from './styles';
 
-const RenderFriends = ({picture, name, username, id, onPress}) => {
+const RenderFriends = ({followInfo, picture, name, username, id, onPress}) => {
   const [isFollow, setIsFollow] = useState(false);
+
+  console.log(followInfo);
 
   const handleFollow = _id => {
     if (onPress) {

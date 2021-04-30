@@ -3,13 +3,10 @@ import React from 'react';
 import {View} from 'react-native';
 import Title from '../../components/title';
 import styles from './styles';
+import FollowFriends from '../followFriends';
 
 const Search = () => {
-  return (
-    <View style={styles.safeAreaView}>
-      <Title label={'Search'} style={styles.lgText} black large bold />
-    </View>
-  );
+  return <FollowFriends external />;
 };
 Search.propTypes = {};
 

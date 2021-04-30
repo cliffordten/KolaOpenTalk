@@ -1,18 +1,32 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 // import PropTypes from 'prop-types';
 import {View} from 'react-native';
 import Posts from '../../views/posts';
 import styles from './styles';
 import {listAllPosts} from '../../utils/graphql/query';
 import {showShortToast} from '../../utils/methods';
-import {useSubCreatePost} from '../../utils/graphql/subscriptions';
+import {subscribeCreatePost} from '../../utils/graphql/subscriptions';
 
 const Home = ({...rest}) => {
   const [data, setData] = useState([]);
   const [next, setNext] = useState(null);
   const [load, setLoad] = useState(false);
-  // const result = useSubCreatePost();
   const [reload, setReload] = useState(false);
+
+  const subscribe = useCallback(() => {
+    const subscribtion = subscribeCreatePost().subscribe({
+      next: ({
+        value: {
+          data: {onCreatePost: post},
+        },
+      }) => {
+        setData(prev => [post, ...prev]);
+      },
+    });
+    return () => {
+      subscribtion.unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     const fetch = async () => {
@@ -21,11 +35,9 @@ const Home = ({...rest}) => {
       setNext(nextToken);
     };
     fetch();
-    // if (result) {
-    //   console.log(result);
-    // }
+    subscribe();
     return () => {};
-  }, []);
+  }, [subscribe]);
 
   const loadMore = async () => {
     if (next) {
