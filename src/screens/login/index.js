@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 // import PropTypes from 'prop-types';
 import {View} from 'react-native';
 import labels from '../../assets/labels';
@@ -9,8 +9,42 @@ import Title from '../../components/title';
 import LinearGradient from '../../views/gradient';
 import ScrollView from '../../views/scroll';
 import styles from './styles';
+import {useForm} from '../../utils/hooks';
+import {Auth} from 'aws-amplify';
+import {showShortToast} from '../../utils/methods';
+import Loader from '../../components/loader';
+import storage from '../../utils/storage';
 
 const Login = ({navigation}) => {
+  const formInit = {
+    email: '',
+    password: '',
+  };
+
+  const [load, setLoad] = useState(false);
+
+  const onSubmit = async formData => {
+    setLoad(true);
+    const {password, email} = formData;
+    try {
+      const user = await Auth.signIn(email, password);
+      console.log(user);
+      storage.setUserisLogedOut(false);
+      storage.setUserSignedup(false);
+      setLoad(false);
+      navigation.navigate('Home');
+    } catch ({code, message}) {
+      if (code === 'InvalidParameterException') {
+        showShortToast('Invalid Credentials');
+      }
+      console.log('onSubmit', code, 'msg', message);
+      setLoad(false);
+    }
+    setLoad(false);
+  };
+
+  const {handleInputChange, handleSubmit} = useForm(formInit, onSubmit);
+
   return (
     <ScrollView style={styles.safeAreaView}>
       <LinearGradient style={styles.gradient}>
@@ -35,13 +69,23 @@ const Login = ({navigation}) => {
           style={styles.lgText}
         />
         <View style={styles.inputContainer}>
-          <Input placeholder={labels.emailText} type={'email'} />
-          <Input placeholder={labels.passwordText} type="password" />
+          <Input
+            placeholder={labels.emailText}
+            handleInputChange={handleInputChange}
+            type={'email'}
+            name={'email'}
+          />
+          <Input
+            placeholder={labels.passwordText}
+            handleInputChange={handleInputChange}
+            type="password"
+            name={'password'}
+          />
           <View style={styles.flatBtn}>
             <Button
               label={labels.passwordForgot}
               flat="placeholder"
-              onPress={() => navigation.navigate('ForgotPassword')}
+              onPress={() => showShortToast('not implemented')}
               textStyles={styles.text}
               style={styles.fpContainer}
             />
@@ -51,9 +95,10 @@ const Login = ({navigation}) => {
           <Button
             label={labels.confirmText}
             color={'secondary'}
-            onPress={() => navigation.navigate('AccountOnboarding')}
+            onPress={handleSubmit}
           />
         </View>
+        {load && <Loader />}
       </View>
     </ScrollView>
   );
