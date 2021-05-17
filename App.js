@@ -11,6 +11,8 @@ import {
 import {Colors} from './src/config';
 import AppNavigation from './src/navigation';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {Provider} from 'react-redux';
+import store from './src/redux/store';
 
 const App = () => {
   useEffect(() => {
@@ -20,14 +22,16 @@ const App = () => {
     return () => {};
   }, []);
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <SafeAreaProvider>
-        <View style={styles.appBackground}>
-          <StatusBar barStyle="default" backgroundColor={Colors.primary} />
-          <AppNavigation />
-        </View>
-      </SafeAreaProvider>
-    </TouchableWithoutFeedback>
+    <Provider store={store}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <SafeAreaProvider>
+          <View style={styles.appBackground}>
+            <StatusBar barStyle="default" backgroundColor={Colors.primary} />
+            <AppNavigation />
+          </View>
+        </SafeAreaProvider>
+      </TouchableWithoutFeedback>
+    </Provider>
   );
 };
 

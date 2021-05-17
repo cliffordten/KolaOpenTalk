@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Modal from 'react-native-modalbox';
 // import PropTypes from 'prop-types';
 import {Text, View} from 'react-native';
@@ -14,6 +14,9 @@ import {Auth} from 'aws-amplify';
 import {createUserAccount} from '../../utils/graphql/mutations';
 import storage from '../../utils/storage';
 import Loader from '../../components/loader';
+import {useDispatch} from 'react-redux';
+import {setCurrentUser} from '../../redux/actions/user';
+import {useSelector} from 'react-redux';
 
 const Signup = ({goToIndex}) => {
   const [photo, setphoto] = useState(null);
@@ -22,7 +25,15 @@ const Signup = ({goToIndex}) => {
   const [conEmail, setConEmail] = useState(null);
   const [path, setPath] = useState(null);
   const [load, setLoad] = useState(false);
+  const dispatch = useDispatch();
+  const userfound = useSelector(state => state.user);
   const ref = useRef();
+
+  useEffect(() => {
+    console.log(userfound);
+    return () => {};
+  }, [userfound]);
+
   const formInit = {
     name: '',
     email: '',
@@ -96,6 +107,7 @@ const Signup = ({goToIndex}) => {
           setLoad(false);
           ref.current.open();
         }
+        dispatch(setCurrentUser(user));
       } catch ({code, message}) {
         if (code === 'UsernameExistsException') {
           setLoad(false);
