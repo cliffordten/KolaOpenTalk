@@ -12,13 +12,33 @@ export const createUser = /* GraphQL */ `
       username
       email
       picture
-      followInfo {
+      following {
         items {
           id
-          isFollowed
           isFollowing
           userID
           userFollowingID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      followers {
+        items {
+          id
+          isFollow
+          userID
+          userFollowerID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      blackList {
+        items {
+          id
+          userID
+          blackListUserID
           createdAt
           updatedAt
         }
@@ -52,13 +72,33 @@ export const updateUser = /* GraphQL */ `
       username
       email
       picture
-      followInfo {
+      following {
         items {
           id
-          isFollowed
           isFollowing
           userID
           userFollowingID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      followers {
+        items {
+          id
+          isFollow
+          userID
+          userFollowerID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      blackList {
+        items {
+          id
+          userID
+          blackListUserID
           createdAt
           updatedAt
         }
@@ -92,13 +132,33 @@ export const deleteUser = /* GraphQL */ `
       username
       email
       picture
-      followInfo {
+      following {
         items {
           id
-          isFollowed
           isFollowing
           userID
           userFollowingID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      followers {
+        items {
+          id
+          isFollow
+          userID
+          userFollowerID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      blackList {
+        items {
+          id
+          userID
+          blackListUserID
           createdAt
           updatedAt
         }
@@ -121,49 +181,322 @@ export const deleteUser = /* GraphQL */ `
     }
   }
 `;
-export const createFollowInfo = /* GraphQL */ `
-  mutation CreateFollowInfo(
-    $input: CreateFollowInfoInput!
-    $condition: ModelFollowInfoConditionInput
+export const createFollowering = /* GraphQL */ `
+  mutation CreateFollowering(
+    $input: CreateFolloweringInput!
+    $condition: ModelFolloweringConditionInput
   ) {
-    createFollowInfo(input: $input, condition: $condition) {
+    createFollowering(input: $input, condition: $condition) {
       id
-      isFollowed
       isFollowing
       userID
       userFollowingID
+      followering {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
   }
 `;
-export const updateFollowInfo = /* GraphQL */ `
-  mutation UpdateFollowInfo(
-    $input: UpdateFollowInfoInput!
-    $condition: ModelFollowInfoConditionInput
+export const updateFollowering = /* GraphQL */ `
+  mutation UpdateFollowering(
+    $input: UpdateFolloweringInput!
+    $condition: ModelFolloweringConditionInput
   ) {
-    updateFollowInfo(input: $input, condition: $condition) {
+    updateFollowering(input: $input, condition: $condition) {
       id
-      isFollowed
       isFollowing
       userID
       userFollowingID
+      followering {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteFollowInfo = /* GraphQL */ `
-  mutation DeleteFollowInfo(
-    $input: DeleteFollowInfoInput!
-    $condition: ModelFollowInfoConditionInput
+export const deleteFollowering = /* GraphQL */ `
+  mutation DeleteFollowering(
+    $input: DeleteFolloweringInput!
+    $condition: ModelFolloweringConditionInput
   ) {
-    deleteFollowInfo(input: $input, condition: $condition) {
+    deleteFollowering(input: $input, condition: $condition) {
       id
-      isFollowed
       isFollowing
       userID
       userFollowingID
+      followering {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createFollower = /* GraphQL */ `
+  mutation CreateFollower(
+    $input: CreateFollowerInput!
+    $condition: ModelFollowerConditionInput
+  ) {
+    createFollower(input: $input, condition: $condition) {
+      id
+      isFollow
+      userID
+      userFollowerID
+      follower {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateFollower = /* GraphQL */ `
+  mutation UpdateFollower(
+    $input: UpdateFollowerInput!
+    $condition: ModelFollowerConditionInput
+  ) {
+    updateFollower(input: $input, condition: $condition) {
+      id
+      isFollow
+      userID
+      userFollowerID
+      follower {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFollower = /* GraphQL */ `
+  mutation DeleteFollower(
+    $input: DeleteFollowerInput!
+    $condition: ModelFollowerConditionInput
+  ) {
+    deleteFollower(input: $input, condition: $condition) {
+      id
+      isFollow
+      userID
+      userFollowerID
+      follower {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createUserBlackList = /* GraphQL */ `
+  mutation CreateUserBlackList(
+    $input: CreateUserBlackListInput!
+    $condition: ModelUserBlackListConditionInput
+  ) {
+    createUserBlackList(input: $input, condition: $condition) {
+      id
+      userID
+      blackListUserID
+      blackList {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUserBlackList = /* GraphQL */ `
+  mutation UpdateUserBlackList(
+    $input: UpdateUserBlackListInput!
+    $condition: ModelUserBlackListConditionInput
+  ) {
+    updateUserBlackList(input: $input, condition: $condition) {
+      id
+      userID
+      blackListUserID
+      blackList {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUserBlackList = /* GraphQL */ `
+  mutation DeleteUserBlackList(
+    $input: DeleteUserBlackListInput!
+    $condition: ModelUserBlackListConditionInput
+  ) {
+    deleteUserBlackList(input: $input, condition: $condition) {
+      id
+      userID
+      blackListUserID
+      blackList {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -301,7 +634,13 @@ export const createPost = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -352,7 +691,13 @@ export const updatePost = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -403,7 +748,13 @@ export const deletePost = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -454,7 +805,13 @@ export const createParentComment = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -530,7 +887,13 @@ export const updateParentComment = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -606,7 +969,13 @@ export const deleteParentComment = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -682,7 +1051,13 @@ export const createChildComment = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -742,7 +1117,13 @@ export const updateChildComment = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -802,7 +1183,13 @@ export const deleteChildComment = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {

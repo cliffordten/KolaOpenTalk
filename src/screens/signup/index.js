@@ -16,7 +16,7 @@ import storage from '../../utils/storage';
 import Loader from '../../components/loader';
 import {useDispatch} from 'react-redux';
 import {setCurrentUser} from '../../redux/actions/user';
-import {useSelector} from 'react-redux';
+// import {useSelector} from 'react-redux';
 
 const Signup = ({goToIndex}) => {
   const [photo, setphoto] = useState(null);
@@ -26,13 +26,13 @@ const Signup = ({goToIndex}) => {
   const [path, setPath] = useState(null);
   const [load, setLoad] = useState(false);
   const dispatch = useDispatch();
-  const userfound = useSelector(state => state.user);
+  // const userfound = useSelector(state => state.user);
   const ref = useRef();
 
-  useEffect(() => {
-    console.log(userfound);
-    return () => {};
-  }, [userfound]);
+  // useEffect(() => {
+  //   console.log(userfound);
+  //   return () => {};
+  // }, [userfound]);
 
   const formInit = {
     name: '',

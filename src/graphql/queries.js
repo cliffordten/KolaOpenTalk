@@ -9,13 +9,33 @@ export const getUser = /* GraphQL */ `
       username
       email
       picture
-      followInfo {
+      following {
         items {
           id
-          isFollowed
           isFollowing
           userID
           userFollowingID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      followers {
+        items {
+          id
+          isFollow
+          userID
+          userFollowerID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      blackList {
+        items {
+          id
+          userID
+          blackListUserID
           createdAt
           updatedAt
         }
@@ -51,7 +71,13 @@ export const listUsers = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -64,32 +90,180 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
-export const getFollowInfo = /* GraphQL */ `
-  query GetFollowInfo($id: ID!) {
-    getFollowInfo(id: $id) {
+export const getFollowering = /* GraphQL */ `
+  query GetFollowering($id: ID!) {
+    getFollowering(id: $id) {
       id
-      isFollowed
       isFollowing
       userID
       userFollowingID
+      followering {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
   }
 `;
-export const listFollowInfos = /* GraphQL */ `
-  query ListFollowInfos(
-    $filter: ModelFollowInfoFilterInput
+export const listFollowerings = /* GraphQL */ `
+  query ListFollowerings(
+    $filter: ModelFolloweringFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listFollowInfos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listFollowerings(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        isFollowed
         isFollowing
         userID
         userFollowingID
+        followering {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getFollower = /* GraphQL */ `
+  query GetFollower($id: ID!) {
+    getFollower(id: $id) {
+      id
+      isFollow
+      userID
+      userFollowerID
+      follower {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listFollowers = /* GraphQL */ `
+  query ListFollowers(
+    $filter: ModelFollowerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listFollowers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        isFollow
+        userID
+        userFollowerID
+        follower {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUserBlackList = /* GraphQL */ `
+  query GetUserBlackList($id: ID!) {
+    getUserBlackList(id: $id) {
+      id
+      userID
+      blackListUserID
+      blackList {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUserBlackLists = /* GraphQL */ `
+  query ListUserBlackLists(
+    $filter: ModelUserBlackListFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserBlackLists(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        blackListUserID
+        blackList {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -191,7 +365,13 @@ export const getPost = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -275,7 +455,13 @@ export const getParentComment = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -397,7 +583,13 @@ export const getChildComment = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {

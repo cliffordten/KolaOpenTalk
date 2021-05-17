@@ -6,8 +6,11 @@ import {
   getUser,
   listPosts,
   listParentComments,
+  listUserBlackLists,
 } from '../../graphql/queries';
 import storage from '../storage';
+
+const userId = storage.readUserId();
 
 export const listCategories = async (nextToken = null, noLimit = false) => {
   try {
@@ -42,14 +45,36 @@ export const listCategories = async (nextToken = null, noLimit = false) => {
   }
 };
 
+export const getBlacklistedUser = async (id = userId) => {
+  try {
+    const {
+      data: {listUserBlackLists: list},
+    } = await API.graphql(graphqlOperation(listUserBlackLists, {id}));
+    return {...list};
+  } catch ({code, message}) {
+    console.log('getUserInfo', code, message);
+  }
+};
+
 export const listUserFollow = async () => {
   try {
     const {
-      data: {listUsers: list},
+      data: {
+        listUsers: {items},
+      },
     } = await API.graphql(graphqlOperation(listUsers));
-    return {...list};
+    const {items: blackList} = await getBlacklistedUser();
+    const filterCurrentUser = items?.filter(({id}) => userId !== id);
+
+    console.log(blackList, 'blackList');
+
+    const filterBlacklist = filterCurrentUser.filter(({id}) =>
+      blackList.every(({blackListUserID}) => blackListUserID !== id),
+    );
+
+    return {items: filterBlacklist};
   } catch ({code, message}) {
-    console.log('listCategory', code, message);
+    console.log('listUserFollow', code, message);
   }
 };
 
@@ -64,18 +89,18 @@ export const getCurrentUser = async email => {
     );
     return items[0];
   } catch ({code, message}) {
-    console.log('listCategory', code, message);
+    console.log('getCurrentUser', code, message);
   }
 };
 
-export const getUserInfo = async (id = storage.readUserId()) => {
+export const getUserInfo = async (id = userId) => {
   try {
     const {
       data: {getUser: list},
     } = await API.graphql(graphqlOperation(getUser, {id}));
     return {...list};
   } catch ({code, message}) {
-    console.log('listCategory', code, message);
+    console.log('getUserInfo', code, message);
   }
 };
 

@@ -4,16 +4,33 @@ type User @model {
   username: String!
   email: String!
   picture: String
-  followInfo: [FollowInfo] @connection(keyName: "byUser", fields: ["id"])
+  following: [Followering] @connection(keyName: "byUser", fields: ["id"])
+  followers: [Follower] @connection(keyName: "byUser", fields: ["id"])
+  blackList: [UserBlackList] @connection(keyName: "byUser", fields: ["id"])
   interest: [Interest] @connection(keyName: "byUser", fields: ["id"])
 }
 
-type FollowInfo @model @key(name: "byUser", fields: ["userID", "userFollowingID"]) {
-  id: ID!
-  isFollowed: Boolean!
+type Followering @model @key(name: "byUser", fields: ["userID"]) {
+  id: ID! 
   isFollowing: Boolean!
   userID: ID!
-  userFollowingID: ID
+  userFollowingID: ID!
+  followering: User! @connection(fields: ["userFollowingID"])
+}
+
+type Follower @model @key(name: "byUser", fields: ["userID"])  {
+  id: ID! 
+  isFollow: Boolean!
+  userID: ID!
+  userFollowerID: ID!
+  follower: User! @connection(fields: ["userFollowerID"])
+}
+
+type UserBlackList @model @key(name: "byUser", fields: ["userID"])  {
+  id: ID! 
+  userID: ID!
+  blackListUserID: ID!
+  blackList: User! @connection(fields: ["blackListUserID"])
 }
 
 type Interest @model @key(name: "byUser", fields: ["userID"]) {

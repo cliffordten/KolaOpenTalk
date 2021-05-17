@@ -9,13 +9,33 @@ export const onCreateUser = /* GraphQL */ `
       username
       email
       picture
-      followInfo {
+      following {
         items {
           id
-          isFollowed
           isFollowing
           userID
           userFollowingID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      followers {
+        items {
+          id
+          isFollow
+          userID
+          userFollowerID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      blackList {
+        items {
+          id
+          userID
+          blackListUserID
           createdAt
           updatedAt
         }
@@ -46,13 +66,33 @@ export const onUpdateUser = /* GraphQL */ `
       username
       email
       picture
-      followInfo {
+      following {
         items {
           id
-          isFollowed
           isFollowing
           userID
           userFollowingID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      followers {
+        items {
+          id
+          isFollow
+          userID
+          userFollowerID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      blackList {
+        items {
+          id
+          userID
+          blackListUserID
           createdAt
           updatedAt
         }
@@ -83,13 +123,33 @@ export const onDeleteUser = /* GraphQL */ `
       username
       email
       picture
-      followInfo {
+      following {
         items {
           id
-          isFollowed
           isFollowing
           userID
           userFollowingID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      followers {
+        items {
+          id
+          isFollow
+          userID
+          userFollowerID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      blackList {
+        items {
+          id
+          userID
+          blackListUserID
           createdAt
           updatedAt
         }
@@ -112,40 +172,295 @@ export const onDeleteUser = /* GraphQL */ `
     }
   }
 `;
-export const onCreateFollowInfo = /* GraphQL */ `
-  subscription OnCreateFollowInfo {
-    onCreateFollowInfo {
+export const onCreateFollowering = /* GraphQL */ `
+  subscription OnCreateFollowering {
+    onCreateFollowering {
       id
-      isFollowed
       isFollowing
       userID
       userFollowingID
+      followering {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
   }
 `;
-export const onUpdateFollowInfo = /* GraphQL */ `
-  subscription OnUpdateFollowInfo {
-    onUpdateFollowInfo {
+export const onUpdateFollowering = /* GraphQL */ `
+  subscription OnUpdateFollowering {
+    onUpdateFollowering {
       id
-      isFollowed
       isFollowing
       userID
       userFollowingID
+      followering {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
   }
 `;
-export const onDeleteFollowInfo = /* GraphQL */ `
-  subscription OnDeleteFollowInfo {
-    onDeleteFollowInfo {
+export const onDeleteFollowering = /* GraphQL */ `
+  subscription OnDeleteFollowering {
+    onDeleteFollowering {
       id
-      isFollowed
       isFollowing
       userID
       userFollowingID
+      followering {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateFollower = /* GraphQL */ `
+  subscription OnCreateFollower {
+    onCreateFollower {
+      id
+      isFollow
+      userID
+      userFollowerID
+      follower {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFollower = /* GraphQL */ `
+  subscription OnUpdateFollower {
+    onUpdateFollower {
+      id
+      isFollow
+      userID
+      userFollowerID
+      follower {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFollower = /* GraphQL */ `
+  subscription OnDeleteFollower {
+    onDeleteFollower {
+      id
+      isFollow
+      userID
+      userFollowerID
+      follower {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateUserBlackList = /* GraphQL */ `
+  subscription OnCreateUserBlackList {
+    onCreateUserBlackList {
+      id
+      userID
+      blackListUserID
+      blackList {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUserBlackList = /* GraphQL */ `
+  subscription OnUpdateUserBlackList {
+    onUpdateUserBlackList {
+      id
+      userID
+      blackListUserID
+      blackList {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUserBlackList = /* GraphQL */ `
+  subscription OnDeleteUserBlackList {
+    onDeleteUserBlackList {
+      id
+      userID
+      blackListUserID
+      blackList {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -262,7 +577,13 @@ export const onCreatePost = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -310,7 +631,13 @@ export const onUpdatePost = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -358,7 +685,13 @@ export const onDeletePost = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -406,7 +739,13 @@ export const onCreateParentComment = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -479,7 +818,13 @@ export const onUpdateParentComment = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -552,7 +897,13 @@ export const onDeleteParentComment = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -625,7 +976,13 @@ export const onCreateChildComment = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -682,7 +1039,13 @@ export const onUpdateChildComment = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
@@ -739,7 +1102,13 @@ export const onDeleteChildComment = /* GraphQL */ `
         username
         email
         picture
-        followInfo {
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
           nextToken
         }
         interest {
