@@ -63,8 +63,6 @@ const Home = ({...rest}) => {
     setReload(false);
   };
 
-  console.log('rendering');
-
   return (
     <View style={styles.safeAreaView}>
       <Posts

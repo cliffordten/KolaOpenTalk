@@ -11,6 +11,7 @@ import Header from '../views/header';
 import labels from '../assets/labels';
 import CreatePost from '../screens/createPost';
 import storage from '../utils/storage';
+import ChildTalk from '../screens/childTalk';
 
 const Stack = createStackNavigator();
 
@@ -51,6 +52,17 @@ const AppNavigation = () => {
               return <Header scene={scene} noImage />;
             },
             headerTitle: labels.navTitle.talk,
+          }}
+        />
+        <Stack.Screen
+          name="ChildTalk"
+          component={ChildTalk}
+          options={{
+            headerShown: true,
+            header: ({scene}) => {
+              return <Header scene={scene} noImage />;
+            },
+            headerTitle: labels.navTitle.comment,
           }}
         />
         <Stack.Screen name="Home" component={SideBar} />

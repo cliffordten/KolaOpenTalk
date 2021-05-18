@@ -5,10 +5,12 @@ import {
   listUsers,
   getUser,
   listPosts,
-  listParentComments,
   listUserBlackLists,
   listFollowerings,
   listFollowers,
+  listComments,
+  getPost,
+  getComment,
 } from '../../graphql/queries';
 import storage from '../storage';
 
@@ -113,7 +115,7 @@ export const getUserInterest = async () => {
   return {items, ...rest};
 };
 
-export const listAllPosts = async (nextToken = null, noLimit = false) => {
+export const listAllPosts = async (next = null, noLimit = false) => {
   try {
     if (noLimit) {
       const {
@@ -122,47 +124,55 @@ export const listAllPosts = async (nextToken = null, noLimit = false) => {
       return {...list};
     }
 
-    if (nextToken) {
+    if (next) {
       const {
         data: {listPosts: list},
       } = await API.graphql(
         graphqlOperation(listPosts, {
           limit: 6,
-          nextToken,
+          nextToken: next,
+        }),
+      );
+
+      return {...list};
+    } else {
+      const {
+        data: {listPosts: list},
+      } = await API.graphql(
+        graphqlOperation(listPosts, {
+          limit: 6,
         }),
       );
       return {...list};
     }
-    const {
-      data: {listPosts: list},
-    } = await API.graphql(
-      graphqlOperation(listPosts, {
-        limit: 6,
-      }),
-    );
-    return {...list};
-  } catch ({code, message}) {
-    console.log('listPosts', code, message);
+  } catch (e) {
+    console.log('listPosts', e);
   }
 };
 
-export const listComments = async (id, nextToken = null, noLimit = false) => {
+export const listPostComments = async (
+  id,
+  nextToken = null,
+  noLimit = false,
+) => {
   try {
     if (noLimit) {
       const {
-        data: {listParentComments: list},
+        data: {listComments: list},
       } = await API.graphql(
-        graphqlOperation(listParentComments, {filter: {postID: {eq: id}}}),
+        graphqlOperation(listComments, {
+          filter: {postID: {eq: id}, childCommentId: {attributeExists: false}},
+        }),
       );
       return {...list};
     }
 
     if (nextToken) {
       const {
-        data: {listParentComments: list},
+        data: {listComments: list},
       } = await API.graphql(
-        graphqlOperation(listParentComments, {
-          filter: {postID: {eq: id}},
+        graphqlOperation(listComments, {
+          filter: {postID: {eq: id}, childCommentId: {attributeExists: false}},
           limit: 6,
           nextToken,
         }),
@@ -170,16 +180,68 @@ export const listComments = async (id, nextToken = null, noLimit = false) => {
       return {...list};
     }
     const {
-      data: {listParentComments: list},
+      data: {listComments: list},
     } = await API.graphql(
-      graphqlOperation(listParentComments, {
+      graphqlOperation(listComments, {
         limit: 6,
-        filter: {postID: {eq: id}},
+        filter: {postID: {eq: id}, childCommentId: {attributeExists: false}},
       }),
     );
     return {...list};
   } catch ({code, message}) {
-    console.log('listParentComments', code, message);
+    console.log('listComments', code, message);
+  }
+};
+
+export const listChildComments = async (
+  id,
+  nextToken = null,
+  noLimit = false,
+) => {
+  try {
+    if (noLimit) {
+      const {
+        data: {listComments: list},
+      } = await API.graphql(
+        graphqlOperation(listComments, {
+          filter: {
+            parentComentId: {eq: id},
+            childCommentId: {attributeExists: true},
+          },
+        }),
+      );
+      return {...list};
+    }
+
+    if (nextToken) {
+      const {
+        data: {listComments: list},
+      } = await API.graphql(
+        graphqlOperation(listComments, {
+          filter: {
+            parentComentId: {eq: id},
+            childCommentId: {attributeExists: true},
+          },
+          limit: 6,
+          nextToken,
+        }),
+      );
+      return {...list};
+    }
+    const {
+      data: {listComments: list},
+    } = await API.graphql(
+      graphqlOperation(listComments, {
+        limit: 6,
+        filter: {
+          parentComentId: {eq: id},
+          childCommentId: {attributeExists: true},
+        },
+      }),
+    );
+    return {...list};
+  } catch ({code, message}) {
+    console.log('listComments', code, message);
   }
 };
 
@@ -262,5 +324,41 @@ export const listUserFollowers = async (
     return {...list};
   } catch ({code, message}) {
     console.log('listFollowers', code, message);
+  }
+};
+
+export const getClickedPost = async id => {
+  try {
+    const {
+      data: {getPost: list},
+    } = await API.graphql(
+      graphqlOperation(getPost, {
+        id,
+      }),
+    );
+
+    console.log('Sucess');
+
+    return list;
+  } catch (error) {
+    console.log('getClickedPost', error);
+  }
+};
+
+export const getClickedComment = async id => {
+  try {
+    const {
+      data: {getComment: list},
+    } = await API.graphql(
+      graphqlOperation(getComment, {
+        id,
+      }),
+    );
+
+    console.log('Sucess');
+
+    return list;
+  } catch (error) {
+    console.log('getClickedComment', error);
   }
 };

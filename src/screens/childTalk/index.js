@@ -1,18 +1,17 @@
 import React, {useEffect, useState} from 'react';
 // import PropTypes from 'prop-types';
 import {View} from 'react-native';
-import PostTalk from '../../views/postTalk';
+import CommentTalk from '../../views/commentTalk';
 import styles from './styles';
 import {createUComment} from '../../utils/graphql/mutations';
-import {listPostComments, getClickedPost} from '../../utils/graphql/query';
+import {listChildComments, getClickedComment} from '../../utils/graphql/query';
 import {showShortToast} from '../../utils/methods';
 import Loader from '../../components/loader';
 
-const Talk = ({route, ...rest}) => {
-  const id = route?.params?._id;
-
+const ChildTalk = ({route, ...rest}) => {
+  const {id, parentComentId, postId} = route?.params;
   const [data, setData] = useState([{}]);
-  const [post, setPost] = useState(null);
+  const [comment, setComment] = useState(null);
   const [loading, setLoading] = useState(false);
   // const result = useSubCreatePost();
 
@@ -20,14 +19,14 @@ const Talk = ({route, ...rest}) => {
     const fetch = async () => {
       setLoading(true);
       if (id) {
-        const result = await getClickedPost(id);
-        setPost(result);
+        const result = await getClickedComment(id);
+        setComment(result);
       }
       setLoading(false);
     };
     const fetchComments = async () => {
       setLoading(true);
-      const {items} = await listPostComments(id);
+      const {items} = await listChildComments(parentComentId);
       setData(items);
       setLoading(false);
     };
@@ -36,12 +35,19 @@ const Talk = ({route, ...rest}) => {
     return () => {
       setLoading(false);
     };
-  }, [id]);
+  }, [id, parentComentId]);
 
   const createUserComment = async (value, imageUrl, blob, time) => {
     if (value) {
       setLoading(true);
-      const res = await createUComment(value, imageUrl, blob, time, id);
+      const res = await createUComment(
+        value,
+        imageUrl,
+        blob,
+        time,
+        postId,
+        parentComentId,
+      );
       if (res) {
         setData(prev => [res, ...prev]);
         setLoading(false);
@@ -56,10 +62,10 @@ const Talk = ({route, ...rest}) => {
 
   return (
     <View style={styles.safeAreaView}>
-      {post && (
-        <PostTalk
+      {comment && (
+        <CommentTalk
           {...rest}
-          post={post}
+          comment={comment}
           data={data}
           createUserComment={createUserComment}
         />
@@ -68,6 +74,6 @@ const Talk = ({route, ...rest}) => {
     </View>
   );
 };
-Talk.propTypes = {};
+ChildTalk.propTypes = {};
 
-export default Talk;
+export default ChildTalk;

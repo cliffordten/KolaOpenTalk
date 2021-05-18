@@ -595,10 +595,10 @@ export const onCreatePost = /* GraphQL */ `
       comments {
         items {
           id
+          parentComentId
+          childCommentId
           content
-          isRead
           isLiked
-          nLikes
           commentImage
           time
           postID
@@ -649,10 +649,10 @@ export const onUpdatePost = /* GraphQL */ `
       comments {
         items {
           id
+          parentComentId
+          childCommentId
           content
-          isRead
           isLiked
-          nLikes
           commentImage
           time
           postID
@@ -703,10 +703,10 @@ export const onDeletePost = /* GraphQL */ `
       comments {
         items {
           id
+          parentComentId
+          childCommentId
           content
-          isRead
           isLiked
-          nLikes
           commentImage
           time
           postID
@@ -721,14 +721,14 @@ export const onDeletePost = /* GraphQL */ `
     }
   }
 `;
-export const onCreateParentComment = /* GraphQL */ `
-  subscription OnCreateParentComment {
-    onCreateParentComment {
+export const onCreateComment = /* GraphQL */ `
+  subscription OnCreateComment {
+    onCreateComment {
       id
+      parentComentId
+      childCommentId
       content
-      isRead
       isLiked
-      nLikes
       commentImage
       time
       postID
@@ -779,35 +779,19 @@ export const onCreateParentComment = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      comments {
-        items {
-          id
-          content
-          isRead
-          isLiked
-          nLikes
-          commentImage
-          time
-          pCommentID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
   }
 `;
-export const onUpdateParentComment = /* GraphQL */ `
-  subscription OnUpdateParentComment {
-    onUpdateParentComment {
+export const onUpdateComment = /* GraphQL */ `
+  subscription OnUpdateComment {
+    onUpdateComment {
       id
+      parentComentId
+      childCommentId
       content
-      isRead
       isLiked
-      nLikes
       commentImage
       time
       postID
@@ -858,35 +842,19 @@ export const onUpdateParentComment = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      comments {
-        items {
-          id
-          content
-          isRead
-          isLiked
-          nLikes
-          commentImage
-          time
-          pCommentID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
   }
 `;
-export const onDeleteParentComment = /* GraphQL */ `
-  subscription OnDeleteParentComment {
-    onDeleteParentComment {
+export const onDeleteComment = /* GraphQL */ `
+  subscription OnDeleteComment {
+    onDeleteComment {
       id
+      parentComentId
+      childCommentId
       content
-      isRead
       isLiked
-      nLikes
       commentImage
       time
       postID
@@ -913,211 +881,6 @@ export const onDeleteParentComment = /* GraphQL */ `
         updatedAt
       }
       post {
-        id
-        desc
-        isUserLikedID
-        isLiked
-        nLikes
-        postImage
-        time
-        userID
-        interest
-        user {
-          id
-          name
-          username
-          email
-          picture
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          content
-          isRead
-          isLiked
-          nLikes
-          commentImage
-          time
-          pCommentID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateChildComment = /* GraphQL */ `
-  subscription OnCreateChildComment {
-    onCreateChildComment {
-      id
-      content
-      isRead
-      isLiked
-      nLikes
-      commentImage
-      time
-      pCommentID
-      userID
-      user {
-        id
-        name
-        username
-        email
-        picture
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        blackList {
-          nextToken
-        }
-        interest {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      pComment {
-        id
-        desc
-        isUserLikedID
-        isLiked
-        nLikes
-        postImage
-        time
-        userID
-        interest
-        user {
-          id
-          name
-          username
-          email
-          picture
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateChildComment = /* GraphQL */ `
-  subscription OnUpdateChildComment {
-    onUpdateChildComment {
-      id
-      content
-      isRead
-      isLiked
-      nLikes
-      commentImage
-      time
-      pCommentID
-      userID
-      user {
-        id
-        name
-        username
-        email
-        picture
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        blackList {
-          nextToken
-        }
-        interest {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      pComment {
-        id
-        desc
-        isUserLikedID
-        isLiked
-        nLikes
-        postImage
-        time
-        userID
-        interest
-        user {
-          id
-          name
-          username
-          email
-          picture
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteChildComment = /* GraphQL */ `
-  subscription OnDeleteChildComment {
-    onDeleteChildComment {
-      id
-      content
-      isRead
-      isLiked
-      nLikes
-      commentImage
-      time
-      pCommentID
-      userID
-      user {
-        id
-        name
-        username
-        email
-        picture
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        blackList {
-          nextToken
-        }
-        interest {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      pComment {
         id
         desc
         isUserLikedID

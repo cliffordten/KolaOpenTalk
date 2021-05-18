@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {FlatList, Image, TouchableOpacity, View} from 'react-native';
+import {FlatList, Image, View} from 'react-native';
 import Button from '../../components/button';
 import Icon from '../../components/icon';
 import Text from '../../components/text';
@@ -8,34 +8,20 @@ import Keyboard from '../keyboard';
 import styles from './styles';
 import {getFomatedTime} from '../../utils/methods';
 
-const RenderPostTalk = ({
+const RenderCommentTalk = ({
   user,
   nComments,
   nLikes,
   time,
   isLiked,
-  navigation,
   commentImage,
-  onPress,
   content,
-  postId,
-  parentComentId,
-  id,
 }) => {
   const [isCommentLiked, setIsCommentLiked] = useState(isLiked);
   const [nPostLikes, setNPostLikes] = useState(nLikes);
 
-  const handlePress = ({...rest}) => {
-    if (onPress) {
-      onPress({...rest});
-    }
-    navigation.navigate('ChildTalk', {...rest});
-  };
-
   return (
-    <TouchableOpacity
-      style={styles.postContainer}
-      onPress={() => handlePress({id, parentComentId, postId})}>
+    <View style={styles.postContainer}>
       <Image source={{uri: user?.picture}} style={styles.imageProfile} />
       <View style={styles.infoContainer}>
         <View style={styles.textContainer}>
@@ -69,7 +55,7 @@ const RenderPostTalk = ({
           <Button
             label={nComments}
             flat="placeholder"
-            onPress={() => handlePress({id, parentComentId, postId})}
+            onPress={() => console.log('object')}
             style={styles.flatBtn}
             textStyles={styles.textBtn}
             icon={
@@ -105,12 +91,20 @@ const RenderPostTalk = ({
           />
         </View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
-const RenderPostHeader = ({headerData}) => {
-  const {user, nComments, nLikes, time, isLiked, postImage, desc} = headerData;
+const RenderCommentHeader = ({headerData}) => {
+  const {
+    user,
+    nComments,
+    nLikes,
+    time,
+    isLiked,
+    commentImage,
+    content,
+  } = headerData;
 
   const [isCommentLiked, setIsCommentLiked] = useState(isLiked);
   const [nPostLikes, setNPostLikes] = useState(nLikes);
@@ -129,12 +123,12 @@ const RenderPostHeader = ({headerData}) => {
       </View>
       <View style={styles.infoHeaderContainer}>
         <Text
-          label={desc}
+          label={content}
           style={[styles.normal, styles.headerText]}
           lines={3}
         />
-        {postImage && (
-          <Image source={{uri: postImage}} style={styles.imageHeaderPost} />
+        {commentImage && (
+          <Image source={{uri: commentImage}} style={styles.imageHeaderPost} />
         )}
         <View style={styles.btnWrapper}>
           <View style={[styles.btnContainer, styles.btnHeaderC]}>
@@ -200,15 +194,20 @@ const RenderPostHeader = ({headerData}) => {
   );
 };
 
-const PostTalk = ({onPress, navigation, data, post, createUserComment}) => {
+const CommentTalk = ({
+  onPress,
+  navigation,
+  data,
+  comment,
+  createUserComment,
+}) => {
   return (
     <View style={styles.flatContainer}>
       <FlatList
         data={data}
-        ListHeaderComponent={() => <RenderPostHeader headerData={post} />}
+        ListHeaderComponent={() => <RenderCommentHeader headerData={comment} />}
         renderItem={({item}) => (
-          <RenderPostTalk
-            postId={post.id}
+          <RenderCommentTalk
             {...item}
             key={({id}) => id}
             onPress={onPress}
@@ -226,4 +225,4 @@ const PostTalk = ({onPress, navigation, data, post, createUserComment}) => {
   );
 };
 
-export default PostTalk;
+export default CommentTalk;

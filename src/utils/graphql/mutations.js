@@ -1,20 +1,20 @@
 import {API, graphqlOperation} from 'aws-amplify';
+import {v4 as uuid} from 'uuid';
 
 import {
   createUser,
   createInterest,
   createPost,
-  createParentComment,
   createUserBlackList,
   createFollowering,
   createFollower,
   deleteFollowering,
   deleteFollower,
+  createComment,
 } from '../../graphql/mutations';
 import {uploadImage} from '../methods';
 import storage from '../storage';
 import {getUserInfo} from './query';
-import {getPost} from '../../graphql/queries';
 
 const userId = storage.readUserId();
 
@@ -275,29 +275,13 @@ export const createUserPost = async (
 
 export const likePost = async (id, isliked) => {};
 
-export const getClickedPost = async id => {
-  try {
-    const {
-      data: {getPost: list},
-    } = await API.graphql(
-      graphqlOperation(getPost, {
-        id,
-      }),
-    );
-
-    console.log('Sucess');
-
-    return list;
-  } catch (error) {
-    console.log('getClickedPost', error);
-  }
-};
 export const createUComment = async (
   content,
   path,
   blob,
   time,
   postID,
+  parentComentId = null,
   userID = userId,
 ) => {
   try {
@@ -310,16 +294,36 @@ export const createUComment = async (
         )
       : null;
 
+    if (parentComentId) {
+      const {
+        data: {createComment: list},
+      } = await API.graphql(
+        graphqlOperation(createComment, {
+          input: {
+            content,
+            postID,
+            commentImage,
+            time,
+            userID,
+            childCommentId: uuid(),
+            parentComentId,
+          },
+        }),
+      );
+      console.log(list ? 'Sucess' : false);
+      return list;
+    }
     const {
-      data: {createParentComment: list},
+      data: {createComment: list},
     } = await API.graphql(
-      graphqlOperation(createParentComment, {
+      graphqlOperation(createComment, {
         input: {
           content,
           postID,
           commentImage,
           time,
           userID,
+          parentComentId: uuid(),
         },
       }),
     );

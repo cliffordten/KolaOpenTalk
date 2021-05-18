@@ -51,42 +51,38 @@ type Category @model{
 type Post @model @key(name: "byBlog", fields: ["userID"]) {
   id: ID!
   desc: String!
-  isUserLikedID: ID
-  isLiked: Boolean
-  nLikes: Int
   postImage: String
+  isPrivate: Boolean!
   time: String!
   userID: ID!
   interest: String!
   user: User! @connection(fields: ["userID"])
-  comments: [ParentComment] @connection(keyName: "byPost", fields: ["id"])
+  comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
+  likes: [Like] @connection(keyName: "byPost", fields: ["id"])
 }
 
-type ParentComment @model @key(name: "byPost", fields: ["postID", "userID"]) {
+type Like @model @key(name: "byPost", fields: ["postID", "userID", "commentID"]) {
   id: ID!
+  isLiked: Boolean!
+  time: String!
+  commentID: ID
+  postID: ID
+  userID: ID!
+  user: User! @connection(fields: ["userID"])
+  post: Post @connection(fields: ["postID"])
+  comment: Comment @connection(fields: ["commentID"])
+}
+
+type Comment @model @key(name: "byPost", fields: ["postID", "userID"]) {
+  id: ID!
+  parentComentId: ID!
+  childCommentId: ID
   content: String!
-  isRead: Boolean
-  isLiked: Boolean
-  nLikes: Int
   commentImage: String
   time: String!
   postID: ID!
   userID: ID!
+  likes: [Like] @connection(keyName: "byPost", fields: ["id"])
   user: User! @connection(fields: ["userID"])
   post: Post! @connection(fields: ["postID"])
-  comments: [ChildComment] @connection(keyName: "byChildComment", fields: ["id"])
-}
-
-type ChildComment @model @key(name: "byChildComment", fields: ["pCommentID", "userID"]) {
-  id: ID!
-  content: String!
-  isRead: Boolean
-  isLiked: Boolean
-  nLikes: Int
-  commentImage: String
-  time: String!
-  pCommentID: ID!
-  userID: ID!
-  user: User! @connection(fields: ["userID"])
-  pComment: Post! @connection(fields: ["pCommentID"])
 }

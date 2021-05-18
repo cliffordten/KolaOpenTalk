@@ -383,10 +383,10 @@ export const getPost = /* GraphQL */ `
       comments {
         items {
           id
+          parentComentId
+          childCommentId
           content
-          isRead
           isLiked
-          nLikes
           commentImage
           time
           postID
@@ -437,14 +437,14 @@ export const listPosts = /* GraphQL */ `
     }
   }
 `;
-export const getParentComment = /* GraphQL */ `
-  query GetParentComment($id: ID!) {
-    getParentComment(id: $id) {
+export const getComment = /* GraphQL */ `
+  query GetComment($id: ID!) {
+    getComment(id: $id) {
       id
+      parentComentId
+      childCommentId
       content
-      isRead
       isLiked
-      nLikes
       commentImage
       time
       postID
@@ -495,40 +495,24 @@ export const getParentComment = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      comments {
-        items {
-          id
-          content
-          isRead
-          isLiked
-          nLikes
-          commentImage
-          time
-          pCommentID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
   }
 `;
-export const listParentComments = /* GraphQL */ `
-  query ListParentComments(
-    $filter: ModelParentCommentFilterInput
+export const listComments = /* GraphQL */ `
+  query ListComments(
+    $filter: ModelCommentFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listParentComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        parentComentId
+        childCommentId
         content
-        isRead
         isLiked
-        nLikes
         commentImage
         time
         postID
@@ -543,118 +527,6 @@ export const listParentComments = /* GraphQL */ `
           updatedAt
         }
         post {
-          id
-          desc
-          isUserLikedID
-          isLiked
-          nLikes
-          postImage
-          time
-          userID
-          interest
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getChildComment = /* GraphQL */ `
-  query GetChildComment($id: ID!) {
-    getChildComment(id: $id) {
-      id
-      content
-      isRead
-      isLiked
-      nLikes
-      commentImage
-      time
-      pCommentID
-      userID
-      user {
-        id
-        name
-        username
-        email
-        picture
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        blackList {
-          nextToken
-        }
-        interest {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      pComment {
-        id
-        desc
-        isUserLikedID
-        isLiked
-        nLikes
-        postImage
-        time
-        userID
-        interest
-        user {
-          id
-          name
-          username
-          email
-          picture
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listChildComments = /* GraphQL */ `
-  query ListChildComments(
-    $filter: ModelChildCommentFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listChildComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        content
-        isRead
-        isLiked
-        nLikes
-        commentImage
-        time
-        pCommentID
-        userID
-        user {
-          id
-          name
-          username
-          email
-          picture
-          createdAt
-          updatedAt
-        }
-        pComment {
           id
           desc
           isUserLikedID

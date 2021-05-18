@@ -652,10 +652,10 @@ export const createPost = /* GraphQL */ `
       comments {
         items {
           id
+          parentComentId
+          childCommentId
           content
-          isRead
           isLiked
-          nLikes
           commentImage
           time
           postID
@@ -709,10 +709,10 @@ export const updatePost = /* GraphQL */ `
       comments {
         items {
           id
+          parentComentId
+          childCommentId
           content
-          isRead
           isLiked
-          nLikes
           commentImage
           time
           postID
@@ -766,10 +766,10 @@ export const deletePost = /* GraphQL */ `
       comments {
         items {
           id
+          parentComentId
+          childCommentId
           content
-          isRead
           isLiked
-          nLikes
           commentImage
           time
           postID
@@ -784,17 +784,17 @@ export const deletePost = /* GraphQL */ `
     }
   }
 `;
-export const createParentComment = /* GraphQL */ `
-  mutation CreateParentComment(
-    $input: CreateParentCommentInput!
-    $condition: ModelParentCommentConditionInput
+export const createComment = /* GraphQL */ `
+  mutation CreateComment(
+    $input: CreateCommentInput!
+    $condition: ModelCommentConditionInput
   ) {
-    createParentComment(input: $input, condition: $condition) {
+    createComment(input: $input, condition: $condition) {
       id
+      parentComentId
+      childCommentId
       content
-      isRead
       isLiked
-      nLikes
       commentImage
       time
       postID
@@ -845,38 +845,22 @@ export const createParentComment = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      comments {
-        items {
-          id
-          content
-          isRead
-          isLiked
-          nLikes
-          commentImage
-          time
-          pCommentID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
   }
 `;
-export const updateParentComment = /* GraphQL */ `
-  mutation UpdateParentComment(
-    $input: UpdateParentCommentInput!
-    $condition: ModelParentCommentConditionInput
+export const updateComment = /* GraphQL */ `
+  mutation UpdateComment(
+    $input: UpdateCommentInput!
+    $condition: ModelCommentConditionInput
   ) {
-    updateParentComment(input: $input, condition: $condition) {
+    updateComment(input: $input, condition: $condition) {
       id
+      parentComentId
+      childCommentId
       content
-      isRead
       isLiked
-      nLikes
       commentImage
       time
       postID
@@ -927,38 +911,22 @@ export const updateParentComment = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      comments {
-        items {
-          id
-          content
-          isRead
-          isLiked
-          nLikes
-          commentImage
-          time
-          pCommentID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteParentComment = /* GraphQL */ `
-  mutation DeleteParentComment(
-    $input: DeleteParentCommentInput!
-    $condition: ModelParentCommentConditionInput
+export const deleteComment = /* GraphQL */ `
+  mutation DeleteComment(
+    $input: DeleteCommentInput!
+    $condition: ModelCommentConditionInput
   ) {
-    deleteParentComment(input: $input, condition: $condition) {
+    deleteComment(input: $input, condition: $condition) {
       id
+      parentComentId
+      childCommentId
       content
-      isRead
       isLiked
-      nLikes
       commentImage
       time
       postID
@@ -985,220 +953,6 @@ export const deleteParentComment = /* GraphQL */ `
         updatedAt
       }
       post {
-        id
-        desc
-        isUserLikedID
-        isLiked
-        nLikes
-        postImage
-        time
-        userID
-        interest
-        user {
-          id
-          name
-          username
-          email
-          picture
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          content
-          isRead
-          isLiked
-          nLikes
-          commentImage
-          time
-          pCommentID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createChildComment = /* GraphQL */ `
-  mutation CreateChildComment(
-    $input: CreateChildCommentInput!
-    $condition: ModelChildCommentConditionInput
-  ) {
-    createChildComment(input: $input, condition: $condition) {
-      id
-      content
-      isRead
-      isLiked
-      nLikes
-      commentImage
-      time
-      pCommentID
-      userID
-      user {
-        id
-        name
-        username
-        email
-        picture
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        blackList {
-          nextToken
-        }
-        interest {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      pComment {
-        id
-        desc
-        isUserLikedID
-        isLiked
-        nLikes
-        postImage
-        time
-        userID
-        interest
-        user {
-          id
-          name
-          username
-          email
-          picture
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateChildComment = /* GraphQL */ `
-  mutation UpdateChildComment(
-    $input: UpdateChildCommentInput!
-    $condition: ModelChildCommentConditionInput
-  ) {
-    updateChildComment(input: $input, condition: $condition) {
-      id
-      content
-      isRead
-      isLiked
-      nLikes
-      commentImage
-      time
-      pCommentID
-      userID
-      user {
-        id
-        name
-        username
-        email
-        picture
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        blackList {
-          nextToken
-        }
-        interest {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      pComment {
-        id
-        desc
-        isUserLikedID
-        isLiked
-        nLikes
-        postImage
-        time
-        userID
-        interest
-        user {
-          id
-          name
-          username
-          email
-          picture
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteChildComment = /* GraphQL */ `
-  mutation DeleteChildComment(
-    $input: DeleteChildCommentInput!
-    $condition: ModelChildCommentConditionInput
-  ) {
-    deleteChildComment(input: $input, condition: $condition) {
-      id
-      content
-      isRead
-      isLiked
-      nLikes
-      commentImage
-      time
-      pCommentID
-      userID
-      user {
-        id
-        name
-        username
-        email
-        picture
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        blackList {
-          nextToken
-        }
-        interest {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      pComment {
         id
         desc
         isUserLikedID

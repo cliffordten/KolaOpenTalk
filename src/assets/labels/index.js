@@ -36,6 +36,7 @@ export default {
     notification: 'Notification',
     message: 'Messages',
     talk: 'Talk',
+    comment: 'Comment',
     createPost: 'Create Post',
   },
   comment: 'Your Comment',
