@@ -7,7 +7,7 @@ import {Colors} from '../../config';
 import LinearGradient from '../gradient';
 import Ripple from 'react-native-material-ripple';
 import SearchBar from '../../components/search';
-import {getUserInfoFollower} from '../../utils/graphql/query';
+import {getUserInfo} from '../../utils/graphql/query';
 
 const Header = ({isHome, scene, isSearch, noImage}) => {
   const {options, navigation} = scene.descriptor;
@@ -22,7 +22,7 @@ const Header = ({isHome, scene, isSearch, noImage}) => {
 
   useEffect(() => {
     const fetch = async () => {
-      const data = await getUserInfoFollower();
+      const data = await getUserInfo();
       setUser(data);
     };
 

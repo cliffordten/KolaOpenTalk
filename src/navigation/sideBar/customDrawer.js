@@ -3,7 +3,7 @@ import {Image, View} from 'react-native';
 import Text from '../../components/text';
 import LinearGradient from '../../views/gradient';
 import styles from './styles';
-import {getUserInfoFollower} from '../../utils/graphql/query';
+import {getUserInfo} from '../../utils/graphql/query';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import storage from '../../utils/storage';
 import Loader from '../../components/loader';
@@ -13,8 +13,13 @@ const CustomDrawer = ({navigation}) => {
   const [load, setLoad] = useState(false);
   useEffect(() => {
     const fetch = async () => {
-      const data = await getUserInfoFollower();
-      setUser(data);
+      const {
+        followers: {items: followers},
+        following: {items: following},
+        ...rest
+      } = await getUserInfo();
+
+      setUser({followers, following, ...rest});
     };
 
     fetch();

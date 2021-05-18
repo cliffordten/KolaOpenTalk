@@ -7,7 +7,15 @@ import Text from '../../components/text';
 import {Colors} from '../../config';
 import styles from './styles';
 
-const RenderFriends = ({followInfo, picture, name, username, id, onPress}) => {
+const RenderFriends = ({
+  followInfo,
+  picture,
+  name,
+  username,
+  id,
+  onPress,
+  blackList,
+}) => {
   const [isFollow, setIsFollow] = useState(false);
 
   const handleFollow = _id => {
@@ -18,7 +26,9 @@ const RenderFriends = ({followInfo, picture, name, username, id, onPress}) => {
   };
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.iconContainer}>
+      <TouchableOpacity
+        style={styles.iconContainer}
+        onPress={() => blackList(id)}>
         <Icon
           name="circle-with-cross"
           color={Colors.error}
@@ -47,13 +57,18 @@ const RenderFriends = ({followInfo, picture, name, username, id, onPress}) => {
   );
 };
 
-const SelectFollows = ({onPress, data}) => {
+const SelectFollows = ({onPress, data, blackList}) => {
   return (
     <View style={styles.flatContainer}>
       <FlatList
         data={data}
         renderItem={({item}) => (
-          <RenderFriends {...item} key={({id}) => id} onPress={onPress} />
+          <RenderFriends
+            {...item}
+            key={({id}) => id}
+            onPress={onPress}
+            blackList={blackList}
+          />
         )}
         keyExtractor={item => item.id}
         numColumns={2}

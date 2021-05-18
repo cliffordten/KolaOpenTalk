@@ -3,19 +3,20 @@ import {API, graphqlOperation} from 'aws-amplify';
 import {
   createUser,
   createInterest,
-  createFollowInfo,
-  updateFollowInfo,
   createPost,
   createParentComment,
+  createUserBlackList,
+  createFollowering,
+  createFollower,
+  deleteFollowering,
+  deleteFollower,
 } from '../../graphql/mutations';
 import {uploadImage} from '../methods';
 import storage from '../storage';
 import {getUserInfo} from './query';
 import {getPost} from '../../graphql/queries';
 
-const getUserId = () => {
-  return storage.readUserId();
-};
+const userId = storage.readUserId();
 
 export const createUserAccount = async (
   email,
@@ -34,9 +35,7 @@ export const createUserAccount = async (
     );
 
     const {
-      data: {
-        createUser: {id},
-      },
+      data: {createUser: user},
     } = await API.graphql(
       graphqlOperation(createUser, {
         input: {
@@ -48,7 +47,9 @@ export const createUserAccount = async (
       }),
     );
 
-    storage.setUserId(id);
+    storage.setUserId(user.id);
+
+    return user;
   } catch (error) {
     console.log('createuser', error);
   }
@@ -58,144 +59,180 @@ export const createUserInterest = async (categoryID, name, profile) => {
   try {
     const result = await API.graphql(
       graphqlOperation(createInterest, {
-        input: {categoryID, name, profile, userID: storage.readUserId()},
+        input: {categoryID, name, profile, userID: userId},
       }),
     );
 
     console.log(result ? 'Sucess' : false);
+    return result;
   } catch (error) {
     console.log('createUserInterest', error);
   }
 };
 
-export const createUserFollows = async (
-  userFollowingID,
-  isFollowing = true,
-  isFollowed = false,
-  userID = storage.readUserId(),
-) => {
+export const createUserFollowing = async (userFollowingID, userID = userId) => {
+  try {
+    const {
+      following: {items: userItems},
+    } = await getUserInfo(userId);
+    let result = null;
+
+    if (userItems.length > 0) {
+      const isFollowing = userItems.filter(
+        ({userFollowingID: id}) => userFollowingID === id,
+      );
+
+      if (isFollowing.length === 0) {
+        result = await API.graphql(
+          graphqlOperation(createFollowering, {
+            input: {isFollowing: true, userFollowingID, userID},
+          }),
+        );
+      }
+    } else {
+      result = await API.graphql(
+        graphqlOperation(createFollowering, {
+          input: {isFollowing: true, userFollowingID, userID},
+        }),
+      );
+    }
+
+    console.log(result ? 'Sucess' : false);
+    return result;
+  } catch (error) {
+    console.log('createUserFollowing', error);
+  }
+};
+
+export const createUserFollower = async (userFollowerID, userID = userId) => {
+  try {
+    let result = null;
+
+    const {
+      followers: {items: followerItems},
+    } = await getUserInfo(userId);
+
+    if (followerItems.length > 0) {
+      const isfollowers = followerItems.filter(
+        ({userFollowerID: id}) => userFollowerID === id,
+      );
+
+      if (isfollowers.length === 0) {
+        result = await API.graphql(
+          graphqlOperation(createFollower, {
+            input: {
+              isFollow: true,
+              userID: userFollowerID,
+              userFollowerID: userID,
+            },
+          }),
+        );
+      }
+    } else {
+      result = await API.graphql(
+        graphqlOperation(createFollower, {
+          input: {
+            isFollow: true,
+            userID: userFollowerID,
+            userFollowerID: userID,
+          },
+        }),
+      );
+    }
+
+    console.log(result ? 'Sucess' : false);
+    return result;
+  } catch (error) {
+    console.log('createUserFollower', error);
+  }
+};
+
+export const deleteUserFollowing = async id => {
+  try {
+    const {
+      following: {items: userItems},
+    } = await getUserInfo(userId);
+    let result = null;
+
+    if (userItems.length > 0) {
+      const isFollowing = userItems.filter(
+        ({userFollowingID}) => userFollowingID === id,
+      );
+
+      console.log(isFollowing);
+      if (isFollowing.length > 0) {
+        result = await API.graphql(
+          graphqlOperation(deleteFollowering, {
+            input: {
+              id: isFollowing[0].id,
+            },
+          }),
+        );
+      }
+    }
+
+    console.log(result ? 'Sucess' : false);
+  } catch (error) {
+    console.log('deleteFollowering', error);
+  }
+};
+
+export const deleteUserFollower = async id => {
+  try {
+    let result = null;
+
+    const {
+      followers: {items: followerItems},
+    } = await getUserInfo(userId);
+
+    if (followerItems.length > 0) {
+      const isfollowers = followerItems.filter(
+        ({userFollowerID}) => userFollowerID === id,
+      );
+
+      console.log(isfollowers);
+      if (isfollowers.length > 0) {
+        result = await API.graphql(
+          graphqlOperation(deleteFollower, {
+            input: {
+              id: isfollowers[0].id,
+            },
+          }),
+        );
+      }
+    }
+
+    console.log(result ? 'Sucess' : false);
+  } catch (error) {
+    console.log('deleteFollowering', error);
+  }
+};
+
+export const followUser = async followUserId => {
+  await createUserFollowing(followUserId);
+  await createUserFollower(followUserId);
+};
+
+export const unFollowUser = async unFollowUserId => {
+  await deleteUserFollowing(unFollowUserId);
+  await deleteUserFollower(unFollowUserId);
+};
+
+export const blackListUser = async (blackListUserID, userID = userId) => {
   try {
     const result = await API.graphql(
-      graphqlOperation(createFollowInfo, {
+      graphqlOperation(createUserBlackList, {
         input: {
-          isFollowed,
-          isFollowing,
-          userFollowingID,
+          blackListUserID,
           userID,
         },
       }),
     );
 
     console.log(result ? 'Sucess' : false);
+    return result;
   } catch (error) {
-    console.log('createUserFollows', error);
-  }
-};
-
-export const updateUserFollows = async (
-  id,
-  following = null,
-  isFollowed = true,
-) => {
-  try {
-    if (following) {
-      await API.graphql(
-        graphqlOperation(updateFollowInfo, {
-          input: {
-            id,
-            following,
-          },
-        }),
-      );
-    } else {
-      await API.graphql(
-        graphqlOperation(updateFollowInfo, {
-          input: {
-            id,
-            isFollowed,
-          },
-        }),
-      );
-    }
-
-    console.log('Sucess');
-  } catch (error) {
-    console.log('updateFollowInfo', error);
-  }
-};
-
-export const followUser = async id => {
-  const {followInfo: userFollowInfo} = await getUserInfo(getUserId());
-  let updated = 0;
-
-  if (userFollowInfo) {
-    const {items: userItems} = userFollowInfo;
-    userItems.forEach(({id: _id, userFollowingID}) => {
-      if (userFollowingID === id) {
-        updateUserFollows(_id, true);
-        updated = updated + 1;
-      }
-    });
-    const {followInfo} = await getUserInfo(id);
-    let check = 0;
-
-    if (followInfo) {
-      const {items} = followInfo;
-
-      items.forEach(({id: _id, userFollowingID}) => {
-        if (userFollowingID === getUserId()) {
-          updateUserFollows(_id);
-          check = check + 1;
-        }
-      });
-    }
-    if (check === 0) {
-      createUserFollows(getUserId(), false, true, id);
-    }
-  }
-
-  if (updated === 0) {
-    createUserFollows(id);
-    const {followInfo} = await getUserInfo(id);
-    let check = 0;
-
-    if (followInfo) {
-      const {items} = followInfo;
-
-      items.forEach(({id: _id, userFollowingID}) => {
-        if (userFollowingID === getUserId()) {
-          updateUserFollows(_id);
-          check = check + 1;
-        }
-      });
-    }
-    if (check === 0) {
-      createUserFollows(getUserId(), false, true, id);
-    }
-  }
-};
-
-export const unFollowUser = async id => {
-  const {followInfo: userFollowInfo} = await getUserInfo(getUserId());
-
-  if (userFollowInfo) {
-    const {items: userItems} = userFollowInfo;
-    userItems.forEach(({id: _id, userFollowingID}) => {
-      if (userFollowingID === id) {
-        updateUserFollows(_id, false);
-      }
-    });
-    const {followInfo} = await getUserInfo(id);
-
-    if (followInfo) {
-      const {items} = followInfo;
-
-      items.forEach(({id: _id, userFollowingID}) => {
-        if (userFollowingID === getUserId()) {
-          updateUserFollows(_id, null, false);
-        }
-      });
-    }
+    console.log('blackListUser', error);
   }
 };
 
@@ -205,7 +242,7 @@ export const createUserPost = async (
   blob,
   path,
   time,
-  userID = storage.readUserId(),
+  userID = userId,
 ) => {
   try {
     const postImage = blob
@@ -230,7 +267,7 @@ export const createUserPost = async (
     );
 
     console.log(result ? 'Sucess' : false);
-    return true;
+    return result;
   } catch (error) {
     console.log('createUserPost', error);
   }
@@ -261,7 +298,7 @@ export const createUComment = async (
   blob,
   time,
   postID,
-  userID = storage.readUserId(),
+  userID = userId,
 ) => {
   try {
     const commentImage = blob

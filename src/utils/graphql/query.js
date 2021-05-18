@@ -7,6 +7,8 @@ import {
   listPosts,
   listParentComments,
   listUserBlackLists,
+  listFollowerings,
+  listFollowers,
 } from '../../graphql/queries';
 import storage from '../storage';
 
@@ -66,8 +68,6 @@ export const listUserFollow = async () => {
     const {items: blackList} = await getBlacklistedUser();
     const filterCurrentUser = items?.filter(({id}) => userId !== id);
 
-    console.log(blackList, 'blackList');
-
     const filterBlacklist = filterCurrentUser.filter(({id}) =>
       blackList.every(({blackListUserID}) => blackListUserID !== id),
     );
@@ -102,18 +102,6 @@ export const getUserInfo = async (id = userId) => {
   } catch ({code, message}) {
     console.log('getUserInfo', code, message);
   }
-};
-
-export const getUserInfoFollower = async () => {
-  const {
-    followInfo: {items},
-    ...rest
-  } = await getUserInfo();
-
-  const followers = items.filter(({isFollowed}) => isFollowed === true);
-  const following = items.filter(({isFollowing}) => isFollowing === true);
-
-  return {followers, following, ...rest};
 };
 
 export const getUserInterest = async () => {
@@ -192,5 +180,87 @@ export const listComments = async (id, nextToken = null, noLimit = false) => {
     return {...list};
   } catch ({code, message}) {
     console.log('listParentComments', code, message);
+  }
+};
+
+export const listUserFollowings = async (
+  id = userId,
+  nextToken = null,
+  noLimit = false,
+) => {
+  try {
+    if (noLimit) {
+      const {
+        data: {listFollowerings: list},
+      } = await API.graphql(
+        graphqlOperation(listFollowerings, {filter: {userID: {eq: id}}}),
+      );
+      return {...list};
+    }
+
+    if (nextToken) {
+      const {
+        data: {listFollowerings: list},
+      } = await API.graphql(
+        graphqlOperation(listFollowerings, {
+          filter: {userID: {eq: id}},
+          limit: 6,
+          nextToken,
+        }),
+      );
+      return {...list};
+    }
+    const {
+      data: {listFollowerings: list},
+    } = await API.graphql(
+      graphqlOperation(listFollowerings, {
+        limit: 6,
+        filter: {userID: {eq: id}},
+      }),
+    );
+    return {...list};
+  } catch ({code, message}) {
+    console.log('listFollowerings', code, message);
+  }
+};
+
+export const listUserFollowers = async (
+  id = userId,
+  nextToken = null,
+  noLimit = false,
+) => {
+  try {
+    if (noLimit) {
+      const {
+        data: {listFollowers: list},
+      } = await API.graphql(
+        graphqlOperation(listFollowers, {filter: {userID: {eq: id}}}),
+      );
+      return {...list};
+    }
+
+    if (nextToken) {
+      const {
+        data: {listFollowers: list},
+      } = await API.graphql(
+        graphqlOperation(listFollowers, {
+          filter: {userID: {eq: id}},
+          limit: 6,
+          nextToken,
+        }),
+      );
+      return {...list};
+    }
+    const {
+      data: {listFollowers: list},
+    } = await API.graphql(
+      graphqlOperation(listFollowers, {
+        limit: 6,
+        filter: {userID: {eq: id}},
+      }),
+    );
+    return {...list};
+  } catch ({code, message}) {
+    console.log('listFollowers', code, message);
   }
 };

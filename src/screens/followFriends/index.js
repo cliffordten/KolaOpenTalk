@@ -11,7 +11,7 @@ import styles from './styles';
 import {listUserFollow} from '../../utils/graphql/query';
 import Loader from '../../components/loader';
 import storage from '../../utils/storage';
-import {followUser} from '../../utils/graphql/mutations';
+import {followUser, blackListUser} from '../../utils/graphql/mutations';
 
 const FollowFriends = ({navigation, external}) => {
   const [data, setData] = useState(null);
@@ -25,7 +25,7 @@ const FollowFriends = ({navigation, external}) => {
     };
     fetch();
     return () => {};
-  }, []);
+  }, [data]);
 
   const handleFollow = (userId, isFollow) => {
     if (userId) {
@@ -35,6 +35,14 @@ const FollowFriends = ({navigation, external}) => {
         const filter = following.filter(id => userId !== id);
         setFollowing(filter);
       }
+    }
+  };
+
+  const handleBlackList = async userId => {
+    if (userId) {
+      await blackListUser(userId);
+      const filterData = data.filter(id => userId !== id);
+      setData(filterData);
     }
   };
 
@@ -68,7 +76,11 @@ const FollowFriends = ({navigation, external}) => {
           )}
         </View>
         <View style={styles.inputContainer}>
-          <SelectFollows data={data} onPress={handleFollow} />
+          <SelectFollows
+            data={data}
+            onPress={handleFollow}
+            blackList={handleBlackList}
+          />
         </View>
         {!external && (
           <View style={styles.confirm}>
