@@ -564,10 +564,8 @@ export const onCreatePost = /* GraphQL */ `
     onCreatePost {
       id
       desc
-      isUserLikedID
-      isLiked
-      nLikes
       postImage
+      isPrivate
       time
       userID
       interest
@@ -598,9 +596,21 @@ export const onCreatePost = /* GraphQL */ `
           parentComentId
           childCommentId
           content
-          isLiked
           commentImage
           time
+          postID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      likes {
+        items {
+          id
+          isLiked
+          time
+          commentID
           postID
           userID
           createdAt
@@ -618,10 +628,8 @@ export const onUpdatePost = /* GraphQL */ `
     onUpdatePost {
       id
       desc
-      isUserLikedID
-      isLiked
-      nLikes
       postImage
+      isPrivate
       time
       userID
       interest
@@ -652,9 +660,21 @@ export const onUpdatePost = /* GraphQL */ `
           parentComentId
           childCommentId
           content
-          isLiked
           commentImage
           time
+          postID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      likes {
+        items {
+          id
+          isLiked
+          time
+          commentID
           postID
           userID
           createdAt
@@ -672,10 +692,8 @@ export const onDeletePost = /* GraphQL */ `
     onDeletePost {
       id
       desc
-      isUserLikedID
-      isLiked
-      nLikes
       postImage
+      isPrivate
       time
       userID
       interest
@@ -706,9 +724,21 @@ export const onDeletePost = /* GraphQL */ `
           parentComentId
           childCommentId
           content
-          isLiked
           commentImage
           time
+          postID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      likes {
+        items {
+          id
+          isLiked
+          time
+          commentID
           postID
           userID
           createdAt
@@ -721,16 +751,13 @@ export const onDeletePost = /* GraphQL */ `
     }
   }
 `;
-export const onCreateComment = /* GraphQL */ `
-  subscription OnCreateComment {
-    onCreateComment {
+export const onCreateLike = /* GraphQL */ `
+  subscription OnCreateLike {
+    onCreateLike {
       id
-      parentComentId
-      childCommentId
-      content
       isLiked
-      commentImage
       time
+      commentID
       postID
       userID
       user {
@@ -757,10 +784,8 @@ export const onCreateComment = /* GraphQL */ `
       post {
         id
         desc
-        isUserLikedID
-        isLiked
-        nLikes
         postImage
+        isPrivate
         time
         userID
         interest
@@ -774,6 +799,312 @@ export const onCreateComment = /* GraphQL */ `
           updatedAt
         }
         comments {
+          nextToken
+        }
+        likes {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      comment {
+        id
+        parentComentId
+        childCommentId
+        content
+        commentImage
+        time
+        postID
+        userID
+        likes {
+          nextToken
+        }
+        user {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        post {
+          id
+          desc
+          postImage
+          isPrivate
+          time
+          userID
+          interest
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateLike = /* GraphQL */ `
+  subscription OnUpdateLike {
+    onUpdateLike {
+      id
+      isLiked
+      time
+      commentID
+      postID
+      userID
+      user {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      post {
+        id
+        desc
+        postImage
+        isPrivate
+        time
+        userID
+        interest
+        user {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
+        likes {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      comment {
+        id
+        parentComentId
+        childCommentId
+        content
+        commentImage
+        time
+        postID
+        userID
+        likes {
+          nextToken
+        }
+        user {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        post {
+          id
+          desc
+          postImage
+          isPrivate
+          time
+          userID
+          interest
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteLike = /* GraphQL */ `
+  subscription OnDeleteLike {
+    onDeleteLike {
+      id
+      isLiked
+      time
+      commentID
+      postID
+      userID
+      user {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      post {
+        id
+        desc
+        postImage
+        isPrivate
+        time
+        userID
+        interest
+        user {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
+        likes {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      comment {
+        id
+        parentComentId
+        childCommentId
+        content
+        commentImage
+        time
+        postID
+        userID
+        likes {
+          nextToken
+        }
+        user {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        post {
+          id
+          desc
+          postImage
+          isPrivate
+          time
+          userID
+          interest
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateComment = /* GraphQL */ `
+  subscription OnCreateComment {
+    onCreateComment {
+      id
+      parentComentId
+      childCommentId
+      content
+      commentImage
+      time
+      postID
+      userID
+      likes {
+        items {
+          id
+          isLiked
+          time
+          commentID
+          postID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      user {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      post {
+        id
+        desc
+        postImage
+        isPrivate
+        time
+        userID
+        interest
+        user {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
+        likes {
           nextToken
         }
         createdAt
@@ -791,11 +1122,23 @@ export const onUpdateComment = /* GraphQL */ `
       parentComentId
       childCommentId
       content
-      isLiked
       commentImage
       time
       postID
       userID
+      likes {
+        items {
+          id
+          isLiked
+          time
+          commentID
+          postID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       user {
         id
         name
@@ -820,10 +1163,8 @@ export const onUpdateComment = /* GraphQL */ `
       post {
         id
         desc
-        isUserLikedID
-        isLiked
-        nLikes
         postImage
+        isPrivate
         time
         userID
         interest
@@ -837,6 +1178,9 @@ export const onUpdateComment = /* GraphQL */ `
           updatedAt
         }
         comments {
+          nextToken
+        }
+        likes {
           nextToken
         }
         createdAt
@@ -854,11 +1198,23 @@ export const onDeleteComment = /* GraphQL */ `
       parentComentId
       childCommentId
       content
-      isLiked
       commentImage
       time
       postID
       userID
+      likes {
+        items {
+          id
+          isLiked
+          time
+          commentID
+          postID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       user {
         id
         name
@@ -883,10 +1239,8 @@ export const onDeleteComment = /* GraphQL */ `
       post {
         id
         desc
-        isUserLikedID
-        isLiked
-        nLikes
         postImage
+        isPrivate
         time
         userID
         interest
@@ -900,6 +1254,9 @@ export const onDeleteComment = /* GraphQL */ `
           updatedAt
         }
         comments {
+          nextToken
+        }
+        likes {
           nextToken
         }
         createdAt

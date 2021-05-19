@@ -621,10 +621,8 @@ export const createPost = /* GraphQL */ `
     createPost(input: $input, condition: $condition) {
       id
       desc
-      isUserLikedID
-      isLiked
-      nLikes
       postImage
+      isPrivate
       time
       userID
       interest
@@ -655,9 +653,21 @@ export const createPost = /* GraphQL */ `
           parentComentId
           childCommentId
           content
-          isLiked
           commentImage
           time
+          postID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      likes {
+        items {
+          id
+          isLiked
+          time
+          commentID
           postID
           userID
           createdAt
@@ -678,10 +688,8 @@ export const updatePost = /* GraphQL */ `
     updatePost(input: $input, condition: $condition) {
       id
       desc
-      isUserLikedID
-      isLiked
-      nLikes
       postImage
+      isPrivate
       time
       userID
       interest
@@ -712,9 +720,21 @@ export const updatePost = /* GraphQL */ `
           parentComentId
           childCommentId
           content
-          isLiked
           commentImage
           time
+          postID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      likes {
+        items {
+          id
+          isLiked
+          time
+          commentID
           postID
           userID
           createdAt
@@ -735,10 +755,8 @@ export const deletePost = /* GraphQL */ `
     deletePost(input: $input, condition: $condition) {
       id
       desc
-      isUserLikedID
-      isLiked
-      nLikes
       postImage
+      isPrivate
       time
       userID
       interest
@@ -769,9 +787,21 @@ export const deletePost = /* GraphQL */ `
           parentComentId
           childCommentId
           content
-          isLiked
           commentImage
           time
+          postID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      likes {
+        items {
+          id
+          isLiked
+          time
+          commentID
           postID
           userID
           createdAt
@@ -784,19 +814,16 @@ export const deletePost = /* GraphQL */ `
     }
   }
 `;
-export const createComment = /* GraphQL */ `
-  mutation CreateComment(
-    $input: CreateCommentInput!
-    $condition: ModelCommentConditionInput
+export const createLike = /* GraphQL */ `
+  mutation CreateLike(
+    $input: CreateLikeInput!
+    $condition: ModelLikeConditionInput
   ) {
-    createComment(input: $input, condition: $condition) {
+    createLike(input: $input, condition: $condition) {
       id
-      parentComentId
-      childCommentId
-      content
       isLiked
-      commentImage
       time
+      commentID
       postID
       userID
       user {
@@ -823,10 +850,8 @@ export const createComment = /* GraphQL */ `
       post {
         id
         desc
-        isUserLikedID
-        isLiked
-        nLikes
         postImage
+        isPrivate
         time
         userID
         interest
@@ -840,6 +865,321 @@ export const createComment = /* GraphQL */ `
           updatedAt
         }
         comments {
+          nextToken
+        }
+        likes {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      comment {
+        id
+        parentComentId
+        childCommentId
+        content
+        commentImage
+        time
+        postID
+        userID
+        likes {
+          nextToken
+        }
+        user {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        post {
+          id
+          desc
+          postImage
+          isPrivate
+          time
+          userID
+          interest
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateLike = /* GraphQL */ `
+  mutation UpdateLike(
+    $input: UpdateLikeInput!
+    $condition: ModelLikeConditionInput
+  ) {
+    updateLike(input: $input, condition: $condition) {
+      id
+      isLiked
+      time
+      commentID
+      postID
+      userID
+      user {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      post {
+        id
+        desc
+        postImage
+        isPrivate
+        time
+        userID
+        interest
+        user {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
+        likes {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      comment {
+        id
+        parentComentId
+        childCommentId
+        content
+        commentImage
+        time
+        postID
+        userID
+        likes {
+          nextToken
+        }
+        user {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        post {
+          id
+          desc
+          postImage
+          isPrivate
+          time
+          userID
+          interest
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteLike = /* GraphQL */ `
+  mutation DeleteLike(
+    $input: DeleteLikeInput!
+    $condition: ModelLikeConditionInput
+  ) {
+    deleteLike(input: $input, condition: $condition) {
+      id
+      isLiked
+      time
+      commentID
+      postID
+      userID
+      user {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      post {
+        id
+        desc
+        postImage
+        isPrivate
+        time
+        userID
+        interest
+        user {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
+        likes {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      comment {
+        id
+        parentComentId
+        childCommentId
+        content
+        commentImage
+        time
+        postID
+        userID
+        likes {
+          nextToken
+        }
+        user {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        post {
+          id
+          desc
+          postImage
+          isPrivate
+          time
+          userID
+          interest
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createComment = /* GraphQL */ `
+  mutation CreateComment(
+    $input: CreateCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
+    createComment(input: $input, condition: $condition) {
+      id
+      parentComentId
+      childCommentId
+      content
+      commentImage
+      time
+      postID
+      userID
+      likes {
+        items {
+          id
+          isLiked
+          time
+          commentID
+          postID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      user {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      post {
+        id
+        desc
+        postImage
+        isPrivate
+        time
+        userID
+        interest
+        user {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
+        likes {
           nextToken
         }
         createdAt
@@ -860,11 +1200,23 @@ export const updateComment = /* GraphQL */ `
       parentComentId
       childCommentId
       content
-      isLiked
       commentImage
       time
       postID
       userID
+      likes {
+        items {
+          id
+          isLiked
+          time
+          commentID
+          postID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       user {
         id
         name
@@ -889,10 +1241,8 @@ export const updateComment = /* GraphQL */ `
       post {
         id
         desc
-        isUserLikedID
-        isLiked
-        nLikes
         postImage
+        isPrivate
         time
         userID
         interest
@@ -906,6 +1256,9 @@ export const updateComment = /* GraphQL */ `
           updatedAt
         }
         comments {
+          nextToken
+        }
+        likes {
           nextToken
         }
         createdAt
@@ -926,11 +1279,23 @@ export const deleteComment = /* GraphQL */ `
       parentComentId
       childCommentId
       content
-      isLiked
       commentImage
       time
       postID
       userID
+      likes {
+        items {
+          id
+          isLiked
+          time
+          commentID
+          postID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       user {
         id
         name
@@ -955,10 +1320,8 @@ export const deleteComment = /* GraphQL */ `
       post {
         id
         desc
-        isUserLikedID
-        isLiked
-        nLikes
         postImage
+        isPrivate
         time
         userID
         interest
@@ -972,6 +1335,9 @@ export const deleteComment = /* GraphQL */ `
           updatedAt
         }
         comments {
+          nextToken
+        }
+        likes {
           nextToken
         }
         createdAt

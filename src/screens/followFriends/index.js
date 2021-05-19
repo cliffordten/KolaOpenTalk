@@ -24,7 +24,6 @@ const FollowFriends = ({navigation, external}) => {
       setData(items);
     };
     fetch();
-    return () => {};
   }, [data]);
 
   const handleFollow = (userId, isFollow) => {
@@ -54,10 +53,10 @@ const FollowFriends = ({navigation, external}) => {
       });
       setTimeout(() => {
         setLoad(false);
-      }, 2000);
+      }, 500);
     }
 
-    navigation.navigate('Home');
+    navigation.replace('Home');
     storage.setonBoardComplete(true);
   };
 

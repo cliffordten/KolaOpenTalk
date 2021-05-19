@@ -242,6 +242,7 @@ export const createUserPost = async (
   blob,
   path,
   time,
+  isPrivate = false,
   userID = userId,
 ) => {
   try {
@@ -262,6 +263,7 @@ export const createUserPost = async (
           postImage,
           time,
           userID,
+          isPrivate,
         },
       }),
     );

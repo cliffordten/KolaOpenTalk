@@ -23,6 +23,7 @@ const Home = ({...rest}) => {
         },
       }) => {
         setData(prev => [post, ...prev]);
+        console.log(post);
       },
     });
     return () => {
@@ -58,6 +59,7 @@ const Home = ({...rest}) => {
   const onRefresh = async () => {
     setReload(true);
     const {items, nextToken} = await listAllPosts();
+    console.log(items.length);
     setData(items);
     setNext(nextToken);
     setReload(false);

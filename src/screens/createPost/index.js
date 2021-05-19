@@ -13,6 +13,7 @@ import {
   Keyboard as RNKeyboard,
   Image,
 } from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
 import Ripple from 'react-native-material-ripple';
 import EmojiBoard from 'react-native-emoji-board';
 import ScrollView from '../../views/scroll';
@@ -32,6 +33,7 @@ const CreatePost = ({navigation}) => {
   const [selectedInterest, setSelectedInterest] = useState(null);
   const [category, setCategory] = useState([]);
   const [load, setLoad] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(false);
 
   const onClick = emoji => {
     if (value.length < 300) {
@@ -71,13 +73,14 @@ const CreatePost = ({navigation}) => {
         blob,
         imageUrl,
         getCurrentTime(),
+        isPrivate,
       );
       if (res) {
         setTimeout(() => {
           setLoad(false);
           navigation.navigate('Home');
           showShortToast('Successfuly Created post');
-        }, 2000);
+        }, 500);
       }
     } else {
       showShortToast('Make sure you selected a category and written something');
@@ -134,6 +137,17 @@ const CreatePost = ({navigation}) => {
                   setPath={setImageUrl}
                 />
               </View>
+            </View>
+            <View style={styles.wrapperCheck}>
+              <CheckBox
+                disabled={false}
+                value={isPrivate}
+                onValueChange={newValue => setIsPrivate(newValue)}
+                style={styles.checkbox}
+                tintColors={{true: Colors.secondary, false: Colors.secondary}}
+                widt
+              />
+              <Text>{labels.private}</Text>
             </View>
             {imageUrl ? (
               <View>

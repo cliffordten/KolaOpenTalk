@@ -84,6 +84,16 @@ const styles = StyleSheet.create({
   noImage: {
     color: Colors.secondaryLightBorder,
   },
+  checkbox: {
+    color: Colors.secondary,
+  },
+  wrapperCheck: {
+    width: width * 0.92,
+    alignSelf: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
 });
 
 export default styles;

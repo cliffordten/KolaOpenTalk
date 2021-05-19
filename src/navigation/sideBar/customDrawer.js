@@ -23,8 +23,10 @@ const CustomDrawer = ({navigation}) => {
     };
 
     fetch();
-    return () => {};
-  }, []);
+    return () => {
+      navigation.pop(1);
+    };
+  }, [navigation]);
 
   const logout = () => {
     setLoad(true);
@@ -32,8 +34,8 @@ const CustomDrawer = ({navigation}) => {
     storage.setUserSignedup(false);
     setTimeout(() => {
       setLoad(false);
-      navigation.navigate('Login');
-    }, 2000);
+      navigation.replace('Login');
+    }, 500);
   };
   return (
     <View style={styles.cont}>

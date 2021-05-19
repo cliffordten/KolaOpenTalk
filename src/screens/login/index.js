@@ -27,13 +27,17 @@ const Login = ({navigation}) => {
   const onSubmit = async formData => {
     setLoad(true);
     const {password, email} = formData;
+    if (password === '' || email === '' || !password || !email) {
+      showShortToast('Please provide login credentials');
+      return;
+    }
     try {
-      await Auth.signIn(email, password);
+      Auth.signIn(email, password);
       const {id} = await getCurrentUser(email);
       storage.setUserisLogedOut(false);
       storage.setUserSignedup(false);
       storage.setUserId(id);
-      navigation.navigate('Home');
+      navigation.replace('Home');
       setLoad(false);
     } catch ({code, message}) {
       if (code === 'InvalidParameterException') {
@@ -41,6 +45,12 @@ const Login = ({navigation}) => {
       }
       if (code === 'NotAuthorizedException') {
         showShortToast('Invalid Credentials');
+      }
+
+      if (code === 'NetworkError') {
+        showShortToast(
+          'Something is wrong with your network, \n Check your connections',
+        );
       }
       console.log('onSubmit', code, 'msg', message);
       setLoad(false);

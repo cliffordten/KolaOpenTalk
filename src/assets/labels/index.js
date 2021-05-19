@@ -42,4 +42,5 @@ export default {
   comment: 'Your Comment',
   post: 'write something...',
   NoImage: 'No Image Selected',
+  private: 'Private Post',
 };

@@ -18,7 +18,7 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       RNBootSplash.hide({fade: true});
-    }, 2000);
+    }, 500);
     return () => {};
   }, []);
   return (

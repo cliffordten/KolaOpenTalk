@@ -352,10 +352,8 @@ export const getPost = /* GraphQL */ `
     getPost(id: $id) {
       id
       desc
-      isUserLikedID
-      isLiked
-      nLikes
       postImage
+      isPrivate
       time
       userID
       interest
@@ -386,9 +384,21 @@ export const getPost = /* GraphQL */ `
           parentComentId
           childCommentId
           content
-          isLiked
           commentImage
           time
+          postID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      likes {
+        items {
+          id
+          isLiked
+          time
+          commentID
           postID
           userID
           createdAt
@@ -411,10 +421,8 @@ export const listPosts = /* GraphQL */ `
       items {
         id
         desc
-        isUserLikedID
-        isLiked
-        nLikes
         postImage
+        isPrivate
         time
         userID
         interest
@@ -430,6 +438,9 @@ export const listPosts = /* GraphQL */ `
         comments {
           nextToken
         }
+        likes {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -437,16 +448,13 @@ export const listPosts = /* GraphQL */ `
     }
   }
 `;
-export const getComment = /* GraphQL */ `
-  query GetComment($id: ID!) {
-    getComment(id: $id) {
+export const getLike = /* GraphQL */ `
+  query GetLike($id: ID!) {
+    getLike(id: $id) {
       id
-      parentComentId
-      childCommentId
-      content
       isLiked
-      commentImage
       time
+      commentID
       postID
       userID
       user {
@@ -473,10 +481,8 @@ export const getComment = /* GraphQL */ `
       post {
         id
         desc
-        isUserLikedID
-        isLiked
-        nLikes
         postImage
+        isPrivate
         time
         userID
         interest
@@ -490,6 +496,173 @@ export const getComment = /* GraphQL */ `
           updatedAt
         }
         comments {
+          nextToken
+        }
+        likes {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      comment {
+        id
+        parentComentId
+        childCommentId
+        content
+        commentImage
+        time
+        postID
+        userID
+        likes {
+          nextToken
+        }
+        user {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        post {
+          id
+          desc
+          postImage
+          isPrivate
+          time
+          userID
+          interest
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listLikes = /* GraphQL */ `
+  query ListLikes(
+    $filter: ModelLikeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLikes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        isLiked
+        time
+        commentID
+        postID
+        userID
+        user {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        post {
+          id
+          desc
+          postImage
+          isPrivate
+          time
+          userID
+          interest
+          createdAt
+          updatedAt
+        }
+        comment {
+          id
+          parentComentId
+          childCommentId
+          content
+          commentImage
+          time
+          postID
+          userID
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getComment = /* GraphQL */ `
+  query GetComment($id: ID!) {
+    getComment(id: $id) {
+      id
+      parentComentId
+      childCommentId
+      content
+      commentImage
+      time
+      postID
+      userID
+      likes {
+        items {
+          id
+          isLiked
+          time
+          commentID
+          postID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      user {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        blackList {
+          nextToken
+        }
+        interest {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      post {
+        id
+        desc
+        postImage
+        isPrivate
+        time
+        userID
+        interest
+        user {
+          id
+          name
+          username
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
+        likes {
           nextToken
         }
         createdAt
@@ -512,11 +685,13 @@ export const listComments = /* GraphQL */ `
         parentComentId
         childCommentId
         content
-        isLiked
         commentImage
         time
         postID
         userID
+        likes {
+          nextToken
+        }
         user {
           id
           name
@@ -529,10 +704,8 @@ export const listComments = /* GraphQL */ `
         post {
           id
           desc
-          isUserLikedID
-          isLiked
-          nLikes
           postImage
+          isPrivate
           time
           userID
           interest
