@@ -1,6 +1,7 @@
 import ReduxTypes from '../types.redux';
 const USER_INITIAL_STATE = {
   currentUser: null,
+  userList: [],
 };
 
 export const userReducer = (state = USER_INITIAL_STATE, action) => {
@@ -9,6 +10,12 @@ export const userReducer = (state = USER_INITIAL_STATE, action) => {
       return {
         ...state,
         currentUser: action.payload,
+      };
+
+    case ReduxTypes.setUserList:
+      return {
+        ...state,
+        userList: action.payload,
       };
 
     default:

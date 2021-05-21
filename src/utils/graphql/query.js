@@ -53,7 +53,9 @@ export const getBlacklistedUser = async (id = userId) => {
   try {
     const {
       data: {listUserBlackLists: list},
-    } = await API.graphql(graphqlOperation(listUserBlackLists, {id}));
+    } = await API.graphql(
+      graphqlOperation(listUserBlackLists, {filter: {userID: {eq: id}}}),
+    );
     return {...list};
   } catch ({code, message}) {
     console.log('getUserInfo', code, message);
@@ -73,7 +75,6 @@ export const listUserFollow = async () => {
     const filterBlacklist = filterCurrentUser.filter(({id}) =>
       blackList.every(({blackListUserID}) => blackListUserID !== id),
     );
-
     return {items: filterBlacklist};
   } catch ({code, message}) {
     console.log('listUserFollow', code, message);

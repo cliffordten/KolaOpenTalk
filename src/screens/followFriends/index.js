@@ -12,19 +12,22 @@ import {listUserFollow} from '../../utils/graphql/query';
 import Loader from '../../components/loader';
 import storage from '../../utils/storage';
 import {followUser, blackListUser} from '../../utils/graphql/mutations';
+import {useDispatch, useSelector} from 'react-redux';
+import {setUserList} from '../../redux/actions/user';
 
 const FollowFriends = ({navigation, external}) => {
-  const [data, setData] = useState(null);
   const [following, setFollowing] = useState([]);
   const [load, setLoad] = useState(false);
+  const dispatch = useDispatch();
+  const {userList} = useSelector(state => state.user);
 
   useEffect(() => {
     const fetch = async () => {
       const {items} = await listUserFollow();
-      setData(items);
+      dispatch(setUserList(items));
     };
     fetch();
-  }, [data]);
+  }, [dispatch, userList]);
 
   const handleFollow = (userId, isFollow) => {
     if (userId) {
@@ -40,8 +43,8 @@ const FollowFriends = ({navigation, external}) => {
   const handleBlackList = async userId => {
     if (userId) {
       await blackListUser(userId);
-      const filterData = data.filter(id => userId !== id);
-      setData(filterData);
+      const filterData = userList.filter(id => userId !== id);
+      dispatch(setUserList(filterData));
     }
   };
 
@@ -76,7 +79,7 @@ const FollowFriends = ({navigation, external}) => {
         </View>
         <View style={styles.inputContainer}>
           <SelectFollows
-            data={data}
+            data={userList}
             onPress={handleFollow}
             blackList={handleBlackList}
           />

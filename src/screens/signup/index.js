@@ -1,4 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
+// import React, {useRef, useState} from 'react';
 import Modal from 'react-native-modalbox';
 // import PropTypes from 'prop-types';
 import {Text, View} from 'react-native';
@@ -16,7 +17,8 @@ import storage from '../../utils/storage';
 import Loader from '../../components/loader';
 import {useDispatch} from 'react-redux';
 import {setCurrentUser} from '../../redux/actions/user';
-// import {useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {getUserInfo} from '../../utils/graphql/query';
 
 const Signup = ({goToIndex}) => {
   const [photo, setphoto] = useState(null);
@@ -26,13 +28,22 @@ const Signup = ({goToIndex}) => {
   const [path, setPath] = useState(null);
   const [load, setLoad] = useState(false);
   const dispatch = useDispatch();
-  // const userfound = useSelector(state => state.user);
+  const {currentUser} = useSelector(state => state.user);
   const ref = useRef();
 
-  // useEffect(() => {
-  //   console.log(userfound);
-  //   return () => {};
-  // }, [userfound]);
+  useEffect(() => {
+    const id = storage.readUserId();
+    const fetchInfo = async () => {
+      const userInfo = await getUserInfo();
+      dispatch(setCurrentUser(userInfo));
+      goToIndex.scrollToIndex({animated: true, index: 1});
+    };
+    if (!currentUser && id) {
+      fetchInfo();
+    }
+
+    return () => {};
+  }, [currentUser, dispatch, goToIndex]);
 
   const formInit = {
     name: '',
@@ -77,10 +88,10 @@ const Signup = ({goToIndex}) => {
   };
 
   const onSubmit = async formData => {
-    const {
-      _data: {name: fileName},
-    } = photo;
     if (isValidate(formData)) {
+      const {
+        _data: {name: fileName},
+      } = photo;
       setLoad(true);
       const {password, email, name} = formData;
       try {
@@ -95,7 +106,7 @@ const Signup = ({goToIndex}) => {
         });
         if (user) {
           setConEmail(email);
-          createUserAccount(
+          const userInfo = await createUserAccount(
             email,
             fileName,
             email.split('@')[0],
@@ -103,15 +114,22 @@ const Signup = ({goToIndex}) => {
             photo,
             path,
           );
+          const {id} = userInfo;
+          storage.setUserId(id);
+          dispatch(setCurrentUser(userInfo));
           showLongToast('A comfirmation code was sent to your email');
           setLoad(false);
           ref.current.open();
         }
-        dispatch(setCurrentUser(user));
       } catch ({code, message}) {
         if (code === 'UsernameExistsException') {
           setLoad(false);
           showLongToast(message);
+        }
+        if (code === 'NetworkError') {
+          showShortToast(
+            'Something is wrong with your network, \n Check your connections',
+          );
         }
         console.log('onSubmit', code, 'msg', message);
       }
