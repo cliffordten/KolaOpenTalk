@@ -10,34 +10,33 @@ import Title from '../../components/title';
 import {Colors} from '../../config';
 import SelectImageCatergory from '../../views/selectImageCatergory';
 import styles from './styles';
-import {listCategories} from '../../utils/graphql/query';
 import Loader from '../../components/loader';
-import {createUserInterest} from '../../utils/graphql/mutations';
 import {showShortToast} from '../../utils/methods';
 import {useDispatch, useSelector} from 'react-redux';
-import {getCategories} from '../../redux/actions/category';
+import {getCategories, saveUserCategories} from '../../redux/actions/category';
 
 const ChooseCategory = ({goToIndex}) => {
   const [next, setNext] = useState(0);
   const [load, setLoad] = useState(false);
   const [categories, setCategories] = useState([]);
   const dispatch = useDispatch();
-  const {categories: category} = useSelector(state => state.category);
+  const {categories: category, isNext} = useSelector(state => state.category);
 
   useEffect(() => {
     dispatch(getCategories());
     return () => {};
   }, [dispatch]);
 
-  console.log(category.length);
-
   const loadMore = async () => {
-    if (category.length > 0) {
+    if (isNext) {
       setLoad(true);
       dispatch(getCategories(next + 1));
       setNext(next + 1);
-      setLoad(false);
+      setTimeout(() => {
+        setLoad(false);
+      }, 500);
     } else {
+      setNext(0);
       showShortToast('End of list');
     }
   };
@@ -56,11 +55,11 @@ const ChooseCategory = ({goToIndex}) => {
   const saveSelection = () => {
     if (categories.length > 0) {
       setLoad(true);
-      categories.forEach(({categoryID, name, profile}) => {
-        createUserInterest(categoryID, name, profile);
-      });
+      dispatch(saveUserCategories(categories));
       goToIndex.scrollToIndex({animated: true, index: 2});
-      setLoad(false);
+      setTimeout(() => {
+        setLoad(false);
+      }, 500);
     }
   };
 

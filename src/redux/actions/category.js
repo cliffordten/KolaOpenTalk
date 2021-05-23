@@ -1,6 +1,9 @@
 import ReduxTypes from '../types.redux';
 import {DataStore, Predicates} from 'aws-amplify';
-import {Category} from '../../models';
+import {Category, Interest} from '../../models';
+import storage from '../../utils/storage';
+
+const userID = storage.readUserId();
 
 export const getCategories = (next = 0) => async dispatch => {
   try {
@@ -20,5 +23,39 @@ export const getCategories = (next = 0) => async dispatch => {
       type: ReduxTypes.exception.error,
       payload: {msg: 'Error fetching categories', error},
     });
+  }
+};
+
+export const saveUserCategories = (categories = []) => async dispatch => {
+  try {
+    categories.forEach(async ({...arg}) => {
+      await DataStore.save(
+        new Interest({
+          ...arg,
+          userID,
+        }),
+      );
+    });
+
+    if (categories) {
+      dispatch({
+        type: ReduxTypes.category.saveUserCategory,
+        payload: categories,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: ReduxTypes.exception.error,
+      payload: {msg: 'Error Saving categories', error},
+    });
+  }
+};
+
+export const checkSave = async () => {
+  try {
+    const result = await DataStore.query(Interest, c => c.userID('eq', userID));
+    console.log(result);
+  } catch (e) {
+    console.log('object', e);
   }
 };

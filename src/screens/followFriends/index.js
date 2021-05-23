@@ -8,12 +8,11 @@ import Title from '../../components/title';
 import {Colors} from '../../config';
 import SelectFollows from '../../views/selectFollows';
 import styles from './styles';
-import {listUserFollow} from '../../utils/graphql/query';
 import Loader from '../../components/loader';
 import storage from '../../utils/storage';
-import {followUser, blackListUser} from '../../utils/graphql/mutations';
+import {followUser} from '../../utils/graphql/mutations';
 import {useDispatch, useSelector} from 'react-redux';
-import {setUserList} from '../../redux/actions/user';
+import {setUserList, blackListUser} from '../../redux/actions/user';
 
 const FollowFriends = ({navigation, external}) => {
   const [following, setFollowing] = useState([]);
@@ -22,12 +21,10 @@ const FollowFriends = ({navigation, external}) => {
   const {userList} = useSelector(state => state.user);
 
   useEffect(() => {
-    const fetch = async () => {
-      const {items} = await listUserFollow();
-      dispatch(setUserList(items));
-    };
-    fetch();
-  }, [dispatch, userList]);
+    dispatch(setUserList());
+  }, [dispatch]);
+
+  console.log(userList.length);
 
   const handleFollow = (userId, isFollow) => {
     if (userId) {
@@ -42,9 +39,7 @@ const FollowFriends = ({navigation, external}) => {
 
   const handleBlackList = async userId => {
     if (userId) {
-      await blackListUser(userId);
-      const filterData = userList.filter(id => userId !== id);
-      dispatch(setUserList(filterData));
+      dispatch(blackListUser(userId, userList));
     }
   };
 
