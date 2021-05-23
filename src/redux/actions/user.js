@@ -1,11 +1,11 @@
 import ReduxTypes from '../types.redux';
 
 export const setCurrentUser = user => ({
-  type: ReduxTypes.setCurrentUser,
+  type: ReduxTypes.user.setCurrentUser,
   payload: user,
 });
 
 export const setUserList = list => ({
-  type: ReduxTypes.setUserList,
+  type: ReduxTypes.user.setUserList,
   payload: list,
 });

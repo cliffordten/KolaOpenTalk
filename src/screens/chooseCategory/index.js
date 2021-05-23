@@ -14,29 +14,28 @@ import {listCategories} from '../../utils/graphql/query';
 import Loader from '../../components/loader';
 import {createUserInterest} from '../../utils/graphql/mutations';
 import {showShortToast} from '../../utils/methods';
+import {useDispatch, useSelector} from 'react-redux';
+import {getCategories} from '../../redux/actions/category';
 
 const ChooseCategory = ({goToIndex}) => {
-  const [data, setData] = useState([]);
-  const [next, setNext] = useState(null);
+  const [next, setNext] = useState(0);
   const [load, setLoad] = useState(false);
   const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch();
+  const {categories: category} = useSelector(state => state.category);
 
   useEffect(() => {
-    const fetch = async () => {
-      const {items, nextToken} = await listCategories();
-      setData(items);
-      setNext(nextToken);
-    };
-    fetch();
+    dispatch(getCategories());
     return () => {};
-  }, []);
+  }, [dispatch]);
+
+  console.log(category.length);
 
   const loadMore = async () => {
-    if (next) {
+    if (category.length > 0) {
       setLoad(true);
-      const {items, nextToken} = await listCategories(next);
-      setData([...data, ...items]);
-      setNext(nextToken);
+      dispatch(getCategories(next + 1));
+      setNext(next + 1);
       setLoad(false);
     } else {
       showShortToast('End of list');
@@ -79,7 +78,7 @@ const ChooseCategory = ({goToIndex}) => {
           />
         </View>
         <View style={styles.inputContainer}>
-          <SelectImageCatergory data={data} onPress={getSelected} />
+          <SelectImageCatergory data={category} onPress={getSelected} />
         </View>
         <View style={styles.confirm}>
           <Button label={labels.seeMore} color={'default'} onPress={loadMore} />

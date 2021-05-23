@@ -3,6 +3,8 @@ import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
 import Icon from '../../components/icon';
 import {Colors} from '../../config';
 import styles from './styles';
+import {useIsEmptyOrNull} from '../../utils/hooks';
+import NoInternetText from '../../components/noInternet';
 
 const RenderImage = ({id, profile, name, onPress}) => {
   const [select, setSelect] = useState(false);
@@ -52,20 +54,26 @@ const RenderImage = ({id, profile, name, onPress}) => {
 };
 
 const SelectImageCatergory = ({onPress, data}) => {
+  const isNull = useIsEmptyOrNull(data);
+
   return (
     <View style={styles.flatContainer}>
-      <FlatList
-        data={data}
-        renderItem={({item}) => (
-          <RenderImage {...item} key={({id}) => id} onPress={onPress} />
-        )}
-        keyExtractor={item => item.id}
-        numColumns={3}
-        style={styles.flatList}
-        showsVerticalScrollIndicator={false}
-        bounces={false}
-        columnWrapperStyle={styles.flat}
-      />
+      {!isNull ? (
+        <FlatList
+          data={data}
+          renderItem={({item}) => (
+            <RenderImage {...item} key={({id}) => id} onPress={onPress} />
+          )}
+          keyExtractor={item => item.id}
+          numColumns={3}
+          style={styles.flatList}
+          showsVerticalScrollIndicator={false}
+          bounces={false}
+          columnWrapperStyle={styles.flat}
+        />
+      ) : (
+        <NoInternetText />
+      )}
     </View>
   );
 };

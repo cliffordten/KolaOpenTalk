@@ -43,9 +43,11 @@ export const listCategories = async (nextToken = null, noLimit = false) => {
         limit: 12,
       }),
     );
+
+    // console.log(list);
     return {...list};
-  } catch ({code, message}) {
-    console.log('listCategory', code, message);
+  } catch (err) {
+    console.log('listCategory', err);
   }
 };
 

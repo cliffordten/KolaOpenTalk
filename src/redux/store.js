@@ -4,8 +4,12 @@ import rootReducer from './reducers';
 
 const initialState = {};
 
-const refreshTokenMiddleWare = () => next => async action => {
-  console.log('log from the store middleware');
+const refreshTokenMiddleWare = res => next => async action => {
+  console.log(
+    '----------------------- ACTION_FIRED :',
+    action?.type,
+    '-----------------------',
+  );
   next(action);
 };
 

@@ -15,10 +15,14 @@ export const onCreateUser = /* GraphQL */ `
           isFollowing
           userID
           userFollowingID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       followers {
         items {
@@ -26,20 +30,28 @@ export const onCreateUser = /* GraphQL */ `
           isFollow
           userID
           userFollowerID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       blackList {
         items {
           id
           userID
           blackListUserID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       interest {
         items {
@@ -48,11 +60,18 @@ export const onCreateUser = /* GraphQL */ `
           profile
           userID
           categoryID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -72,10 +91,14 @@ export const onUpdateUser = /* GraphQL */ `
           isFollowing
           userID
           userFollowingID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       followers {
         items {
@@ -83,20 +106,28 @@ export const onUpdateUser = /* GraphQL */ `
           isFollow
           userID
           userFollowerID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       blackList {
         items {
           id
           userID
           blackListUserID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       interest {
         items {
@@ -105,11 +136,18 @@ export const onUpdateUser = /* GraphQL */ `
           profile
           userID
           categoryID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -129,10 +167,14 @@ export const onDeleteUser = /* GraphQL */ `
           isFollowing
           userID
           userFollowingID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       followers {
         items {
@@ -140,20 +182,28 @@ export const onDeleteUser = /* GraphQL */ `
           isFollow
           userID
           userFollowerID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       blackList {
         items {
           id
           userID
           blackListUserID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       interest {
         items {
@@ -162,11 +212,18 @@ export const onDeleteUser = /* GraphQL */ `
           profile
           userID
           categoryID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -187,19 +244,29 @@ export const onCreateFollowering = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -220,19 +287,29 @@ export const onUpdateFollowering = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -253,19 +330,29 @@ export const onDeleteFollowering = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -286,19 +373,29 @@ export const onCreateFollower = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -319,19 +416,29 @@ export const onUpdateFollower = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -352,19 +459,29 @@ export const onDeleteFollower = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -384,19 +501,29 @@ export const onCreateUserBlackList = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -416,19 +543,29 @@ export const onUpdateUserBlackList = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -448,19 +585,29 @@ export const onDeleteUserBlackList = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -478,9 +625,15 @@ export const onCreateInterest = /* GraphQL */ `
         id
         name
         profile
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -498,9 +651,15 @@ export const onUpdateInterest = /* GraphQL */ `
         id
         name
         profile
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -518,9 +677,15 @@ export const onDeleteInterest = /* GraphQL */ `
         id
         name
         profile
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -532,6 +697,9 @@ export const onCreateCategory = /* GraphQL */ `
       id
       name
       profile
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -543,6 +711,9 @@ export const onUpdateCategory = /* GraphQL */ `
       id
       name
       profile
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -554,6 +725,9 @@ export const onDeleteCategory = /* GraphQL */ `
       id
       name
       profile
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -577,16 +751,23 @@ export const onCreatePost = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -600,10 +781,14 @@ export const onCreatePost = /* GraphQL */ `
           time
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       likes {
         items {
@@ -613,11 +798,18 @@ export const onCreatePost = /* GraphQL */ `
           commentID
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -641,16 +833,23 @@ export const onUpdatePost = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -664,10 +863,14 @@ export const onUpdatePost = /* GraphQL */ `
           time
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       likes {
         items {
@@ -677,11 +880,18 @@ export const onUpdatePost = /* GraphQL */ `
           commentID
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -705,16 +915,23 @@ export const onDeletePost = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -728,10 +945,14 @@ export const onDeletePost = /* GraphQL */ `
           time
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       likes {
         items {
@@ -741,11 +962,18 @@ export const onDeletePost = /* GraphQL */ `
           commentID
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -768,16 +996,23 @@ export const onCreateLike = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -795,15 +1030,23 @@ export const onCreateLike = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         comments {
           nextToken
+          startedAt
         }
         likes {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -818,6 +1061,7 @@ export const onCreateLike = /* GraphQL */ `
         userID
         likes {
           nextToken
+          startedAt
         }
         user {
           id
@@ -825,6 +1069,9 @@ export const onCreateLike = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -836,12 +1083,21 @@ export const onCreateLike = /* GraphQL */ `
           time
           userID
           interest
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -864,16 +1120,23 @@ export const onUpdateLike = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -891,15 +1154,23 @@ export const onUpdateLike = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         comments {
           nextToken
+          startedAt
         }
         likes {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -914,6 +1185,7 @@ export const onUpdateLike = /* GraphQL */ `
         userID
         likes {
           nextToken
+          startedAt
         }
         user {
           id
@@ -921,6 +1193,9 @@ export const onUpdateLike = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -932,12 +1207,21 @@ export const onUpdateLike = /* GraphQL */ `
           time
           userID
           interest
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -960,16 +1244,23 @@ export const onDeleteLike = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -987,15 +1278,23 @@ export const onDeleteLike = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         comments {
           nextToken
+          startedAt
         }
         likes {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1010,6 +1309,7 @@ export const onDeleteLike = /* GraphQL */ `
         userID
         likes {
           nextToken
+          startedAt
         }
         user {
           id
@@ -1017,6 +1317,9 @@ export const onDeleteLike = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -1028,12 +1331,21 @@ export const onDeleteLike = /* GraphQL */ `
           time
           userID
           interest
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1058,10 +1370,14 @@ export const onCreateComment = /* GraphQL */ `
           commentID
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       user {
         id
@@ -1071,16 +1387,23 @@ export const onCreateComment = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1098,18 +1421,29 @@ export const onCreateComment = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         comments {
           nextToken
+          startedAt
         }
         likes {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1134,10 +1468,14 @@ export const onUpdateComment = /* GraphQL */ `
           commentID
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       user {
         id
@@ -1147,16 +1485,23 @@ export const onUpdateComment = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1174,18 +1519,29 @@ export const onUpdateComment = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         comments {
           nextToken
+          startedAt
         }
         likes {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1210,10 +1566,14 @@ export const onDeleteComment = /* GraphQL */ `
           commentID
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       user {
         id
@@ -1223,16 +1583,23 @@ export const onDeleteComment = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1250,18 +1617,29 @@ export const onDeleteComment = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         comments {
           nextToken
+          startedAt
         }
         likes {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }

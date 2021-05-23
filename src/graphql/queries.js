@@ -1,6 +1,52 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const syncUsers = /* GraphQL */ `
+  query SyncUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncUsers(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        username
+        email
+        picture
+        following {
+          nextToken
+          startedAt
+        }
+        followers {
+          nextToken
+          startedAt
+        }
+        blackList {
+          nextToken
+          startedAt
+        }
+        interest {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -15,10 +61,14 @@ export const getUser = /* GraphQL */ `
           isFollowing
           userID
           userFollowingID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       followers {
         items {
@@ -26,20 +76,28 @@ export const getUser = /* GraphQL */ `
           isFollow
           userID
           userFollowerID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       blackList {
         items {
           id
           userID
           blackListUserID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       interest {
         items {
@@ -48,11 +106,18 @@ export const getUser = /* GraphQL */ `
           profile
           userID
           categoryID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -73,20 +138,69 @@ export const listUsers = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncFollowerings = /* GraphQL */ `
+  query SyncFollowerings(
+    $filter: ModelFolloweringFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncFollowerings(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        isFollowing
+        userID
+        userFollowingID
+        followering {
+          id
+          name
+          username
+          email
+          picture
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -105,19 +219,29 @@ export const getFollowering = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -141,13 +265,61 @@ export const listFollowerings = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncFollowers = /* GraphQL */ `
+  query SyncFollowers(
+    $filter: ModelFollowerFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncFollowers(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        isFollow
+        userID
+        userFollowerID
+        follower {
+          id
+          name
+          username
+          email
+          picture
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -166,19 +338,29 @@ export const getFollower = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -202,13 +384,60 @@ export const listFollowers = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncUserBlackLists = /* GraphQL */ `
+  query SyncUserBlackLists(
+    $filter: ModelUserBlackListFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncUserBlackLists(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        userID
+        blackListUserID
+        blackList {
+          id
+          name
+          username
+          email
+          picture
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -226,19 +455,29 @@ export const getUserBlackList = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -261,13 +500,60 @@ export const listUserBlackLists = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncInterests = /* GraphQL */ `
+  query SyncInterests(
+    $filter: ModelInterestFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncInterests(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        profile
+        userID
+        categoryID
+        category {
+          id
+          name
+          profile
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -283,9 +569,15 @@ export const getInterest = /* GraphQL */ `
         id
         name
         profile
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -308,13 +600,48 @@ export const listInterests = /* GraphQL */ `
           id
           name
           profile
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncCategories = /* GraphQL */ `
+  query SyncCategories(
+    $filter: ModelCategoryFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncCategories(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        profile
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -324,6 +651,9 @@ export const getCategory = /* GraphQL */ `
       id
       name
       profile
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -340,10 +670,66 @@ export const listCategorys = /* GraphQL */ `
         id
         name
         profile
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncPosts = /* GraphQL */ `
+  query SyncPosts(
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncPosts(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        desc
+        postImage
+        isPrivate
+        time
+        userID
+        interest
+        user {
+          id
+          name
+          username
+          email
+          picture
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+          startedAt
+        }
+        likes {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -365,16 +751,23 @@ export const getPost = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -388,10 +781,14 @@ export const getPost = /* GraphQL */ `
           time
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       likes {
         items {
@@ -401,11 +798,18 @@ export const getPost = /* GraphQL */ `
           commentID
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -432,19 +836,100 @@ export const listPosts = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         comments {
           nextToken
+          startedAt
         }
         likes {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncLikes = /* GraphQL */ `
+  query SyncLikes(
+    $filter: ModelLikeFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncLikes(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        isLiked
+        time
+        commentID
+        postID
+        userID
+        user {
+          id
+          name
+          username
+          email
+          picture
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        post {
+          id
+          desc
+          postImage
+          isPrivate
+          time
+          userID
+          interest
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        comment {
+          id
+          parentComentId
+          childCommentId
+          content
+          commentImage
+          time
+          postID
+          userID
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -465,16 +950,23 @@ export const getLike = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -492,15 +984,23 @@ export const getLike = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         comments {
           nextToken
+          startedAt
         }
         likes {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -515,6 +1015,7 @@ export const getLike = /* GraphQL */ `
         userID
         likes {
           nextToken
+          startedAt
         }
         user {
           id
@@ -522,6 +1023,9 @@ export const getLike = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -533,12 +1037,21 @@ export const getLike = /* GraphQL */ `
           time
           userID
           interest
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -564,6 +1077,9 @@ export const listLikes = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -575,6 +1091,9 @@ export const listLikes = /* GraphQL */ `
           time
           userID
           interest
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -587,13 +1106,83 @@ export const listLikes = /* GraphQL */ `
           time
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncComments = /* GraphQL */ `
+  query SyncComments(
+    $filter: ModelCommentFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncComments(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        parentComentId
+        childCommentId
+        content
+        commentImage
+        time
+        postID
+        userID
+        likes {
+          nextToken
+          startedAt
+        }
+        user {
+          id
+          name
+          username
+          email
+          picture
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        post {
+          id
+          desc
+          postImage
+          isPrivate
+          time
+          userID
+          interest
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -616,10 +1205,14 @@ export const getComment = /* GraphQL */ `
           commentID
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       user {
         id
@@ -629,16 +1222,23 @@ export const getComment = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -656,18 +1256,29 @@ export const getComment = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         comments {
           nextToken
+          startedAt
         }
         likes {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -691,6 +1302,7 @@ export const listComments = /* GraphQL */ `
         userID
         likes {
           nextToken
+          startedAt
         }
         user {
           id
@@ -698,6 +1310,9 @@ export const listComments = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -709,13 +1324,20 @@ export const listComments = /* GraphQL */ `
           time
           userID
           interest
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
   }
 `;

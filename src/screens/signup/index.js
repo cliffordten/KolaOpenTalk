@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState} from 'react';
 // import React, {useRef, useState} from 'react';
 import Modal from 'react-native-modalbox';
 // import PropTypes from 'prop-types';
@@ -17,8 +17,6 @@ import storage from '../../utils/storage';
 import Loader from '../../components/loader';
 import {useDispatch} from 'react-redux';
 import {setCurrentUser} from '../../redux/actions/user';
-import {useSelector} from 'react-redux';
-import {getUserInfo} from '../../utils/graphql/query';
 
 const Signup = ({goToIndex}) => {
   const [photo, setphoto] = useState(null);
@@ -28,22 +26,7 @@ const Signup = ({goToIndex}) => {
   const [path, setPath] = useState(null);
   const [load, setLoad] = useState(false);
   const dispatch = useDispatch();
-  const {currentUser} = useSelector(state => state.user);
   const ref = useRef();
-
-  useEffect(() => {
-    const id = storage.readUserId();
-    const fetchInfo = async () => {
-      const userInfo = await getUserInfo();
-      dispatch(setCurrentUser(userInfo));
-      goToIndex.scrollToIndex({animated: true, index: 1});
-    };
-    if (!currentUser && id) {
-      fetchInfo();
-    }
-
-    return () => {};
-  }, [currentUser, dispatch, goToIndex]);
 
   const formInit = {
     name: '',

@@ -43,4 +43,5 @@ export default {
   post: 'write something...',
   NoImage: 'No Image Selected',
   private: 'Private Post',
+  isOffline: 'Please Connect to the internet. Device is offline',
 };

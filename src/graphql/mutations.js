@@ -18,10 +18,14 @@ export const createUser = /* GraphQL */ `
           isFollowing
           userID
           userFollowingID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       followers {
         items {
@@ -29,20 +33,28 @@ export const createUser = /* GraphQL */ `
           isFollow
           userID
           userFollowerID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       blackList {
         items {
           id
           userID
           blackListUserID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       interest {
         items {
@@ -51,11 +63,18 @@ export const createUser = /* GraphQL */ `
           profile
           userID
           categoryID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -78,10 +97,14 @@ export const updateUser = /* GraphQL */ `
           isFollowing
           userID
           userFollowingID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       followers {
         items {
@@ -89,20 +112,28 @@ export const updateUser = /* GraphQL */ `
           isFollow
           userID
           userFollowerID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       blackList {
         items {
           id
           userID
           blackListUserID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       interest {
         items {
@@ -111,11 +142,18 @@ export const updateUser = /* GraphQL */ `
           profile
           userID
           categoryID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -138,10 +176,14 @@ export const deleteUser = /* GraphQL */ `
           isFollowing
           userID
           userFollowingID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       followers {
         items {
@@ -149,20 +191,28 @@ export const deleteUser = /* GraphQL */ `
           isFollow
           userID
           userFollowerID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       blackList {
         items {
           id
           userID
           blackListUserID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       interest {
         items {
@@ -171,11 +221,18 @@ export const deleteUser = /* GraphQL */ `
           profile
           userID
           categoryID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -199,19 +256,29 @@ export const createFollowering = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -235,19 +302,29 @@ export const updateFollowering = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -271,19 +348,29 @@ export const deleteFollowering = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -307,19 +394,29 @@ export const createFollower = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -343,19 +440,29 @@ export const updateFollower = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -379,19 +486,29 @@ export const deleteFollower = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -414,19 +531,29 @@ export const createUserBlackList = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -449,19 +576,29 @@ export const updateUserBlackList = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -484,19 +621,29 @@ export const deleteUserBlackList = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -517,9 +664,15 @@ export const createInterest = /* GraphQL */ `
         id
         name
         profile
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -540,9 +693,15 @@ export const updateInterest = /* GraphQL */ `
         id
         name
         profile
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -563,9 +722,15 @@ export const deleteInterest = /* GraphQL */ `
         id
         name
         profile
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -580,6 +745,9 @@ export const createCategory = /* GraphQL */ `
       id
       name
       profile
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -594,6 +762,9 @@ export const updateCategory = /* GraphQL */ `
       id
       name
       profile
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -608,6 +779,9 @@ export const deleteCategory = /* GraphQL */ `
       id
       name
       profile
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -634,16 +808,23 @@ export const createPost = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -657,10 +838,14 @@ export const createPost = /* GraphQL */ `
           time
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       likes {
         items {
@@ -670,11 +855,18 @@ export const createPost = /* GraphQL */ `
           commentID
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -701,16 +893,23 @@ export const updatePost = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -724,10 +923,14 @@ export const updatePost = /* GraphQL */ `
           time
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       likes {
         items {
@@ -737,11 +940,18 @@ export const updatePost = /* GraphQL */ `
           commentID
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -768,16 +978,23 @@ export const deletePost = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -791,10 +1008,14 @@ export const deletePost = /* GraphQL */ `
           time
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       likes {
         items {
@@ -804,11 +1025,18 @@ export const deletePost = /* GraphQL */ `
           commentID
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -834,16 +1062,23 @@ export const createLike = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -861,15 +1096,23 @@ export const createLike = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         comments {
           nextToken
+          startedAt
         }
         likes {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -884,6 +1127,7 @@ export const createLike = /* GraphQL */ `
         userID
         likes {
           nextToken
+          startedAt
         }
         user {
           id
@@ -891,6 +1135,9 @@ export const createLike = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -902,12 +1149,21 @@ export const createLike = /* GraphQL */ `
           time
           userID
           interest
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -933,16 +1189,23 @@ export const updateLike = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -960,15 +1223,23 @@ export const updateLike = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         comments {
           nextToken
+          startedAt
         }
         likes {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -983,6 +1254,7 @@ export const updateLike = /* GraphQL */ `
         userID
         likes {
           nextToken
+          startedAt
         }
         user {
           id
@@ -990,6 +1262,9 @@ export const updateLike = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -1001,12 +1276,21 @@ export const updateLike = /* GraphQL */ `
           time
           userID
           interest
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1032,16 +1316,23 @@ export const deleteLike = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1059,15 +1350,23 @@ export const deleteLike = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         comments {
           nextToken
+          startedAt
         }
         likes {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1082,6 +1381,7 @@ export const deleteLike = /* GraphQL */ `
         userID
         likes {
           nextToken
+          startedAt
         }
         user {
           id
@@ -1089,6 +1389,9 @@ export const deleteLike = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -1100,12 +1403,21 @@ export const deleteLike = /* GraphQL */ `
           time
           userID
           interest
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1133,10 +1445,14 @@ export const createComment = /* GraphQL */ `
           commentID
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       user {
         id
@@ -1146,16 +1462,23 @@ export const createComment = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1173,18 +1496,29 @@ export const createComment = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         comments {
           nextToken
+          startedAt
         }
         likes {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1212,10 +1546,14 @@ export const updateComment = /* GraphQL */ `
           commentID
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       user {
         id
@@ -1225,16 +1563,23 @@ export const updateComment = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1252,18 +1597,29 @@ export const updateComment = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         comments {
           nextToken
+          startedAt
         }
         likes {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1291,10 +1647,14 @@ export const deleteComment = /* GraphQL */ `
           commentID
           postID
           userID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
       user {
         id
@@ -1304,16 +1664,23 @@ export const deleteComment = /* GraphQL */ `
         picture
         following {
           nextToken
+          startedAt
         }
         followers {
           nextToken
+          startedAt
         }
         blackList {
           nextToken
+          startedAt
         }
         interest {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1331,18 +1698,29 @@ export const deleteComment = /* GraphQL */ `
           username
           email
           picture
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         comments {
           nextToken
+          startedAt
         }
         likes {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }

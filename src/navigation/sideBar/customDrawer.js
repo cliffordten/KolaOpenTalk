@@ -34,6 +34,7 @@ const CustomDrawer = ({navigation}) => {
     storage.setUserSignedup(false);
     setTimeout(() => {
       setLoad(false);
+      navigation.pop();
       navigation.replace('Login');
     }, 500);
   };
