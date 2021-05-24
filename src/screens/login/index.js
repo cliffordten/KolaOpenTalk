@@ -14,7 +14,7 @@ import {Auth} from 'aws-amplify';
 import {showShortToast} from '../../utils/methods';
 import Loader from '../../components/loader';
 import {useDispatch} from 'react-redux';
-import {loginUser} from '../../redux/actions/user';
+import {getUserInfo} from '../../redux/actions/user';
 
 const Login = ({navigation}) => {
   const formInit = {
@@ -34,9 +34,9 @@ const Login = ({navigation}) => {
     }
     try {
       Auth.signIn(email, password);
-      dispatch(loginUser(email));
-      navigation.replace('Home');
+      dispatch(getUserInfo(email));
       setTimeout(() => {
+        navigation.replace('Home');
         setLoad(false);
       }, 500);
     } catch ({code, message}) {

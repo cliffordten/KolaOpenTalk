@@ -1,6 +1,7 @@
 import React from 'react';
 import {FlatList as RNFlatList, View} from 'react-native';
 import Loader from '../loader';
+import NoInternetText from '../noInternet';
 
 const FlatList = ({onEndReached, loadMore, onRefresh, reload, ...props}) => {
   return (
@@ -13,6 +14,7 @@ const FlatList = ({onEndReached, loadMore, onRefresh, reload, ...props}) => {
       }
       onRefresh={onRefresh}
       refreshing={reload}
+      ListEmptyComponent={<NoInternetText />}
     />
   );
 };

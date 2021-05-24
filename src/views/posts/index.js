@@ -139,6 +139,7 @@ const Posts = ({
         reload={reload}
         onRefresh={onRefresh}
       />
+
       <Ripple
         style={styles.floatingBtn}
         onPress={() => navigation.navigate('CreatePost')}>

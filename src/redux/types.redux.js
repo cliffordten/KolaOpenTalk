@@ -8,6 +8,10 @@ const ReduxTypes = {
     listCategories: 'LIST_CATERGORY',
     saveUserCategory: 'SAVE_USER_CATERGORY',
   },
+  post: {
+    listPost: 'LIST_POST',
+    createPost: 'CREATE_POST',
+  },
   follow: {
     listFollowing: 'LIST_FOLLOWING',
     saveFollowing: 'SAVE_USER_FOLLOWING',

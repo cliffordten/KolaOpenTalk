@@ -3,17 +3,19 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {View} from 'react-native';
 import Posts from '../../views/posts';
 import styles from './styles';
-import {listAllPosts} from '../../utils/graphql/query';
 import {showShortToast} from '../../utils/methods';
 import {subscribeCreatePost} from '../../utils/graphql/subscriptions';
 import Loader from '../../components/loader';
+import {useSelector, useDispatch} from 'react-redux';
+import {getPosts} from '../../redux/actions/post';
 
 const Home = ({...rest}) => {
-  const [data, setData] = useState([]);
-  const [next, setNext] = useState(null);
+  const [next, setNext] = useState(0);
   const [load, setLoad] = useState(false);
   const [reload, setReload] = useState(false);
   const [loading, setLoading] = useState(false);
+  const {posts, isNext} = useSelector(state => state.post);
+  const dispatch = useDispatch();
 
   const subscribe = useCallback(() => {
     const subscribtion = subscribeCreatePost().subscribe({
@@ -22,7 +24,7 @@ const Home = ({...rest}) => {
           data: {onCreatePost: post},
         },
       }) => {
-        setData(prev => [post, ...prev]);
+        // setData(prev => [post, ...prev]);
         console.log(post);
       },
     });
@@ -32,44 +34,42 @@ const Home = ({...rest}) => {
   }, []);
 
   useEffect(() => {
-    const fetch = async () => {
-      setLoading(true);
-      const {items, nextToken} = await listAllPosts();
-      setData(items);
-      setNext(nextToken);
+    setLoading(true);
+    dispatch(getPosts());
+    setTimeout(() => {
       setLoading(false);
-    };
-    fetch();
+    }, 1000);
     subscribe();
     return () => {};
-  }, [subscribe]);
+  }, [dispatch, subscribe]);
 
   const loadMore = async () => {
-    if (next) {
+    if (isNext) {
       setLoad(true);
-      const {items, nextToken} = await listAllPosts(next);
-      setData([...data, ...items]);
-      setNext(nextToken);
-      setLoad(false);
+      dispatch(getPosts(next));
+      setNext(next + 1);
+      setTimeout(() => {
+        setLoad(false);
+      }, 500);
     } else {
+      setNext(0);
       showShortToast('End of list');
     }
   };
 
   const onRefresh = async () => {
     setReload(true);
-    const {items, nextToken} = await listAllPosts();
-    console.log(items.length);
-    setData(items);
-    setNext(nextToken);
-    setReload(false);
+    dispatch(getPosts());
+    setTimeout(() => {
+      setLoad(false);
+    }, 500);
   };
 
   return (
     <View style={styles.safeAreaView}>
       <Posts
         {...rest}
-        data={data}
+        data={posts}
         loadMore={loadMore}
         load={load}
         onRefresh={onRefresh}

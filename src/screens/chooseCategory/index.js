@@ -56,9 +56,9 @@ const ChooseCategory = ({goToIndex}) => {
     if (categories.length > 0) {
       setLoad(true);
       dispatch(saveUserCategories(categories));
-      goToIndex.scrollToIndex({animated: true, index: 2});
       setTimeout(() => {
         setLoad(false);
+        goToIndex.scrollToIndex({animated: true, index: 2});
       }, 500);
     }
   };

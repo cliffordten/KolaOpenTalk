@@ -3,38 +3,34 @@ import {Image, View} from 'react-native';
 import Text from '../../components/text';
 import LinearGradient from '../../views/gradient';
 import styles from './styles';
-import {getUserInfo} from '../../utils/graphql/query';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import storage from '../../utils/storage';
 import Loader from '../../components/loader';
+import {useSelector, useDispatch} from 'react-redux';
+import {getUserInfo} from '../../redux/actions/user';
+import {DataStore} from 'aws-amplify';
 
 const CustomDrawer = ({navigation}) => {
-  const [user, setUser] = useState(null);
   const [load, setLoad] = useState(false);
+
+  const {currentUser} = useSelector(state => state.user);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    const fetch = async () => {
-      const {
-        followers: {items: followers},
-        following: {items: following},
-        ...rest
-      } = await getUserInfo();
+    if (!currentUser) {
+      dispatch(getUserInfo());
+    }
+  }, [navigation, currentUser, dispatch]);
 
-      setUser({followers, following, ...rest});
-    };
-
-    fetch();
-    return () => {
-      navigation.pop(1);
-    };
-  }, [navigation]);
+  // console.log(currentUser);
 
   const logout = () => {
     setLoad(true);
     storage.setUserisLogedOut(true);
     storage.setUserSignedup(false);
+    DataStore.clear();
     setTimeout(() => {
       setLoad(false);
-      navigation.pop();
       navigation.replace('Login');
     }, 500);
   };
@@ -42,22 +38,22 @@ const CustomDrawer = ({navigation}) => {
     <View style={styles.cont}>
       <LinearGradient style={styles.drawerWrapper}>
         <View style={styles.imageWrapper}>
-          <Image source={{uri: user?.picture}} style={styles.image} />
+          <Image source={{uri: currentUser?.picture}} style={styles.image} />
           <View>
-            <Text label={user?.name} style={styles.text} />
+            <Text label={currentUser?.name} style={styles.text} />
             <Text
-              label={`@${user?.username}`}
+              label={`@${currentUser?.username}`}
               style={[styles.text, styles.username]}
             />
           </View>
         </View>
         <View style={[styles.imageWrapper, styles.textWrapper]}>
           <Text
-            label={user?.following?.length + ' Following'}
+            label={currentUser?.following?.length + ' Following'}
             style={styles.text}
           />
           <Text
-            label={user?.followers?.length + ' Followers'}
+            label={currentUser?.followers?.length + ' Followers'}
             style={[styles.text, styles.left]}
           />
         </View>

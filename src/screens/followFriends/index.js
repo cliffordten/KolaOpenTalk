@@ -47,11 +47,10 @@ const FollowFriends = ({navigation, external}) => {
       dispatch(saveUserFollowing(following));
       setTimeout(() => {
         setLoad(false);
+        navigation.replace('Home');
+        storage.setonBoardComplete(true);
       }, 500);
     }
-
-    navigation.replace('Home');
-    storage.setonBoardComplete(true);
   };
 
   return (

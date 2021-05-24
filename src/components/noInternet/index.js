@@ -5,7 +5,9 @@ import labels from '../../assets/labels';
 
 const NoInternetText = ({error}) => {
   return (
-    <Text style={error ? styles.err : styles.text}>{labels.noCategory}</Text>
+    <Text style={error ? styles.err : styles.text}>
+      {error ? labels.isOffline : labels.noCategory}
+    </Text>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 // import PropTypes from 'prop-types';
 import {Image, Text} from 'react-native';
 import styles from './styles';
@@ -7,11 +7,11 @@ import {Colors} from '../../config';
 import LinearGradient from '../gradient';
 import Ripple from 'react-native-material-ripple';
 import SearchBar from '../../components/search';
-import {getUserInfo} from '../../utils/graphql/query';
+import {useSelector, useDispatch} from 'react-redux';
+import {getUserInfo} from '../../redux/actions/user';
 
 const Header = ({isHome, scene, isSearch, noImage}) => {
   const {options, navigation} = scene.descriptor;
-  const [user, setUser] = useState(null);
 
   const title =
     options.headerTitle !== undefined
@@ -20,15 +20,14 @@ const Header = ({isHome, scene, isSearch, noImage}) => {
       ? options.title
       : scene.route.name;
 
-  useEffect(() => {
-    const fetch = async () => {
-      const data = await getUserInfo();
-      setUser(data);
-    };
+  const {currentUser} = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
-    fetch();
-    return () => {};
-  }, []);
+  useEffect(() => {
+    if (!currentUser) {
+      dispatch(getUserInfo());
+    }
+  }, [navigation, currentUser, dispatch]);
 
   return (
     <LinearGradient style={noImage ? styles.noImage : styles.gradient}>
@@ -51,7 +50,7 @@ const Header = ({isHome, scene, isSearch, noImage}) => {
       {!isSearch ? <Text style={styles.text}>{title}</Text> : <SearchBar />}
       {!noImage ? (
         <Ripple>
-          <Image source={{uri: user?.picture}} style={styles.image} />
+          <Image source={{uri: currentUser?.picture}} style={styles.image} />
         </Ripple>
       ) : null}
     </LinearGradient>

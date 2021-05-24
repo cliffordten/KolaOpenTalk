@@ -1,4 +1,4 @@
-import {User, UserBlackList} from '../../models';
+import {Follower, Followering, User, UserBlackList} from '../../models';
 import ReduxTypes from '../types.redux';
 import {DataStore} from 'aws-amplify';
 import storage from '../../utils/storage';
@@ -10,6 +10,19 @@ export const setCurrentUser = user => ({
   type: ReduxTypes.user.setCurrentUser,
   payload: user,
 });
+
+const getUserFollowInfo = async (id = userID) => {
+  const followingList = await DataStore.query(Followering);
+  const followerList = await DataStore.query(Follower);
+
+  const following = followingList?.filter(({userID: Id}) => id === Id);
+  const followers = followerList?.filter(({userID: Id}) => id === Id);
+
+  return {
+    following,
+    followers,
+  };
+};
 
 export const signUpUser = (
   email,
@@ -35,12 +48,19 @@ export const signUpUser = (
         name,
       }),
     );
+
     if (user) {
       const {id} = user;
       storage.setUserId(id);
+
+      const followInfo = await getUserFollowInfo(id);
+
       dispatch({
         type: ReduxTypes.user.setCurrentUser,
-        payload: user,
+        payload: {
+          ...user[0],
+          ...followInfo,
+        },
       });
     }
   } catch (error) {
@@ -51,26 +71,43 @@ export const signUpUser = (
   }
 };
 
-export const loginUser = userEmail => async dispatch => {
+export const getUserInfo = (userEmail = null) => async dispatch => {
   try {
-    const userList = await DataStore.query(User);
+    let user = null;
 
-    const user = userList?.filter(({email}) => email === userEmail);
+    if (userEmail) {
+      const userList = await DataStore.query(User);
 
-    if (user?.length === 0) {
-      const {id} = user[0];
+      user = userList?.filter(({email}) => email === userEmail);
+      if (user?.length === 1) {
+        user = user[0];
+      }
+    } else {
+      user = await DataStore.query(User, userID);
+    }
+    console.log(user, 'lakjfklajlfads');
+
+    if (user) {
+      const {id} = user;
+
+      const followInfo = await getUserFollowInfo(id);
+
       storage.setUserId(id);
       storage.setUserisLogedOut(false);
       storage.setUserSignedup(false);
+
       dispatch({
         type: ReduxTypes.user.setCurrentUser,
-        payload: user[0],
+        payload: {
+          ...user,
+          ...followInfo,
+        },
       });
     }
   } catch (error) {
     dispatch({
       type: ReduxTypes.exception.error,
-      payload: {msg: 'Error signing up User', error},
+      payload: {msg: 'Error Loging in User', error},
     });
   }
 };

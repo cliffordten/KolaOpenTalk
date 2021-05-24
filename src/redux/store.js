@@ -10,6 +10,9 @@ const refreshTokenMiddleWare = res => next => async action => {
     action?.type,
     '-----------------------',
   );
+  if (action?.type === 'ERROR') {
+    console.log(action?.payload);
+  }
   next(action);
 };
 
