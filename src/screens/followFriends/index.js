@@ -10,9 +10,9 @@ import SelectFollows from '../../views/selectFollows';
 import styles from './styles';
 import Loader from '../../components/loader';
 import storage from '../../utils/storage';
-import {followUser} from '../../utils/graphql/mutations';
 import {useDispatch, useSelector} from 'react-redux';
 import {setUserList, blackListUser} from '../../redux/actions/user';
+import {saveUserFollowing} from '../../redux/actions/follow';
 
 const FollowFriends = ({navigation, external}) => {
   const [following, setFollowing] = useState([]);
@@ -23,8 +23,6 @@ const FollowFriends = ({navigation, external}) => {
   useEffect(() => {
     dispatch(setUserList());
   }, [dispatch]);
-
-  console.log(userList.length);
 
   const handleFollow = (userId, isFollow) => {
     if (userId) {
@@ -46,9 +44,7 @@ const FollowFriends = ({navigation, external}) => {
   const saveFollowing = () => {
     if (following.length > 0) {
       setLoad(true);
-      following.forEach(async id => {
-        followUser(id);
-      });
+      dispatch(saveUserFollowing(following));
       setTimeout(() => {
         setLoad(false);
       }, 500);

@@ -44,4 +44,5 @@ export default {
   NoImage: 'No Image Selected',
   private: 'Private Post',
   isOffline: 'Please Connect to the internet. Device is offline',
+  noCategory: 'No Category found',
 };

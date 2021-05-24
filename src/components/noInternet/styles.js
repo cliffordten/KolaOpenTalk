@@ -5,6 +5,9 @@ import {Colors} from '../../config';
 
 const styles = StyleSheet.create({
   text: {
+    fontStyle: 'italic',
+  },
+  err: {
     color: Colors.error,
     fontStyle: 'italic',
   },
