@@ -13,8 +13,8 @@ import {useForm} from '../../utils/hooks';
 import {Auth} from 'aws-amplify';
 import {showShortToast} from '../../utils/methods';
 import Loader from '../../components/loader';
-import storage from '../../utils/storage';
-import {getCurrentUser} from '../../utils/graphql/query';
+import {useDispatch} from 'react-redux';
+import {loginUser} from '../../redux/actions/user';
 
 const Login = ({navigation}) => {
   const formInit = {
@@ -23,6 +23,7 @@ const Login = ({navigation}) => {
   };
 
   const [load, setLoad] = useState(false);
+  const dispatch = useDispatch();
 
   const onSubmit = async formData => {
     setLoad(true);
@@ -33,12 +34,11 @@ const Login = ({navigation}) => {
     }
     try {
       Auth.signIn(email, password);
-      const {id} = await getCurrentUser(email);
-      storage.setUserisLogedOut(false);
-      storage.setUserSignedup(false);
-      storage.setUserId(id);
+      dispatch(loginUser(email));
       navigation.replace('Home');
-      setLoad(false);
+      setTimeout(() => {
+        setLoad(false);
+      }, 500);
     } catch ({code, message}) {
       if (code === 'InvalidParameterException') {
         showShortToast('An error occured');
@@ -53,9 +53,13 @@ const Login = ({navigation}) => {
         );
       }
       console.log('onSubmit', code, 'msg', message);
-      setLoad(false);
+      setTimeout(() => {
+        setLoad(false);
+      }, 500);
     }
-    setLoad(false);
+    setTimeout(() => {
+      setLoad(false);
+    }, 500);
   };
 
   const {handleInputChange, handleSubmit} = useForm(formInit, onSubmit);

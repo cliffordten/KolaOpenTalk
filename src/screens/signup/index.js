@@ -12,11 +12,10 @@ import styles from './styles';
 import {useForm} from '../../utils/hooks';
 import {showLongToast, showShortToast} from '../../utils/methods';
 import {Auth} from 'aws-amplify';
-import {createUserAccount} from '../../utils/graphql/mutations';
 import storage from '../../utils/storage';
 import Loader from '../../components/loader';
 import {useDispatch} from 'react-redux';
-import {setCurrentUser} from '../../redux/actions/user';
+import {signUpUser} from '../../redux/actions/user';
 
 const Signup = ({goToIndex}) => {
   const [photo, setphoto] = useState(null);
@@ -89,17 +88,9 @@ const Signup = ({goToIndex}) => {
         });
         if (user) {
           setConEmail(email);
-          const userInfo = await createUserAccount(
-            email,
-            fileName,
-            email.split('@')[0],
-            name,
-            photo,
-            path,
+          dispatch(
+            signUpUser(email, fileName, email.split('@')[0], name, photo, path),
           );
-          const {id} = userInfo;
-          storage.setUserId(id);
-          dispatch(setCurrentUser(userInfo));
           showLongToast('A comfirmation code was sent to your email');
           setLoad(false);
           ref.current.open();
