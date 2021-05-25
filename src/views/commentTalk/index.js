@@ -7,6 +7,7 @@ import {Colors} from '../../config';
 import Keyboard from '../keyboard';
 import styles from './styles';
 import {getFomatedTime} from '../../utils/methods';
+import Loader from '../../components/loader';
 
 const RenderCommentTalk = ({
   user,
@@ -53,23 +54,7 @@ const RenderCommentTalk = ({
         )}
         <View style={styles.btnContainer}>
           <Button
-            label={nComments}
-            flat="placeholder"
-            onPress={() => console.log('object')}
-            style={styles.flatBtn}
-            textStyles={styles.textBtn}
-            icon={
-              <Icon
-                name="commenting-o"
-                color={Colors.placeholder}
-                style={styles.icon}
-                family={'FontAwesome'}
-              />
-            }
-            left
-          />
-          <Button
-            label={nPostLikes}
+            label={nPostLikes || 0}
             flat="placeholder"
             onPress={() => {
               setIsCommentLiked(!isCommentLiked);
@@ -198,6 +183,8 @@ const CommentTalk = ({
   onPress,
   navigation,
   data,
+  loadMore,
+  load,
   comment,
   createUserComment,
 }) => {
@@ -206,6 +193,7 @@ const CommentTalk = ({
       <FlatList
         data={data}
         ListHeaderComponent={() => <RenderCommentHeader headerData={comment} />}
+        ListFooterComponent={() => (load ? <Loader nofloat small /> : <View />)}
         renderItem={({item}) => (
           <RenderCommentTalk
             {...item}
@@ -217,6 +205,7 @@ const CommentTalk = ({
         keyExtractor={item => item.id}
         style={styles.flatList}
         showsVerticalScrollIndicator={false}
+        onEndReached={loadMore}
         bounces={false}
         contentContainerStyle={styles.pad}
       />

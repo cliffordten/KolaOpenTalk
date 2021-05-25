@@ -14,7 +14,7 @@ export const categoryReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         categories: _.unionBy(action.payload, state.categories, 'id'),
-        isNext: action.payload?.length > 0,
+        isNext: action.payload?.length >= 0,
       };
     case ReduxTypes.category.saveUserCategory:
       return {

@@ -44,7 +44,7 @@ export const useIsEmptyOrNull = data => {
     } else {
       setIsNull(true);
     }
-    if (data?.length > 0) {
+    if (data?.length >= 0) {
       setIsNull(false);
     } else {
       setIsNull(true);

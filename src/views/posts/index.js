@@ -8,6 +8,7 @@ import {Colors} from '../../config';
 import styles from './styles';
 import FlatList from '../../components/flatlist';
 import {getFomatedTime} from '../../utils/methods';
+import labels from '../../assets/labels';
 
 const RenderPost = ({
   id,
@@ -116,30 +117,34 @@ const Posts = ({
   load,
   onRefresh,
   reload,
+  loading,
 }) => {
   return (
     <View style={styles.flatContainer}>
-      <FlatList
-        data={data}
-        renderItem={({item}) => (
-          <RenderPost
-            {...item}
-            key={({id}) => id}
-            onPress={onPress}
-            navigation={navigation}
-          />
-        )}
-        keyExtractor={item => item.id}
-        style={styles.flatList}
-        showsVerticalScrollIndicator={false}
-        bounces={false}
-        contentContainerStyle={styles.pad}
-        onEndReached={loadMore}
-        loadMore={load}
-        reload={reload}
-        onRefresh={onRefresh}
-      />
-
+      {!loading && data.length >= 0 ? (
+        <FlatList
+          data={data}
+          renderItem={({item}) => (
+            <RenderPost
+              {...item}
+              key={({id}) => id}
+              onPress={onPress}
+              navigation={navigation}
+            />
+          )}
+          keyExtractor={item => item.id}
+          style={styles.flatList}
+          showsVerticalScrollIndicator={false}
+          bounces={false}
+          contentContainerStyle={styles.pad}
+          onEndReached={loadMore}
+          loadMore={load}
+          reload={reload}
+          onRefresh={onRefresh}
+        />
+      ) : (
+        <Text label={labels.loading} style={styles.normal} />
+      )}
       <Ripple
         style={styles.floatingBtn}
         onPress={() => navigation.navigate('CreatePost')}>

@@ -33,7 +33,7 @@ const createUserFollowing = async userFollowingID => {
 
     console.log(userItems);
 
-    if (userItems?.following?.length > 0) {
+    if (userItems?.following?.length >= 0) {
       const isFollowing = userItems.filter(
         ({userFollowingID: id}) => userFollowingID === id,
       );
@@ -72,7 +72,7 @@ const createUserFollower = async userFollowerID => {
     const userItems = await DataStore.query(User, userID);
     let result = null;
 
-    if (userItems?.followers?.length > 0) {
+    if (userItems?.followers?.length >= 0) {
       const isfollowers = userItems.filter(
         ({userFollowerID: id}) => userFollowerID === id,
       );

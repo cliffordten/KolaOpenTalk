@@ -42,7 +42,7 @@ const FollowFriends = ({navigation, external}) => {
   };
 
   const saveFollowing = () => {
-    if (following.length > 0) {
+    if (following.length >= 0) {
       setLoad(true);
       dispatch(saveUserFollowing(following));
       setTimeout(() => {

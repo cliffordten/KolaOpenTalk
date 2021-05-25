@@ -53,7 +53,7 @@ const ChooseCategory = ({goToIndex}) => {
   };
 
   const saveSelection = () => {
-    if (categories.length > 0) {
+    if (categories.length >= 0) {
       setLoad(true);
       dispatch(saveUserCategories(categories));
       setTimeout(() => {

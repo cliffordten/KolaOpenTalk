@@ -13,10 +13,28 @@ export const getPosts = (next = 0) => async dispatch => {
       limit: 10,
     });
 
-    if (posts.length > 0) {
+    if (posts.length >= 0) {
       dispatch({
         type: ReduxTypes.post.listPost,
         payload: posts,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: ReduxTypes.exception.error,
+      payload: {msg: 'Error fetching post', error},
+    });
+  }
+};
+
+export const getClickedPost = postId => async dispatch => {
+  try {
+    const post = await DataStore.query(Post, postId);
+
+    if (post) {
+      dispatch({
+        type: ReduxTypes.post.getPost,
+        payload: post,
       });
     }
   } catch (error) {

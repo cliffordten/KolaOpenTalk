@@ -3,7 +3,7 @@ import {createUser} from '../../graphql/mutations';
 const data = [];
 
 export const makeQuery = () => {
-  if (data.length > 0) {
+  if (data.length >= 0) {
     data.forEach(async d => {
       try {
         // await DataStore.save(new Category(d));

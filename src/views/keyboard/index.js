@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   TextInput,
   Platform,
@@ -7,6 +7,8 @@ import {
   View,
   Keyboard as RNKeyboard,
   Image,
+  Alert,
+  BackHandler,
 } from 'react-native';
 import styles from './styles';
 import {Colors} from '../../config';
@@ -18,12 +20,15 @@ import EmojiBoard from 'react-native-emoji-board';
 import ImagePicker from '../imagePicker';
 import ScrollView from '../scroll';
 import {getCurrentTime} from '../../utils/methods';
+import {useNavigation} from '@react-navigation/native';
 
 const Keyboard = ({createUserComment}) => {
   const [value, setValue] = useState('');
   const [imageUrl, setImageUrl] = useState(null);
   const [blob, setBlob] = useState(null);
   const [show, setShow] = useState(false);
+
+  const navigation = useNavigation();
 
   const onClick = emoji => {
     if (value.length <= 100) {
@@ -56,12 +61,32 @@ const Keyboard = ({createUserComment}) => {
     }
   };
 
+  const handleBackButton = useCallback(() => {
+    if (show) {
+      setShow(false);
+      return true;
+    }
+    if (value.length > 2) {
+      Alert.alert('Do you want to exit?', 'Your changes will not be saved!', [
+        {
+          text: 'Cancel',
+          onPress: () => true,
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => navigation.goBack()},
+      ]);
+      return true;
+    }
+  }, [navigation, show, value]);
+
   useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackButton);
     RNKeyboard.addListener('keyboardDidShow', keyboardDidShow);
     return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
       RNKeyboard.removeListener('keyboardDidShow', keyboardDidShow);
     };
-  }, []);
+  }, [handleBackButton]);
 
   return (
     <KeyboardAvoidingView

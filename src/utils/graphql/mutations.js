@@ -77,7 +77,7 @@ export const createUserFollowing = async (userFollowingID, userID = userId) => {
     } = await getUserInfo(userId);
     let result = null;
 
-    if (userItems.length > 0) {
+    if (userItems.length >= 0) {
       const isFollowing = userItems.filter(
         ({userFollowingID: id}) => userFollowingID === id,
       );
@@ -112,7 +112,7 @@ export const createUserFollower = async (userFollowerID, userID = userId) => {
       followers: {items: followerItems},
     } = await getUserInfo(userId);
 
-    if (followerItems.length > 0) {
+    if (followerItems.length >= 0) {
       const isfollowers = followerItems.filter(
         ({userFollowerID: id}) => userFollowerID === id,
       );
@@ -154,13 +154,13 @@ export const deleteUserFollowing = async id => {
     } = await getUserInfo(userId);
     let result = null;
 
-    if (userItems.length > 0) {
+    if (userItems.length >= 0) {
       const isFollowing = userItems.filter(
         ({userFollowingID}) => userFollowingID === id,
       );
 
       console.log(isFollowing);
-      if (isFollowing.length > 0) {
+      if (isFollowing.length >= 0) {
         result = await API.graphql(
           graphqlOperation(deleteFollowering, {
             input: {
@@ -185,13 +185,13 @@ export const deleteUserFollower = async id => {
       followers: {items: followerItems},
     } = await getUserInfo(userId);
 
-    if (followerItems.length > 0) {
+    if (followerItems.length >= 0) {
       const isfollowers = followerItems.filter(
         ({userFollowerID}) => userFollowerID === id,
       );
 
       console.log(isfollowers);
-      if (isfollowers.length > 0) {
+      if (isfollowers.length >= 0) {
         result = await API.graphql(
           graphqlOperation(deleteFollower, {
             input: {

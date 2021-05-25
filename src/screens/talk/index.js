@@ -3,68 +3,85 @@ import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import PostTalk from '../../views/postTalk';
 import styles from './styles';
-import {createUComment} from '../../utils/graphql/mutations';
-import {listPostComments, getClickedPost} from '../../utils/graphql/query';
 import {showShortToast} from '../../utils/methods';
 import Loader from '../../components/loader';
+import {useSelector, useDispatch} from 'react-redux';
+import {getClickedPost} from '../../redux/actions/post';
+import {createComment, getComments} from '../../redux/actions/comment';
 
 const Talk = ({route, ...rest}) => {
   const id = route?.params?._id;
-
-  const [data, setData] = useState([{}]);
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(false);
-  // const result = useSubCreatePost();
+  const [next, setNext] = useState(0);
+  const [loads, setLoad] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const {cickedPost} = useSelector(state => state.post);
+  const {comments, loading: load, isNext} = useSelector(state => state.comment);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetch = async () => {
-      setLoading(true);
-      if (id) {
-        const result = await getClickedPost(id);
-        setPost(result);
-      }
+    setLoading(true);
+    if (id) {
+      dispatch(getClickedPost(id));
+      dispatch(getComments(id));
+    }
+    setTimeout(() => {
       setLoading(false);
-    };
-    const fetchComments = async () => {
-      setLoading(true);
-      const {items} = await listPostComments(id);
-      setData(items);
-      setLoading(false);
-    };
-    fetchComments();
-    fetch();
+    }, 500);
+
     return () => {
       setLoading(false);
     };
-  }, [id]);
+  }, [dispatch, id]);
 
   const createUserComment = async (value, imageUrl, blob, time) => {
     if (value) {
       setLoading(true);
-      const res = await createUComment(value, imageUrl, blob, time, id);
-      if (res) {
-        setData(prev => [res, ...prev]);
-        setLoading(false);
-        showShortToast('Comment Added');
+      dispatch(createComment(value, imageUrl, blob, time, id));
+      if (!load) {
+        setTimeout(() => {
+          setLoading(false);
+          showShortToast('Comment Added');
+        }, 500);
       }
       setLoading(false);
       return true;
     } else {
-      showShortToast('Make sure you selected a category and written something');
+      showShortToast('Please write something');
+    }
+  };
+
+  const loadMore = async () => {
+    if (comments?.length > 10) {
+      if (isNext) {
+        setLoad(true);
+        dispatch(getComments(id, null, next));
+        setNext(next + 1);
+        setTimeout(() => {
+          setLoad(false);
+        }, 500);
+      } else {
+        setNext(0);
+        showShortToast('End of list');
+      }
     }
   };
 
   return (
     <View style={styles.safeAreaView}>
-      {post && (
-        <PostTalk
-          {...rest}
-          post={post}
-          data={data}
-          createUserComment={createUserComment}
-        />
+      {loading || load ? (
+        <Loader />
+      ) : (
+        cickedPost && (
+          <PostTalk
+            {...rest}
+            post={cickedPost}
+            loadMore={loadMore}
+            load={loads}
+            data={comments}
+            createUserComment={createUserComment}
+          />
+        )
       )}
-      {loading && <Loader />}
     </View>
   );
 };

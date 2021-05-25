@@ -36,12 +36,14 @@ const Home = ({...rest}) => {
   useEffect(() => {
     setLoading(true);
     dispatch(getPosts());
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    if (posts?.length >= 0) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
+    }
     subscribe();
     return () => {};
-  }, [dispatch, subscribe]);
+  }, [dispatch, posts?.length, subscribe]);
 
   const loadMore = async () => {
     if (posts?.length > 10) {
@@ -76,6 +78,7 @@ const Home = ({...rest}) => {
         load={load}
         onRefresh={onRefresh}
         reload={reload}
+        loading={loading}
       />
       {loading && <Loader />}
     </View>

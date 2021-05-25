@@ -7,6 +7,7 @@ import {Colors} from '../../config';
 import Keyboard from '../keyboard';
 import styles from './styles';
 import {getFomatedTime} from '../../utils/methods';
+import Loader from '../../components/loader';
 
 const RenderPostTalk = ({
   user,
@@ -200,12 +201,21 @@ const RenderPostHeader = ({headerData}) => {
   );
 };
 
-const PostTalk = ({onPress, navigation, data, post, createUserComment}) => {
+const PostTalk = ({
+  onPress,
+  navigation,
+  data,
+  loadMore,
+  load,
+  post,
+  createUserComment,
+}) => {
   return (
     <View style={styles.flatContainer}>
       <FlatList
         data={data}
         ListHeaderComponent={() => <RenderPostHeader headerData={post} />}
+        ListFooterComponent={() => (load ? <Loader nofloat small /> : <View />)}
         renderItem={({item}) => (
           <RenderPostTalk
             postId={post.id}
@@ -219,6 +229,7 @@ const PostTalk = ({onPress, navigation, data, post, createUserComment}) => {
         style={styles.flatList}
         showsVerticalScrollIndicator={false}
         bounces={false}
+        onEndReached={loadMore}
         contentContainerStyle={styles.pad}
       />
       <Keyboard createUserComment={createUserComment} />
