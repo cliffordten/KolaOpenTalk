@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, Image, TouchableOpacity, View} from 'react-native';
 import labels from '../../assets/labels';
 import Button from '../../components/button';
@@ -6,17 +6,26 @@ import Icon from '../../components/icon';
 import Text from '../../components/text';
 import {Colors} from '../../config';
 import styles from './styles';
+import {checkFollow} from '../../redux/actions/follow';
 
 const RenderFriends = ({
-  followInfo,
   picture,
   name,
   username,
   id,
   onPress,
   blackList,
+  ...rest
 }) => {
   const [isFollow, setIsFollow] = useState(false);
+
+  useEffect(() => {
+    const check = async () => {
+      setIsFollow(await checkFollow(id));
+    };
+    check();
+    return () => {};
+  }, [id]);
 
   const handleFollow = _id => {
     if (onPress) {

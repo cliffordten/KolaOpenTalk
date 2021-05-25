@@ -24,6 +24,7 @@ export default {
   chooseLibrary: 'Choose from Library...',
   skip: 'Skip',
   okay: 'OK',
+  save: 'Save',
   chooseCategoryText: 'Choose your categories',
   followFriendsText: 'Follow your friends',
   nextStep: 'Next step',

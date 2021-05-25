@@ -104,3 +104,14 @@ const createUserFollower = async userFollowerID => {
     console.log('createUserFollower', error);
   }
 };
+
+export const checkFollow = async id => {
+  const result = await (
+    await DataStore.query(Followering, c => c.and(a => a.userID('eq', userID)))
+  ).filter(c => c.followering.id === id);
+
+  if (result.length === 1) {
+    return result[0]?.isFollowing;
+  }
+  return false;
+};

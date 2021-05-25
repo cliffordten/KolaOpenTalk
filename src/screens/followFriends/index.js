@@ -55,7 +55,7 @@ const FollowFriends = ({navigation, external}) => {
 
   return (
     <View style={styles.safeAreaView}>
-      <View style={styles.container}>
+      <View style={external ? styles.containerExternal : styles.container}>
         <View style={styles.textContainer}>
           {!external && (
             <Title
@@ -74,24 +74,25 @@ const FollowFriends = ({navigation, external}) => {
             blackList={handleBlackList}
           />
         </View>
-        {!external && (
-          <View style={styles.confirm}>
-            <Button
-              label={labels.nextStep}
-              color={'secondary'}
-              onPress={saveFollowing}
-              icon={
+
+        <View style={styles.confirm}>
+          <Button
+            label={external ? labels.save : labels.nextStep}
+            color={'secondary'}
+            onPress={saveFollowing}
+            icon={
+              !external && (
                 <Icon
                   name="greater-than"
                   color={Colors.white}
                   style={styles.icon}
                   family={'MaterialCommunityIcons'}
                 />
-              }
-              style={styles.btn}
-            />
-          </View>
-        )}
+              )
+            }
+            style={styles.btn}
+          />
+        </View>
       </View>
       {load && <Loader />}
     </View>

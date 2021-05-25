@@ -14,6 +14,9 @@ const styles = StyleSheet.create({
     height: height * 0.62,
     marginTop: 30,
   },
+  containerExternal: {
+    // justifyContent: 'space-between',
+  },
   input: {
     marginTop: 0,
   },
