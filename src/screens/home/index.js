@@ -25,7 +25,7 @@ const Home = ({...rest}) => {
         },
       }) => {
         // setData(prev => [post, ...prev]);
-        console.log(post);
+        // console.log(post, 'posting');
       },
     });
     return () => {
@@ -44,16 +44,18 @@ const Home = ({...rest}) => {
   }, [dispatch, subscribe]);
 
   const loadMore = async () => {
-    if (isNext) {
-      setLoad(true);
-      dispatch(getPosts(next));
-      setNext(next + 1);
-      setTimeout(() => {
-        setLoad(false);
-      }, 500);
-    } else {
-      setNext(0);
-      showShortToast('End of list');
+    if (posts?.length > 10) {
+      if (isNext) {
+        setLoad(true);
+        dispatch(getPosts(next));
+        setNext(next + 1);
+        setTimeout(() => {
+          setLoad(false);
+        }, 500);
+      } else {
+        setNext(0);
+        showShortToast('End of list');
+      }
     }
   };
 
@@ -61,7 +63,7 @@ const Home = ({...rest}) => {
     setReload(true);
     dispatch(getPosts());
     setTimeout(() => {
-      setLoad(false);
+      setReload(false);
     }, 500);
   };
 

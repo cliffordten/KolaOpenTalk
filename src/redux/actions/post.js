@@ -1,18 +1,19 @@
 import ReduxTypes from '../types.redux';
 import {DataStore, Predicates} from 'aws-amplify';
 import {Post} from '../../models';
-// import storage from '../../utils/storage';
+import storage from '../../utils/storage';
+import {uploadImage} from '../../utils/methods';
 
-// const userID = storage.readUserId();
+const userID = storage.readUserId();
 
 export const getPosts = (next = 0) => async dispatch => {
   try {
     const posts = await DataStore.query(Post, Predicates.ALL, {
       page: 0 + next,
-      limit: 6,
+      limit: 10,
     });
 
-    if (posts) {
+    if (posts.length > 0) {
       dispatch({
         type: ReduxTypes.post.listPost,
         payload: posts,
@@ -26,9 +27,39 @@ export const getPosts = (next = 0) => async dispatch => {
   }
 };
 
-export const createPost = post => async dispatch => {
+export const createPost = (
+  desc,
+  interest,
+  blob,
+  path,
+  time,
+  isPrivate = false,
+) => async dispatch => {
   try {
-    const result = await DataStore.save(new Post(post));
+    dispatch({
+      type: ReduxTypes.exception.loading,
+      payload: true,
+    });
+
+    const postImage = blob
+      ? await uploadImage(
+          'postImages/',
+          path,
+          blob?._data?.name,
+          blob?._data?.type,
+        )
+      : null;
+
+    const result = await DataStore.save(
+      new Post({
+        desc,
+        interest,
+        postImage,
+        time,
+        user: {id: userID},
+        isPrivate,
+      }),
+    );
 
     if (result) {
       dispatch({

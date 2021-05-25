@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 // import PropTypes from 'prop-types';
 import labels from '../../assets/labels';
 import Button from '../../components/button';
@@ -12,6 +12,8 @@ import {
   View,
   Keyboard as RNKeyboard,
   Image,
+  BackHandler,
+  Alert,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Ripple from 'react-native-material-ripple';
@@ -20,10 +22,11 @@ import ScrollView from '../../views/scroll';
 import {Picker} from '@react-native-picker/picker';
 import {Colors} from '../../config';
 import Icon from '../../components/icon';
-import {listCategories} from '../../utils/graphql/query';
-import {createUserPost} from '../../utils/graphql/mutations';
 import {getCurrentTime, showShortToast} from '../../utils/methods';
 import Loader from '../../components/loader';
+import {createPost} from '../../redux/actions/post';
+import {useDispatch, useSelector} from 'react-redux';
+import {getCategories} from '../../redux/actions/category';
 
 const CreatePost = ({navigation}) => {
   const [value, setValue] = useState('');
@@ -31,9 +34,11 @@ const CreatePost = ({navigation}) => {
   const [imageUrl, setImageUrl] = useState(null);
   const [show, setShow] = useState(false);
   const [selectedInterest, setSelectedInterest] = useState(null);
-  const [category, setCategory] = useState([]);
   const [load, setLoad] = useState(false);
   const [isPrivate, setIsPrivate] = useState(false);
+  const dispatch = useDispatch();
+  const {categories} = useSelector(state => state.category);
+  const {loading} = useSelector(state => state.post);
 
   const onClick = emoji => {
     if (value.length < 300) {
@@ -51,31 +56,52 @@ const CreatePost = ({navigation}) => {
     setShow(false);
   };
 
+  const handleBackButton = useCallback(() => {
+    if (show) {
+      setShow(false);
+      return true;
+    }
+    if (selectedInterest || value) {
+      Alert.alert('Do you want to exit?', 'Your changes will not be saved!', [
+        {
+          text: 'Cancel',
+          onPress: () => true,
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => navigation.goBack()},
+      ]);
+      return true;
+    }
+  }, [navigation, selectedInterest, show, value]);
+
   useEffect(() => {
-    const fetch = async () => {
-      const {items} = await listCategories(null, true);
-      setCategory(items);
-    };
-    fetch();
+    if (categories.length === 0) {
+      dispatch(getCategories(0, true));
+    }
 
     RNKeyboard.addListener('keyboardDidShow', keyboardDidShow);
+    BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
     return () => {
       RNKeyboard.removeListener('keyboardDidShow', keyboardDidShow);
+      BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
     };
-  }, []);
+  }, [categories, dispatch, handleBackButton]);
 
-  const createPost = async () => {
+  const createUserPost = async () => {
     if (selectedInterest && value) {
       setLoad(true);
-      const res = await createUserPost(
-        value,
-        selectedInterest,
-        blob,
-        imageUrl,
-        getCurrentTime(),
-        isPrivate,
+      dispatch(
+        createPost(
+          value,
+          selectedInterest,
+          blob,
+          imageUrl,
+          getCurrentTime(),
+          isPrivate,
+        ),
       );
-      if (res) {
+      if (!loading) {
         setTimeout(() => {
           setLoad(false);
           navigation.navigate('Home');
@@ -101,7 +127,7 @@ const CreatePost = ({navigation}) => {
                 setSelectedInterest(itemValue)
               }>
               <Picker.Item label={labels.category} value="" />
-              {category?.map(({name, id}) => (
+              {categories?.map(({name, id}) => (
                 <Picker.Item label={name} value={name} key={id} />
               ))}
             </Picker>
@@ -171,7 +197,7 @@ const CreatePost = ({navigation}) => {
             <Button
               label={labels.postText}
               color={'secondary'}
-              onPress={createPost}
+              onPress={createUserPost}
             />
           </View>
           {load && <Loader />}
@@ -180,6 +206,5 @@ const CreatePost = ({navigation}) => {
     </KeyboardAvoidingView>
   );
 };
-CreatePost.propTypes = {};
 
 export default CreatePost;

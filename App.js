@@ -13,6 +13,9 @@ import AppNavigation from './src/navigation';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Provider} from 'react-redux';
 import store from './src/redux/store';
+import {Dimensions} from 'react-native';
+
+const {width} = Dimensions.get('window');
 
 const App = () => {
   useEffect(() => {
@@ -39,6 +42,7 @@ const styles = StyleSheet.create({
   appBackground: {
     backgroundColor: Colors.white,
     flex: 1,
+    width,
   },
 });
 

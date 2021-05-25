@@ -4,7 +4,7 @@ import _ from 'lodash';
 const INITIAL_STATE = {
   categories: [],
   user_category: [],
-  isNext: true,
+  isNext: false,
   error: false,
 };
 

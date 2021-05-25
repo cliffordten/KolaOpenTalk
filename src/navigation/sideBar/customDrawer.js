@@ -9,6 +9,7 @@ import Loader from '../../components/loader';
 import {useSelector, useDispatch} from 'react-redux';
 import {getUserInfo} from '../../redux/actions/user';
 import {DataStore} from 'aws-amplify';
+import labels from '../../assets/labels';
 
 const CustomDrawer = ({navigation}) => {
   const [load, setLoad] = useState(false);
@@ -21,8 +22,6 @@ const CustomDrawer = ({navigation}) => {
       dispatch(getUserInfo());
     }
   }, [navigation, currentUser, dispatch]);
-
-  // console.log(currentUser);
 
   const logout = () => {
     setLoad(true);
@@ -37,23 +36,29 @@ const CustomDrawer = ({navigation}) => {
   return (
     <View style={styles.cont}>
       <LinearGradient style={styles.drawerWrapper}>
-        <View style={styles.imageWrapper}>
-          <Image source={{uri: currentUser?.picture}} style={styles.image} />
-          <View>
-            <Text label={currentUser?.name} style={styles.text} />
-            <Text
-              label={`@${currentUser?.username}`}
-              style={[styles.text, styles.username]}
-            />
+        {currentUser ? (
+          <View style={styles.imageWrapper}>
+            <Image source={{uri: currentUser?.picture}} style={styles.image} />
+            <View>
+              <Text label={currentUser?.name} style={styles.text} />
+              <Text
+                label={`@${currentUser?.username}`}
+                style={[styles.text, styles.username]}
+              />
+            </View>
           </View>
-        </View>
+        ) : (
+          <View style={styles.imageWrapper}>
+            <Text label={labels.loading} style={styles.text} />
+          </View>
+        )}
         <View style={[styles.imageWrapper, styles.textWrapper]}>
           <Text
-            label={currentUser?.following?.length + ' Following'}
+            label={`${currentUser?.following?.length || '0'}` + ' Following'}
             style={styles.text}
           />
           <Text
-            label={currentUser?.followers?.length + ' Followers'}
+            label={`${currentUser?.followers?.length || '0'}` + ' Followers'}
             style={[styles.text, styles.left]}
           />
         </View>

@@ -4,8 +4,9 @@ import _ from 'lodash';
 const INITIAL_STATE = {
   posts: [],
   user_post: [],
-  isNext: true,
+  isNext: false,
   error: false,
+  loading: false,
 };
 
 export const postReducer = (state = INITIAL_STATE, action) => {
@@ -13,7 +14,7 @@ export const postReducer = (state = INITIAL_STATE, action) => {
     case ReduxTypes.post.listPost:
       return {
         ...state,
-        posts: _.unionBy(action.payload, state.posts, 'id'),
+        posts: _.unionBy(action.payload, state.posts, 'id').reverse(),
         isNext: action.payload?.length > 0,
       };
     case ReduxTypes.post.createPost:
@@ -21,6 +22,12 @@ export const postReducer = (state = INITIAL_STATE, action) => {
         ...state,
         posts: _.unionBy(action.payload, state.posts, 'id'),
         user_post: _.unionBy(action.payload, state.user_post, 'id'),
+        loading: false,
+      };
+    case ReduxTypes.exception.loading:
+      return {
+        ...state,
+        loading: action.payload,
       };
     case ReduxTypes.exception.error:
       return {

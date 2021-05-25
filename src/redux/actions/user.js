@@ -85,7 +85,6 @@ export const getUserInfo = (userEmail = null) => async dispatch => {
     } else {
       user = await DataStore.query(User, userID);
     }
-    console.log(user, 'lakjfklajlfads');
 
     if (user) {
       const {id} = user;

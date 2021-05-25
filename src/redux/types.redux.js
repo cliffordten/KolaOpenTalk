@@ -19,6 +19,7 @@ const ReduxTypes = {
   exception: {
     error: 'ERROR',
     success: 'SUCCESS',
+    loading: 'LOADING',
   },
 };
 

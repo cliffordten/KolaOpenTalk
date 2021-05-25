@@ -18,6 +18,7 @@ export default {
   comfirmCode: 'Confirmation Code',
   passwordForgot: 'Forgot your password?',
   steps: 'Step',
+  loading: 'Loading',
   pickImageText: 'Pick an Image',
   confirmationRequired: 'Confirmation Required',
   takePhoto: 'Take photo...',

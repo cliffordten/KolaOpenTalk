@@ -12,6 +12,7 @@ import labels from '../assets/labels';
 import CreatePost from '../screens/createPost';
 import storage from '../utils/storage';
 import ChildTalk from '../screens/childTalk';
+import {createNativeStackNavigator} from 'react-native-screens/native-stack';
 
 const Stack = createStackNavigator();
 

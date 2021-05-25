@@ -7,6 +7,7 @@ import Search from '../screens/search';
 import Notification from '../screens/notification';
 import Message from '../screens/message';
 import labels from '../assets/labels';
+import {createNativeStackNavigator} from 'react-native-screens/native-stack';
 
 const Stack = createStackNavigator();
 
