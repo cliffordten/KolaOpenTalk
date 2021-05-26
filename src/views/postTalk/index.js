@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, Image, TouchableOpacity, View} from 'react-native';
 import Button from '../../components/button';
 import Icon from '../../components/icon';
@@ -8,10 +8,10 @@ import Keyboard from '../keyboard';
 import styles from './styles';
 import {getFomatedTime} from '../../utils/methods';
 import Loader from '../../components/loader';
+import {getNComments, getNChildComments} from '../../redux/actions/comment';
 
 const RenderPostTalk = ({
   user,
-  nComments,
   nLikes,
   time,
   isLiked,
@@ -25,6 +25,16 @@ const RenderPostTalk = ({
 }) => {
   const [isCommentLiked, setIsCommentLiked] = useState(isLiked);
   const [nPostLikes, setNPostLikes] = useState(nLikes);
+
+  const [nComments, setNcomments] = useState(0);
+
+  useEffect(() => {
+    const fetch = async () => {
+      setNcomments(await getNChildComments(parentComentId));
+    };
+    fetch();
+    return () => {};
+  }, [parentComentId]);
 
   const handlePress = ({...rest}) => {
     if (onPress) {
@@ -111,10 +121,20 @@ const RenderPostTalk = ({
 };
 
 const RenderPostHeader = ({headerData}) => {
-  const {user, nComments, nLikes, time, isLiked, postImage, desc} = headerData;
+  const {user, nLikes, id, time, isLiked, postImage, desc} = headerData;
 
   const [isCommentLiked, setIsCommentLiked] = useState(isLiked);
   const [nPostLikes, setNPostLikes] = useState(nLikes);
+
+  const [nComments, setNcomments] = useState(0);
+
+  useEffect(() => {
+    const fetch = async () => {
+      setNcomments(await getNComments(id));
+    };
+    fetch();
+    return () => {};
+  }, [id]);
 
   return (
     <View style={styles.postHeaderContainer}>

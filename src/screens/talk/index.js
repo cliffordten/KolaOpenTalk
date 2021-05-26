@@ -17,6 +17,7 @@ const Talk = ({route, ...rest}) => {
   const {cickedPost} = useSelector(state => state.post);
   const {comments, loading: load, isNext} = useSelector(state => state.comment);
   const dispatch = useDispatch();
+  const [cLoad, setCLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -35,15 +36,12 @@ const Talk = ({route, ...rest}) => {
 
   const createUserComment = async (value, imageUrl, blob, time) => {
     if (value) {
-      setLoading(true);
+      setCLoading(true);
       dispatch(createComment(value, imageUrl, blob, time, id));
-      if (!load) {
-        setTimeout(() => {
-          setLoading(false);
-          showShortToast('Comment Added');
-        }, 500);
-      }
-      setLoading(false);
+      setTimeout(() => {
+        setCLoading(false);
+        showShortToast('Comment Added');
+      }, 500);
       return true;
     } else {
       showShortToast('Please write something');
@@ -68,6 +66,7 @@ const Talk = ({route, ...rest}) => {
 
   return (
     <View style={styles.safeAreaView}>
+      {cLoad && <Loader />}
       {loading || load ? (
         <Loader />
       ) : (

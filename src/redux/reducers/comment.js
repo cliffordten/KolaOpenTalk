@@ -23,7 +23,6 @@ export const commentReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         comments: _.unionBy(action.payload, state.comments, 'id'),
-        loading: false,
       };
     case ReduxTypes.comment.listChildComment:
       return {
@@ -36,7 +35,6 @@ export const commentReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         childComments: _.unionBy(action.payload, state.childComments, 'id'),
-        loading: false,
       };
     case ReduxTypes.comment.getComment:
       return {

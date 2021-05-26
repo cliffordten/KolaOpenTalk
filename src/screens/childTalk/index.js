@@ -15,6 +15,7 @@ import {useSelector, useDispatch} from 'react-redux';
 const ChildTalk = ({route, ...rest}) => {
   const {parentComentId, postId} = route?.params;
   const [loading, setLoading] = useState(true);
+  const [cLoad, setCLoading] = useState(false);
   const [next, setNext] = useState(0);
   const [loads, setLoad] = useState(false);
   const {cickedComment, loading: load, childComments, isNext} = useSelector(
@@ -39,15 +40,14 @@ const ChildTalk = ({route, ...rest}) => {
 
   const createUserComment = async (value, imageUrl, blob, time) => {
     if (value) {
-      setLoading(true);
-      createComment(value, imageUrl, blob, time, postId, parentComentId);
-      if (!load) {
-        setTimeout(() => {
-          setLoading(false);
-          showShortToast('Comment Added');
-        }, 500);
-      }
-      setLoading(false);
+      setCLoading(true);
+      dispatch(
+        createComment(value, imageUrl, blob, time, postId, parentComentId),
+      );
+      setTimeout(() => {
+        setCLoading(false);
+        showShortToast('Comment Added');
+      }, 500);
       return true;
     } else {
       showShortToast('Please write something');
@@ -72,6 +72,8 @@ const ChildTalk = ({route, ...rest}) => {
 
   return (
     <View style={styles.safeAreaView}>
+      {cLoad && <Loader />}
+
       {loading || load ? (
         <Loader />
       ) : (

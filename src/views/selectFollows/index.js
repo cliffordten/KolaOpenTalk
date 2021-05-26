@@ -49,7 +49,7 @@ const RenderFriends = ({
         <Image source={{uri: picture}} style={styles.image} />
         <Text label={name} style={styles.text} />
         <Text
-          label={`@${username.toLowerCase()}`}
+          label={`@${username?.toLowerCase()}`}
           style={[styles.text, styles.username]}
         />
       </View>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, Image, View} from 'react-native';
 import Button from '../../components/button';
 import Icon from '../../components/icon';
@@ -8,6 +8,7 @@ import Keyboard from '../keyboard';
 import styles from './styles';
 import {getFomatedTime} from '../../utils/methods';
 import Loader from '../../components/loader';
+import {getNChildComments} from '../../redux/actions/comment';
 
 const RenderCommentTalk = ({
   user,
@@ -83,16 +84,26 @@ const RenderCommentTalk = ({
 const RenderCommentHeader = ({headerData}) => {
   const {
     user,
-    nComments,
     nLikes,
     time,
     isLiked,
     commentImage,
     content,
+    parentComentId,
   } = headerData;
 
   const [isCommentLiked, setIsCommentLiked] = useState(isLiked);
   const [nPostLikes, setNPostLikes] = useState(nLikes);
+
+  const [nComments, setNcomments] = useState(0);
+
+  useEffect(() => {
+    const fetch = async () => {
+      setNcomments(await getNChildComments(parentComentId));
+    };
+    fetch();
+    return () => {};
+  }, [parentComentId]);
 
   return (
     <View style={styles.postHeaderContainer}>
@@ -185,6 +196,7 @@ const CommentTalk = ({
   data,
   loadMore,
   load,
+  nChildComments,
   comment,
   createUserComment,
 }) => {
@@ -192,7 +204,12 @@ const CommentTalk = ({
     <View style={styles.flatContainer}>
       <FlatList
         data={data}
-        ListHeaderComponent={() => <RenderCommentHeader headerData={comment} />}
+        ListHeaderComponent={() => (
+          <RenderCommentHeader
+            headerData={comment}
+            nChildComments={nChildComments}
+          />
+        )}
         ListFooterComponent={() => (load ? <Loader nofloat small /> : <View />)}
         renderItem={({item}) => (
           <RenderCommentTalk

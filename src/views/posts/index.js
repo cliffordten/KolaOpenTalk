@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, TouchableOpacity, View} from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import Button from '../../components/button';
@@ -9,11 +9,11 @@ import styles from './styles';
 import FlatList from '../../components/flatlist';
 import {getFomatedTime} from '../../utils/methods';
 import labels from '../../assets/labels';
+import {getNComments} from '../../redux/actions/comment';
 
 const RenderPost = ({
   id,
   onPress,
-  nComments,
   nLikes,
   time,
   navigation,
@@ -24,6 +24,16 @@ const RenderPost = ({
 }) => {
   const [isCommentLiked, setIsCommentLiked] = useState(isLiked || false);
   const [nPostLikes, setNPostLikes] = useState(nLikes || 0);
+
+  const [ncomments, setNcomments] = useState(0);
+
+  useEffect(() => {
+    const fetch = async () => {
+      setNcomments(await getNComments(id));
+    };
+    fetch();
+    return () => {};
+  }, [id]);
 
   const handlePress = _id => {
     if (onPress) {
@@ -51,7 +61,7 @@ const RenderPost = ({
         )}
         <View style={styles.btnContainer}>
           <Button
-            label={nComments}
+            label={ncomments}
             flat="placeholder"
             onPress={() => handlePress(id)}
             style={styles.flatBtn}

@@ -19,12 +19,17 @@ export const getComments = (
     });
 
     if (parentCommentId) {
-      const comments = await (
-        await DataStore.query(Comment, c => c.childCommentId('ne', null), {
+      const comments = await DataStore.query(
+        Comment,
+        c =>
+          c
+            .and(a => a.childCommentId('ne', null))
+            .parentComentId('eq', parentCommentId),
+        {
           page: 0 + next,
           limit: 10,
-        })
-      ).filter(c => c.parentComentId === parentCommentId);
+        },
+      );
 
       if (comments.length >= 0) {
         dispatch({
@@ -84,11 +89,6 @@ export const createComment = (
   parentComentId = null,
 ) => async dispatch => {
   try {
-    dispatch({
-      type: ReduxTypes.exception.loading,
-      payload: true,
-    });
-
     const commentImage = blob
       ? await uploadImage(
           'commentImage/',
@@ -150,4 +150,20 @@ export const createComment = (
       payload: {msg: 'Error Saving post', error},
     });
   }
+};
+
+export const getNComments = async postId => {
+  const comments = await (
+    await DataStore.query(Comment, c => c.childCommentId('eq', null))
+  ).filter(c => c.post.id === postId);
+
+  return comments?.length;
+};
+
+export const getNChildComments = async parentCommentId => {
+  const comments = await (
+    await DataStore.query(Comment, c => c.childCommentId('ne', null))
+  ).filter(c => c.parentComentId === parentCommentId);
+
+  return comments?.length;
 };
