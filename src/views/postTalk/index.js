@@ -9,12 +9,11 @@ import styles from './styles';
 import {getFomatedTime} from '../../utils/methods';
 import Loader from '../../components/loader';
 import {getNComments, getNChildComments} from '../../redux/actions/comment';
+import {getLikeInfo, performLike} from '../../redux/actions/like';
 
 const RenderPostTalk = ({
   user,
-  nLikes,
   time,
-  isLiked,
   navigation,
   commentImage,
   onPress,
@@ -23,18 +22,20 @@ const RenderPostTalk = ({
   parentComentId,
   id,
 }) => {
-  const [isCommentLiked, setIsCommentLiked] = useState(isLiked);
-  const [nPostLikes, setNPostLikes] = useState(nLikes);
+  const [isLike, setIsLike] = useState(false);
+  const [nLikes, setnLikes] = useState(0);
 
   const [nComments, setNcomments] = useState(0);
 
   useEffect(() => {
     const fetch = async () => {
+      setIsLike((await getLikeInfo(id, false)).isLike);
+      setnLikes((await getLikeInfo(id, false)).nLikes);
       setNcomments(await getNChildComments(parentComentId));
     };
     fetch();
     return () => {};
-  }, [parentComentId]);
+  }, [id, parentComentId]);
 
   const handlePress = ({...rest}) => {
     if (onPress) {
@@ -94,20 +95,19 @@ const RenderPostTalk = ({
             left
           />
           <Button
-            label={nPostLikes}
+            label={isLike}
             flat="placeholder"
             onPress={() => {
-              setIsCommentLiked(!isCommentLiked);
-              !isCommentLiked
-                ? setNPostLikes(nPostLikes + 1)
-                : setNPostLikes(nPostLikes - 1);
+              performLike(id, !isLike, false);
+              setIsLike(!isLike);
+              !isLike ? setnLikes(nLikes + 1) : setnLikes(nLikes - 1);
             }}
             style={styles.flatBtn}
             textStyles={styles.textBtn}
             icon={
               <Icon
-                name={!isCommentLiked ? 'thumbs-o-up' : 'thumbs-up'}
-                color={!isCommentLiked ? Colors.placeholder : Colors.secondary}
+                name={!isLike ? 'thumbs-o-up' : 'thumbs-up'}
+                color={!isLike ? Colors.placeholder : Colors.secondary}
                 style={styles.icon}
                 family={'FontAwesome'}
               />
@@ -121,15 +121,17 @@ const RenderPostTalk = ({
 };
 
 const RenderPostHeader = ({headerData}) => {
-  const {user, nLikes, id, time, isLiked, postImage, desc} = headerData;
+  const {user, id, time, postImage, desc} = headerData;
 
-  const [isCommentLiked, setIsCommentLiked] = useState(isLiked);
-  const [nPostLikes, setNPostLikes] = useState(nLikes);
+  const [isLike, setIsLike] = useState(false);
+  const [nLikes, setnLikes] = useState(0);
 
   const [nComments, setNcomments] = useState(0);
 
   useEffect(() => {
     const fetch = async () => {
+      setIsLike((await getLikeInfo(id)).isLike);
+      setnLikes((await getLikeInfo(id)).nLikes);
       setNcomments(await getNComments(id));
     };
     fetch();
@@ -176,22 +178,19 @@ const RenderPostHeader = ({headerData}) => {
               left
             />
             <Button
-              label={nPostLikes}
+              label={nLikes}
               flat="placeholder"
               onPress={() => {
-                setIsCommentLiked(!isCommentLiked);
-                !isCommentLiked
-                  ? setNPostLikes(nPostLikes + 1)
-                  : setNPostLikes(nPostLikes - 1);
+                performLike(id, !isLike);
+                setIsLike(!isLike);
+                !isLike ? setnLikes(nLikes + 1) : setnLikes(nLikes - 1);
               }}
               style={styles.flatBtn}
               textStyles={styles.textBtn}
               icon={
                 <Icon
-                  name={!isCommentLiked ? 'thumbs-o-up' : 'thumbs-up'}
-                  color={
-                    !isCommentLiked ? Colors.placeholder : Colors.secondary
-                  }
+                  name={!isLike ? 'thumbs-o-up' : 'thumbs-up'}
+                  color={!isLike ? Colors.placeholder : Colors.secondary}
                   style={styles.icon}
                   family={'FontAwesome'}
                 />

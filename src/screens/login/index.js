@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 // import PropTypes from 'prop-types';
 import {View} from 'react-native';
 import labels from '../../assets/labels';
@@ -13,8 +13,8 @@ import {useForm} from '../../utils/hooks';
 import {Auth} from 'aws-amplify';
 import {showShortToast} from '../../utils/methods';
 import Loader from '../../components/loader';
-import {useDispatch} from 'react-redux';
-import {getUserInfo} from '../../redux/actions/user';
+import {useDispatch, useSelector} from 'react-redux';
+import {loginUser} from '../../redux/actions/user';
 
 const Login = ({navigation}) => {
   const formInit = {
@@ -24,6 +24,23 @@ const Login = ({navigation}) => {
 
   const [load, setLoad] = useState(false);
   const dispatch = useDispatch();
+  const {userError, success} = useSelector(state => state.user);
+
+  useEffect(() => {
+    if (userError) {
+      showShortToast('Could not log you in, Please try again later');
+      setLoad(false);
+    }
+    if (success) {
+      setTimeout(() => {
+        navigation.replace('Home');
+        setLoad(false);
+      }, 500);
+    }
+    return () => {};
+  }, [navigation, success, userError]);
+
+  console.log(userError, success);
 
   const onSubmit = async formData => {
     setLoad(true);
@@ -34,11 +51,7 @@ const Login = ({navigation}) => {
     }
     try {
       Auth.signIn(email, password);
-      dispatch(getUserInfo(email));
-      setTimeout(() => {
-        navigation.replace('Home');
-        setLoad(false);
-      }, 500);
+      dispatch(loginUser(email));
     } catch ({code, message}) {
       if (code === 'InvalidParameterException') {
         showShortToast('An error occured');

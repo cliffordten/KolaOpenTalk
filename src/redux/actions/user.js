@@ -12,11 +12,8 @@ export const setCurrentUser = user => ({
 });
 
 const getUserFollowInfo = async (id = userID) => {
-  const followingList = await DataStore.query(Followering);
-  const followerList = await DataStore.query(Follower);
-
-  const following = followingList?.filter(({userID: Id}) => id === Id);
-  const followers = followerList?.filter(({userID: Id}) => id === Id);
+  const following = await DataStore.query(Followering, c => c.userID('eq', id));
+  const followers = await DataStore.query(Follower, c => c.userID('eq', id));
 
   return {
     following,
@@ -71,29 +68,14 @@ export const signUpUser = (
   }
 };
 
-export const getUserInfo = (userEmail = null) => async dispatch => {
+export const getUserInfo = () => async dispatch => {
   try {
-    let user = null;
-
-    if (userEmail) {
-      const userList = await DataStore.query(User);
-
-      user = userList?.filter(({email}) => email === userEmail);
-      if (user?.length === 1) {
-        user = user[0];
-      }
-    } else {
-      user = await DataStore.query(User, userID);
-    }
+    const user = await DataStore.query(User, userID);
 
     if (user) {
       const {id} = user;
 
       const followInfo = await getUserFollowInfo(id);
-
-      storage.setUserId(id);
-      storage.setUserisLogedOut(false);
-      storage.setUserSignedup(false);
 
       dispatch({
         type: ReduxTypes.user.setCurrentUser,
@@ -101,6 +83,10 @@ export const getUserInfo = (userEmail = null) => async dispatch => {
           ...user,
           ...followInfo,
         },
+      });
+    } else {
+      dispatch({
+        type: ReduxTypes.user.setLoginError,
       });
     }
   } catch (error) {
@@ -110,15 +96,58 @@ export const getUserInfo = (userEmail = null) => async dispatch => {
     });
   }
 };
+export const loginUser = userEmail => async dispatch => {
+  try {
+    const user = await DataStore.query(User, c => c.email('eq', userEmail));
 
+    if (user.length > 0) {
+      const {id} = user[0];
+
+      const followInfo = await getUserFollowInfo(id);
+
+      storage.setUserId(id);
+      storage.setUserisLogedOut(false);
+      storage.setUserSignedup(false);
+
+      dispatch({
+        type: ReduxTypes.user.loginUser,
+        payload: {
+          ...user[0],
+          ...followInfo,
+        },
+      });
+    } else {
+      dispatch({
+        type: ReduxTypes.user.setLoginError,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: ReduxTypes.exception.error,
+      payload: {msg: 'Error Loging in User', error},
+    });
+  }
+};
+export const logOutUser = () => async dispatch => {
+  try {
+    dispatch({
+      type: ReduxTypes.user.logoutUser,
+    });
+  } catch (error) {
+    dispatch({
+      type: ReduxTypes.exception.error,
+      payload: {msg: 'Error Loging in User', error},
+    });
+  }
+};
 export const setUserList = () => async dispatch => {
   try {
-    const blackLists = await DataStore.query(UserBlackList);
-    const userList = await DataStore.query(User);
+    const blackLists = await DataStore.query(UserBlackList, c =>
+      c.userID('eq', userID),
+    );
+    const userList = await DataStore.query(User, c => c.id('ne', userID));
 
-    const filterCurrentUser = userList?.filter(({id}) => userID !== id);
-
-    const filterBlacklist = filterCurrentUser.filter(({id}) =>
+    const filterBlacklist = userList.filter(({id}) =>
       blackLists.every(({blackList}) => blackList.id !== id),
     );
 

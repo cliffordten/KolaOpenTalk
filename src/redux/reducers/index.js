@@ -4,6 +4,7 @@ import {categoryReducer} from './category';
 import {followReducer} from './follow';
 import {postReducer} from './post';
 import {commentReducer} from './comment';
+import {likeReducer} from './like';
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   follow: followReducer,
   post: postReducer,
   comment: commentReducer,
+  like: likeReducer,
 });
 
 export default rootReducer;

@@ -6,6 +6,8 @@ const INITIAL_STATE = {
   userList: [],
   userBlackList: [],
   error: false,
+  userError: false,
+  success: false,
 };
 
 export const userReducer = (state = INITIAL_STATE, action) => {
@@ -16,10 +18,56 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         currentUser: action.payload,
       };
 
+    case ReduxTypes.user.loginUser:
+      return {
+        ...state,
+        currentUser: action.payload,
+        userError: false,
+        success: true,
+      };
+
+    case ReduxTypes.user.logoutUser:
+      return {
+        ...state,
+        userError: false,
+        success: false,
+      };
+
+    case ReduxTypes.follow.saveFollowing:
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          following: _.unionBy(
+            action.payload,
+            state.currentUser?.following,
+            'id',
+          ),
+        },
+      };
+
+    case ReduxTypes.follow.saveUnFollowing:
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          following: _.filter(
+            state.currentUser?.following,
+            ({followering: {id}}) => !_.includes(action.payload, id),
+          ),
+        },
+      };
+
     case ReduxTypes.user.setUserList:
       return {
         ...state,
         userList: action.payload,
+      };
+
+    case ReduxTypes.user.setLoginError:
+      return {
+        ...state,
+        userError: true,
       };
 
     case ReduxTypes.user.setUserBlackList:

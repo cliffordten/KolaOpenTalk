@@ -7,7 +7,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import storage from '../../utils/storage';
 import Loader from '../../components/loader';
 import {useSelector, useDispatch} from 'react-redux';
-import {getUserInfo} from '../../redux/actions/user';
+import {getUserInfo, logOutUser} from '../../redux/actions/user';
 import {DataStore} from 'aws-amplify';
 import labels from '../../assets/labels';
 
@@ -23,11 +23,12 @@ const CustomDrawer = ({navigation}) => {
     }
   }, [navigation, currentUser, dispatch]);
 
-  const logout = () => {
+  const logout = async () => {
     setLoad(true);
     storage.setUserisLogedOut(true);
     storage.setUserSignedup(false);
-    DataStore.clear();
+    dispatch(logOutUser());
+    await DataStore.clear();
     setTimeout(() => {
       setLoad(false);
       navigation.replace('Login');

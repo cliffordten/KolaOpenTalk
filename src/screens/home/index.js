@@ -39,9 +39,9 @@ const Home = ({...rest}) => {
     if (posts?.length >= 0) {
       setTimeout(() => {
         setLoading(false);
-      }, 500);
+      }, 2000);
     }
-    subscribe();
+    // subscribe();
     return () => {};
   }, [dispatch, posts?.length, subscribe]);
 

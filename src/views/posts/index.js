@@ -10,25 +10,18 @@ import FlatList from '../../components/flatlist';
 import {getFomatedTime} from '../../utils/methods';
 import labels from '../../assets/labels';
 import {getNComments} from '../../redux/actions/comment';
+import {getLikeInfo, performLike} from '../../redux/actions/like';
 
-const RenderPost = ({
-  id,
-  onPress,
-  nLikes,
-  time,
-  navigation,
-  isLiked,
-  postImage,
-  desc,
-  user,
-}) => {
-  const [isCommentLiked, setIsCommentLiked] = useState(isLiked || false);
-  const [nPostLikes, setNPostLikes] = useState(nLikes || 0);
-
+const RenderPost = ({id, onPress, time, navigation, postImage, desc, user}) => {
   const [ncomments, setNcomments] = useState(0);
+
+  const [isLike, setIsLike] = useState(false);
+  const [nLikes, setnLikes] = useState(0);
 
   useEffect(() => {
     const fetch = async () => {
+      setIsLike((await getLikeInfo(id)).isLike);
+      setnLikes((await getLikeInfo(id)).nLikes);
       setNcomments(await getNComments(id));
     };
     fetch();
@@ -77,20 +70,19 @@ const RenderPost = ({
             left
           />
           <Button
-            label={nPostLikes}
+            label={nLikes}
             flat="placeholder"
             onPress={() => {
-              setIsCommentLiked(!isCommentLiked);
-              !isCommentLiked
-                ? setNPostLikes(nPostLikes + 1)
-                : setNPostLikes(nPostLikes - 1);
+              performLike(id, !isLike);
+              setIsLike(!isLike);
+              !isLike ? setnLikes(nLikes + 1) : setnLikes(nLikes - 1);
             }}
             style={styles.flatBtn}
             textStyles={styles.textBtn}
             icon={
               <Icon
-                name={!isCommentLiked ? 'thumb-up-outline' : 'thumb-up'}
-                color={!isCommentLiked ? Colors.placeholder : Colors.secondary}
+                name={!isLike ? 'thumb-up-outline' : 'thumb-up'}
+                color={!isLike ? Colors.placeholder : Colors.secondary}
                 style={styles.icon}
                 family={'MaterialCommunityIcons'}
               />

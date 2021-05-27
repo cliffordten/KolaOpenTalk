@@ -13,6 +13,13 @@ export const followReducer = (state = INITIAL_STATE, action) => {
         ...state,
         following: _.unionBy(action.payload, state.following, 'id'),
       };
+    case ReduxTypes.follow.saveUnFollowing:
+      return {
+        ...state,
+        following: _.forEach(action.payload, id =>
+          _.remove(state.following, a => a === id),
+        ),
+      };
     case ReduxTypes.exception.error:
       return {
         ...state,

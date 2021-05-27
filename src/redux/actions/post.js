@@ -40,7 +40,7 @@ export const getClickedPost = postId => async dispatch => {
   } catch (error) {
     dispatch({
       type: ReduxTypes.exception.error,
-      payload: {msg: 'Error fetching post', error},
+      payload: {msg: 'Error fetching clicked post', error},
     });
   }
 };

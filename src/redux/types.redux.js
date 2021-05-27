@@ -1,5 +1,8 @@
 const ReduxTypes = {
   user: {
+    loginUser: 'LOGIN_USER',
+    logoutUser: 'LOGOUT_USER',
+    setLoginError: 'SET_LOGIN_ERROR',
     setCurrentUser: 'SET_CURRENT_USER',
     setUserList: 'SET_USER_LIST',
     setUserBlackList: 'SET_USER_BLACK_LIST',
@@ -20,9 +23,15 @@ const ReduxTypes = {
     createPostComment: 'CREATE_POST_COMMENT',
     createChildComment: 'CREATE_CHILD_COMMENT',
   },
+  like: {
+    getIsLikeInfo: 'GET_IS_LIKE_INFO',
+    createLike: 'CREATE_IS_LIKE',
+    deleteLike: 'DELETE_IS_LIKE',
+  },
   follow: {
     listFollowing: 'LIST_FOLLOWING',
     saveFollowing: 'SAVE_USER_FOLLOWING',
+    saveUnFollowing: 'SAVE_USER_UN_FOLLOWING',
   },
   exception: {
     error: 'ERROR',
