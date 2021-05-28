@@ -21,6 +21,32 @@ const getUserFollowInfo = async (id = userID) => {
   };
 };
 
+export const performSearch = val => async dispatch => {
+  try {
+    dispatch({
+      type: ReduxTypes.exception.searching,
+      payload: true,
+    });
+
+    dispatch({
+      type: ReduxTypes.user.searchUser,
+      payload: val,
+    });
+
+    setTimeout(() => {
+      dispatch({
+        type: ReduxTypes.exception.searching,
+        payload: false,
+      });
+    }, 500);
+  } catch (error) {
+    dispatch({
+      type: ReduxTypes.exception.error,
+      payload: {msg: 'Error Loging in User', error},
+    });
+  }
+};
+
 export const signUpUser = (
   email,
   picture,
@@ -145,13 +171,14 @@ export const setUserList = () => async dispatch => {
     const blackLists = await DataStore.query(UserBlackList, c =>
       c.userID('eq', userID),
     );
+    console.log(userID, blackLists);
     const userList = await DataStore.query(User, c => c.id('ne', userID));
 
     const filterBlacklist = userList.filter(({id}) =>
       blackLists.every(({blackList}) => blackList.id !== id),
     );
 
-    if (filterBlacklist) {
+    if (filterBlacklist.length >= 0) {
       dispatch({
         type: ReduxTypes.user.setUserList,
         payload: filterBlacklist,

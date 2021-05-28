@@ -18,9 +18,9 @@ import {showShortToast} from '../../utils/methods';
 const FollowFriends = ({navigation, external}) => {
   const [following, setFollowing] = useState([]);
   const [unFollowing, setUnFollowing] = useState([]);
-  const [load, setLoad] = useState(false);
   const dispatch = useDispatch();
-  const {userList} = useSelector(state => state.user);
+  const {userList, userSearch, searching} = useSelector(state => state.user);
+  const [load, setLoad] = useState(false);
 
   useEffect(() => {
     setLoad(true);
@@ -114,7 +114,7 @@ const FollowFriends = ({navigation, external}) => {
         </View>
         <View style={styles.inputContainer}>
           <SelectFollows
-            data={userList}
+            data={userSearch.length > 0 ? userSearch : userList}
             onPress={handleFollow}
             blackList={handleBlackList}
           />
@@ -140,6 +140,7 @@ const FollowFriends = ({navigation, external}) => {
         </View>
       </View>
       {load && <Loader />}
+      {searching && <Loader />}
     </View>
   );
 };

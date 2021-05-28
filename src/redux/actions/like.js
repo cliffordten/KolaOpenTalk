@@ -3,7 +3,6 @@ import {DataStore} from 'aws-amplify';
 import {Like} from '../../models';
 import storage from '../../utils/storage';
 import {getCurrentTime} from '../../utils/methods';
-import {v4 as uuid} from 'uuid';
 
 const userID = storage.readUserId();
 
@@ -42,9 +41,7 @@ const performIsLike = async (id, isPost = true) => {
           post: {
             id,
           },
-          comment: {
-            id: uuid(),
-          },
+          comment: null,
           user: {
             id: userID,
           },
@@ -58,9 +55,7 @@ const performIsLike = async (id, isPost = true) => {
           comment: {
             id,
           },
-          post: {
-            id: uuid(),
-          },
+          post: null,
           user: {
             id: userID,
           },

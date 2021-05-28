@@ -8,6 +8,8 @@ const INITIAL_STATE = {
   error: false,
   userError: false,
   success: false,
+  userSearch: [],
+  searching: false,
 };
 
 export const userReducer = (state = INITIAL_STATE, action) => {
@@ -16,6 +18,17 @@ export const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentUser: action.payload,
+      };
+
+    case ReduxTypes.user.searchUser:
+      return {
+        ...state,
+        userSearch: _.filter(state.userList, ({name, username}) =>
+          action.payload.length > 1
+            ? name.toLowerCase().includes(action.payload.toLowerCase()) ||
+              username.toLowerCase().includes(action.payload.toLowerCase())
+            : state.userList,
+        ),
       };
 
     case ReduxTypes.user.loginUser:
@@ -77,6 +90,12 @@ export const userReducer = (state = INITIAL_STATE, action) => {
       };
 
     case ReduxTypes.exception.error:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ReduxTypes.exception.searching:
       return {
         ...state,
         error: action.payload,

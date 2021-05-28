@@ -156,6 +156,7 @@ const deleteUserFollower = async id => {
 };
 
 export const checkFollow = async id => {
+  console.log(userID);
   const result = await (
     await DataStore.query(Followering, c => c.and(a => a.userID('eq', userID)))
   ).filter(c => c.followering.id === id);

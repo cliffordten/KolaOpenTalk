@@ -5,6 +5,7 @@ const ReduxTypes = {
     setLoginError: 'SET_LOGIN_ERROR',
     setCurrentUser: 'SET_CURRENT_USER',
     setUserList: 'SET_USER_LIST',
+    searchUser: 'SEARCHING_USER',
     setUserBlackList: 'SET_USER_BLACK_LIST',
   },
   category: {
@@ -37,6 +38,7 @@ const ReduxTypes = {
     error: 'ERROR',
     success: 'SUCCESS',
     loading: 'LOADING',
+    searching: 'SEARCHING',
   },
 };
 
